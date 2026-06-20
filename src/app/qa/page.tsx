@@ -161,13 +161,28 @@ function QARecordCard({ record, versionId }: { record: QARecord; versionId: stri
       </div>
 
       <div className="p-5 space-y-4">
-        {/* Pressure Point */}
+        {/* Pressure Point & R Trigger */}
         <div className="flex items-start gap-2">
           <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold flex-shrink-0 mt-0.5">压</span>
-          <div>
+          <div className="flex-1">
             <span className="text-xs font-medium text-[#6b8ab5] uppercase tracking-wider">压测点</span>
             <p className="text-sm text-[#8ba3c7] mt-0.5">{record.pressurePoint}</p>
           </div>
+          {record.rTrigger && (
+            <div className="flex-shrink-0">
+              <span className={`text-xs font-mono px-2 py-1 rounded-lg bg-[#0d1526] ${
+                record.rTrigger.includes("✅") && !record.rTrigger.includes("❌")
+                  ? "text-emerald-400"
+                  : record.rTrigger.includes("⚠️")
+                  ? "text-amber-400"
+                  : record.rTrigger.includes("❌")
+                  ? "text-red-400"
+                  : "text-[#6b8ab5]"
+              }`}>
+                {record.rTrigger}
+              </span>
+            </div>
+          )}
         </div>
 
         {/* Question */}
@@ -194,15 +209,29 @@ function QARecordCard({ record, versionId }: { record: QARecord; versionId: stri
 
         {/* Audit Layer */}
         {showAudit && (
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 text-[10px] font-bold">审</span>
-              <span className="text-xs font-medium text-[#6b8ab5] uppercase tracking-wider">审计层记录</span>
+          <>
+            <div>
+              <div className="flex items-center gap-2 mb-2">
+                <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 text-[10px] font-bold">审</span>
+                <span className="text-xs font-medium text-[#6b8ab5] uppercase tracking-wider">审计层记录</span>
+              </div>
+              <div className="bg-rose-500/5 border border-rose-500/10 rounded-lg p-4 text-[#6b8ab5] leading-relaxed text-sm whitespace-pre-wrap">
+                {record.auditNote}
+              </div>
             </div>
-            <div className="bg-rose-500/5 border border-rose-500/10 rounded-lg p-4 text-[#6b8ab5] leading-relaxed text-sm">
-              {record.auditNote}
-            </div>
-          </div>
+
+            {record.auditConclusion && (
+              <div>
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 text-[10px] font-bold">结</span>
+                  <span className="text-xs font-medium text-[#6b8ab5] uppercase tracking-wider">评估结论</span>
+                </div>
+                <div className="bg-amber-500/5 border border-amber-500/10 rounded-lg p-4 text-[#e0e6f0] leading-relaxed text-sm">
+                  {record.auditConclusion}
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
     </div>

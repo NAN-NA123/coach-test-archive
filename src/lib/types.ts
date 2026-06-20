@@ -88,9 +88,11 @@ export interface QARecord {
   round: string;
   question: string;
   pressurePoint: string;
+  rTrigger?: string;
   score: number;
   coachAnswer: string;
   auditNote: string;
+  auditConclusion?: string;
 }
 
 export interface AllVersionsData {

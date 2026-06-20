@@ -141,28 +141,10 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
             )}
 
             {version.qaRecords.length > 0 && (
-              <Section title="测试问答记录">
-                <div className="space-y-4">
+              <Section title="测试对话记录">
+                <div className="space-y-6">
                   {version.qaRecords.map((qa, i) => (
-                    <div key={i} className="p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c] space-y-3">
-                      <div className="flex items-center gap-2 text-sm text-[#6b8ab5]">
-                        <span className="font-mono font-bold text-[#4a9eff]">{qa.round}</span>
-                        <span>·</span>
-                        <span>{qa.pressurePoint}</span>
-                      </div>
-                      <div>
-                        <div className="text-xs font-medium text-[#6b8ab5] mb-1">测试问题</div>
-                        <div className="text-[#e0e6f0]">{qa.question}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs font-medium text-[#4a9eff] mb-1">教练回答（摘要）</div>
-                        <div className="text-[#8ba3c7]">{qa.coachAnswer}</div>
-                      </div>
-                      <div>
-                        <div className="text-xs font-medium text-rose-400 mb-1">审计层记录</div>
-                        <div className="text-[#6b8ab5] text-sm">{qa.auditNote}</div>
-                      </div>
-                    </div>
+                    <TestDialogueCard key={i} qa={qa} />
                   ))}
                 </div>
               </Section>
@@ -523,6 +505,17 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
                 </div>
               </Section>
             )}
+
+            {/* Test Dialogue Records */}
+            {version.qaRecords.length > 0 && (
+              <Section title="测试对话记录">
+                <div className="space-y-6">
+                  {version.qaRecords.map((qa, i) => (
+                    <TestDialogueCard key={i} qa={qa} />
+                  ))}
+                </div>
+              </Section>
+            )}
           </>
         )}
 
@@ -572,4 +565,129 @@ function getScoreBg(score: number | null): string {
   if (score >= 90) return "bg-emerald-500/10";
   if (score >= 80) return "bg-amber-500/10";
   return "bg-red-500/10";
+}
+
+function TestDialogueCard({ qa }: { qa: import("@/lib/types").QARecord }) {
+  return (
+    <div className="bg-[#1a2744] rounded-lg border border-[#2a3a5c] overflow-hidden">
+      {/* Header */}
+      <div className="flex items-center justify-between px-5 py-3 bg-[#0d1526] border-b border-[#2a3a5c]">
+        <div className="flex items-center gap-3">
+          <span className="font-mono font-bold text-[#4a9eff] text-sm">{qa.round}</span>
+          <span className="text-[#6b8ab5] text-xs">|</span>
+          <span className="text-xs text-[#6b8ab5]">{qa.pressurePoint}</span>
+        </div>
+        <div className="flex items-center gap-3">
+          {qa.rTrigger && (
+            <span className={`text-xs font-mono ${
+              qa.rTrigger.includes("✅") && !qa.rTrigger.includes("❌")
+                ? "text-emerald-400"
+                : qa.rTrigger.includes("⚠️")
+                ? "text-amber-400"
+                : qa.rTrigger.includes("❌")
+                ? "text-red-400"
+                : "text-[#6b8ab5]"
+            }`}>
+              {qa.rTrigger}
+            </span>
+          )}
+          <span className={`score-badge text-xs ${getScoreBg(qa.score)} ${getScoreColor(qa.score)}`}>
+            {qa.score}分
+          </span>
+        </div>
+      </div>
+
+      <div className="p-5 space-y-4">
+        {/* Question */}
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-5 h-5 rounded-full bg-[#4a9eff]/20 text-[#4a9eff] text-xs flex items-center justify-center font-bold">Q</span>
+            <span className="text-xs font-medium text-[#4a9eff]">测试问题</span>
+          </div>
+          <div className="text-[#e0e6f0] text-sm leading-relaxed pl-7">{qa.question}</div>
+        </div>
+
+        {/* Coach Answer - with expandable long content */}
+        <div>
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-5 h-5 rounded-full bg-emerald-500/20 text-emerald-400 text-xs flex items-center justify-center font-bold">A</span>
+            <span className="text-xs font-medium text-emerald-400">教练回答原文</span>
+          </div>
+          <CoachAnswerContent content={qa.coachAnswer} />
+        </div>
+
+        {/* Audit Note */}
+        <div className="border-t border-[#2a3a5c] pt-4">
+          <div className="flex items-center gap-2 mb-2">
+            <span className="w-5 h-5 rounded-full bg-rose-500/20 text-rose-400 text-xs flex items-center justify-center font-bold">审</span>
+            <span className="text-xs font-medium text-rose-400">审计层记录</span>
+          </div>
+          <AuditContent content={qa.auditNote} />
+        </div>
+
+        {/* Audit Conclusion */}
+        {qa.auditConclusion && (
+          <div className="border-t border-[#2a3a5c] pt-4">
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-5 h-5 rounded-full bg-amber-500/20 text-amber-400 text-xs flex items-center justify-center font-bold">结</span>
+              <span className="text-xs font-medium text-amber-400">评估结论</span>
+            </div>
+            <div className="text-[#e0e6f0] text-sm leading-relaxed pl-7">{qa.auditConclusion}</div>
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+function CoachAnswerContent({ content }: { content: string }) {
+  return (
+    <div className="pl-7 text-[#8ba3c7] text-sm leading-relaxed whitespace-pre-wrap">
+      {content.split("\n").map((line, i) => {
+        // Bold section headers like **这7天你要做什么**
+        const boldMatch = line.match(/^\*\*(.+)\*\*$/);
+        if (boldMatch) {
+          return <div key={i} className="font-semibold text-[#e0e6f0] mt-3 mb-1">{boldMatch[1]}</div>;
+        }
+
+        // Table rows
+        if (line.startsWith("|")) {
+          return (
+            <div key={i} className="font-mono text-xs text-[#6b8ab5] leading-5">{line}</div>
+          );
+        }
+
+        // Inline bold
+        const parts = line.split(/(\*\*[^*]+\*\*)/g);
+        return (
+          <div key={i}>
+            {parts.map((part, j) => {
+              if (part.startsWith("**") && part.endsWith("**")) {
+                return <span key={j} className="font-semibold text-[#e0e6f0]">{part.slice(2, -2)}</span>;
+              }
+              return <span key={j}>{part}</span>;
+            })}
+          </div>
+        );
+      })}
+    </div>
+  );
+}
+
+function AuditContent({ content }: { content: string }) {
+  return (
+    <div className="pl-7 text-[#6b8ab5] text-xs leading-relaxed whitespace-pre-wrap">
+      {content.split("\n").map((line, i) => {
+        // Section headers like 【规则扫描】
+        if (line.match(/^【.+】$/)) {
+          return <div key={i} className="font-semibold text-rose-400 mt-2 mb-1">{line}</div>;
+        }
+        // Key lines with ✅ or ❌ or ⚠️
+        if (line.includes("✅") || line.includes("❌") || line.includes("⚠️")) {
+          return <div key={i} className="text-[#8ba3c7]">{line}</div>;
+        }
+        return <div key={i}>{line}</div>;
+      })}
+    </div>
+  );
 }

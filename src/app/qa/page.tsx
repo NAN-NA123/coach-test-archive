@@ -57,8 +57,8 @@ export default function QAPage() {
                       }`}
                     >
                       {v.fullName}
-                      <span className={`ml-2 font-mono text-xs ${selectedVersion === v.id ? "text-white/70" : getScoreColor(v.totalScore)}`}>
-                        {v.totalScore}
+                      <span className={`ml-2 font-mono text-xs ${selectedVersion === v.id ? "text-white/70" : v.totalScore !== null ? getScoreColor(v.totalScore) : "text-gray-400"}`}>
+                        {v.totalScore !== null ? v.totalScore : "未评分"}
                       </span>
                     </button>
                   ))}
@@ -133,6 +133,7 @@ export default function QAPage() {
 
 function QARecordCard({ record, versionId }: { record: QARecord; versionId: string }) {
   const [showAudit, setShowAudit] = useState(false);
+  const isUnscored = record.score === 0 && (versionId === "v1" || versionId === "v2" || versionId === "v3" || versionId === "v4");
 
   return (
     <div className="bg-white rounded-lg border border-[#e2e8f0] overflow-hidden">
@@ -143,9 +144,13 @@ function QARecordCard({ record, versionId }: { record: QARecord; versionId: stri
           <span className="text-white/60 text-xs">|</span>
           <span className="text-sm text-white/80 uppercase">{versionId}</span>
           <span className="text-white/60 text-xs">|</span>
-          <span className="font-mono font-bold text-sm" style={{ color: getScoreColor(record.score) }}>
-            {record.score}/100
-          </span>
+          {isUnscored ? (
+            <span className="text-sm text-white/50">未评分</span>
+          ) : (
+            <span className="font-mono font-bold text-sm" style={{ color: getScoreColor(record.score) }}>
+              {record.score}/100
+            </span>
+          )}
         </div>
         <button
           onClick={() => setShowAudit(!showAudit)}

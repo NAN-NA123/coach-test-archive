@@ -1,6 +1,158 @@
 {
   "versions": [
     {
+      "id": "v1",
+      "name": "V1",
+      "fullName": "V1（规则雏形）",
+      "status": "已归档",
+      "totalScore": null,
+      "testRounds": null,
+      "coreChange": "基本依赖K库解释、无规则优先级、输出偏科普型建议",
+      "coreIssues": [
+        "无决策机制",
+        "无收敛能力"
+      ],
+      "dimensions": {
+        "rLibrary": { "score": null, "max": 40, "label": "R库" },
+        "kLibrary": { "score": null, "max": 15, "label": "K库" },
+        "cLibrary": { "score": null, "max": 10, "label": "C库" },
+        "output": { "score": null, "max": 25, "label": "输出" },
+        "stability": { "score": null, "max": 10, "label": "稳定性" }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [
+        { "phase": "引入C库", "desc": "建立失败案例分类机制，从纯K库解释转向案例驱动" }
+      ],
+      "qaRecords": [
+        {
+          "round": "Q1",
+          "question": "我身高175，体重55kg，每周训练3次，但一直长不胖，这是为什么？",
+          "pressurePoint": "单轮对话测试 / 基础K库解释能力",
+          "score": 0,
+          "coachAnswer": "问题分类为摄入+吸收综合增重失败。匹配案例C001（摄入≠吸收≠利用）和C002（吸收依赖通道失败）。调用R库但信息不足以触发规则。引用K009热量平衡、K003细胞稳态、K006压力与恢复。输出P001/P006/P007原则。最终给出四维度排查表（摄入/吸收/训练/恢复）并要求用户补充饮食、睡眠、训练、消化数据。",
+          "auditNote": "早期版本：无决策机制，输出偏科普型建议，R库信息不足无法触发规则，缺少收敛能力，仅能做信息罗列和排查建议"
+        }
+      ]
+    },
+    {
+      "id": "v2",
+      "name": "V2",
+      "fullName": "V2（引入C库）",
+      "status": "已归档",
+      "totalScore": null,
+      "testRounds": null,
+      "coreChange": "引入失败案例分类、可以识别吃很多但不长",
+      "coreIssues": [
+        "仍然是贴案例、没有真正决策逻辑"
+      ],
+      "dimensions": {
+        "rLibrary": { "score": null, "max": 40, "label": "R库" },
+        "kLibrary": { "score": null, "max": 15, "label": "K库" },
+        "cLibrary": { "score": null, "max": 10, "label": "C库" },
+        "output": { "score": null, "max": 25, "label": "输出" },
+        "stability": { "score": null, "max": 10, "label": "稳定性" }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [
+        { "phase": "引入R库", "desc": "建立规则化判断机制，引入睡眠/恢复/训练规则" }
+      ],
+      "qaRecords": [
+        {
+          "round": "Q1",
+          "question": "我吃得很多，但体重完全不变，是不是我体质问题？",
+          "pressurePoint": "单轮对话测试 / C库案例识别能力",
+          "score": 0,
+          "coachAnswer": "启动闭环决策系统。分类为摄入型增重失败，主因热量摄入不足（权重75%）。引入假设性诊断机制——标注「这是假设不是结论」。7天实验方案要求用APP记录饮食、体重、睡眠、消化。反馈后按体重变化和热量达标情况修正主因方向。",
+          "auditNote": "引入C库后能识别「吃很多但不长」的案例，但仍然是「贴案例」式输出，没有真正的决策逻辑驱动"
+        }
+      ]
+    },
+    {
+      "id": "v3",
+      "name": "V3",
+      "fullName": "V3（引入R库）",
+      "status": "已归档",
+      "totalScore": null,
+      "testRounds": null,
+      "coreChange": "开始规则化判断、引入睡眠/恢复/训练规则",
+      "coreIssues": [
+        "规则未分层",
+        "多主因混乱"
+      ],
+      "dimensions": {
+        "rLibrary": { "score": null, "max": 40, "label": "R库" },
+        "kLibrary": { "score": null, "max": 15, "label": "K库" },
+        "cLibrary": { "score": null, "max": 10, "label": "C库" },
+        "output": { "score": null, "max": 25, "label": "输出" },
+        "stability": { "score": null, "max": 10, "label": "稳定性" }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [
+        { "phase": "规则执行强化", "desc": "R库主导决策、输出出现「裁决式逻辑」" }
+      ],
+      "qaRecords": [
+        {
+          "round": "Q1",
+          "question": "我吃得很多，但体重完全不变，是不是我体质问题？",
+          "pressurePoint": "单轮对话测试 / R库规则触发能力",
+          "score": 0,
+          "coachAnswer": "四大库完整检索，6步闭环流程。问题分类为摄入型/吸收型增重失败。主因热量摄入未验证（权重55%），辅因吸收效率受限（30%）和压力恢复失衡（15%）。R库三条规则（R001/R002/R003）均因缺数据无法判断。引入K003稳态、K010跨膜转运、K006压力恢复。7天只记录不调整的基线实验。",
+          "auditNote": "R库规则已引入但因缺数据均无法触发判断，规则未分层（L1/L2无区分），多主因同时存在导致混乱，闭环流程框架已建立但执行不彻底"
+        }
+      ]
+    },
+    {
+      "id": "v4",
+      "name": "V4",
+      "fullName": "V4（规则执行强化）",
+      "status": "已归档",
+      "totalScore": null,
+      "testRounds": null,
+      "coreChange": "R库开始主导决策、输出出现「裁决式逻辑」",
+
+      "coreIssues": [
+        "仍可能过度依赖规则",
+        "K库解释过重"
+      ],
+      "dimensions": {
+        "rLibrary": { "score": null, "max": 40, "label": "R库" },
+        "kLibrary": { "score": null, "max": 15, "label": "K库" },
+        "cLibrary": { "score": null, "max": 10, "label": "C库" },
+        "output": { "score": null, "max": 25, "label": "输出" },
+        "stability": { "score": null, "max": 10, "label": "稳定性" }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [
+        { "phase": "基线评估", "desc": "建立评分体系、R库强制裁决、输出结构稳定化" }
+      ],
+      "qaRecords": [
+        {
+          "round": "Q1",
+          "question": "我最近训练很努力，但力量没有提升，还容易疲劳",
+          "pressurePoint": "单轮对话测试 / R库裁决逻辑验证",
+          "score": 0,
+          "coachAnswer": "分类为恢复型训练停滞。唯一主因：恢复能力不足以覆盖训练压力。R003触发——恢复<压力→暂停加负荷。证据链来自K006（压力与恢复）和R003。排除训练刺激不足和吸收障碍。7天方案：减少训练量30%、睡眠强制≥7小时、训练后20分钟内进食。",
+          "auditNote": "R库已能主导决策并触发裁决（R003），输出出现明确的「裁决式逻辑」，但K库解释仍然过重，可能过度依赖规则"
+        }
+      ]
+    },
+    {
       "id": "v5",
       "name": "V5",
       "fullName": "V5（基线版）",
@@ -18,11 +170,11 @@
         "R002缺量化标准"
       ],
       "dimensions": {
-        "rLibrary": { "score": 0, "max": 40, "label": "R库" },
-        "kLibrary": { "score": 0, "max": 15, "label": "K库" },
-        "cLibrary": { "score": 0, "max": 10, "label": "C库" },
-        "output": { "score": 0, "max": 25, "label": "输出" },
-        "stability": { "score": 0, "max": 10, "label": "稳定性" }
+        "rLibrary": { "score": 20, "max": 40, "label": "R库" },
+        "kLibrary": { "score": 8, "max": 15, "label": "K库" },
+        "cLibrary": { "score": 5, "max": 10, "label": "C库" },
+        "output": { "score": 15, "max": 25, "label": "输出" },
+        "stability": { "score": 13, "max": 10, "label": "稳定性" }
       },
       "rounds": [
         {
@@ -62,11 +214,11 @@
       "qaRecords": [
         {
           "round": "Q1",
-          "question": "我身高175cm体重55kg，最近三个月一直在健身房练，每周4次，但体重一点没涨。我每天吃三顿饭，偶尔加餐，但就是吃不下去更多了。有什么办法吗？",
-          "pressurePoint": "基线整体评估 / 输出分层 / 术语暴露 / 路由协议 / 吸收规则",
+          "question": "我最近训练频率很高（每周6天），但同时睡眠只有5-6小时。训练时还能撑住，但恢复变慢，力量有点停滞。应该继续保持训练强度还是减少训练量？",
+          "pressurePoint": "单轮对话实录评估 / R库强制裁决 / 输出结构稳定性",
           "score": 61,
-          "coachAnswer": "你好，我注意到你提到最近三个月体重没有变化，这可能涉及多个因素。首先，你需要确保你的热量摄入大于消耗。建议你记录一下每天的饮食，看看总热量是否足够。关于训练，你每周4次的频率是合适的，但需要确保训练强度足够。另外，建议你考虑增加蛋白质摄入，比如在每餐中加入鸡蛋、牛奶等。如果你有消化问题，可以考虑少量多餐的方式。",
-          "auditNote": "基线评估：输出未分层（直接堆叠信息）、系统术语暴露（无用户层包装）、无路由协议（未触发R库规则）、吸收维度空白（未调用C库）、行动方案靠后（建议淹没在文字中）、语气偏生硬机械"
+          "coachAnswer": "分类为恢复型训练停滞。R001+R002+R003三条规则同时触发，裁决一致：降低训练量、增加休息、暂停加负荷。结论「不允许继续保持训练强度，必须减少训练量，这不是建议是规则裁决」。主因由R003直接锁定。7天方案：训练6天降至3-4天、增加2个休息日、不增加重量、睡眠强制≥7小时。",
+          "auditNote": "基线评估：R库开始「强制裁决」、输出结构稳定（分类→规则→K解释→方案）、出现「恢复优先」稳定逻辑。但输出未分层、系统术语直接暴露、无路由协议、吸收维度空白、K库触发词遗漏"
         }
       ]
     },

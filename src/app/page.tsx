@@ -18,7 +18,7 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-[#1a365d]">版本演进总览</h1>
-          <p className="text-[#64748b] mt-1">AI瘦子增重执行教练系统 - 从V5基线到最新版本的测试评估结果</p>
+          <p className="text-[#64748b] mt-1">AI瘦子增重执行教练系统 - 从V1规则雏形到最新版本的测试评估结果</p>
         </div>
 
         {/* Timeline */}
@@ -29,7 +29,9 @@ export default function DashboardPage() {
             <div className="flex justify-between relative">
               {versions.map((v, i) => {
                 const dotClass =
-                  v.status === "基线"
+                  v.status === "已归档"
+                    ? "bg-gray-400 border-gray-400"
+                    : v.status === "基线"
                     ? "bg-[#1a365d] border-[#1a365d] shadow-[0_0_0_4px_rgba(26,54,93,0.15)]"
                     : v.status === "已完成"
                     ? "bg-emerald-500 border-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.15)]"
@@ -42,6 +44,8 @@ export default function DashboardPage() {
                     ? `${v.totalScore}`
                     : v.status === "待执行"
                     ? "待测"
+                    : v.status === "已归档"
+                    ? "—"
                     : "—";
 
                 return (
@@ -59,6 +63,8 @@ export default function DashboardPage() {
                           ? getScoreColor(v.totalScore)
                           : v.status === "待执行"
                           ? "text-amber-500"
+                          : v.status === "已归档"
+                          ? "text-gray-400"
                           : "text-slate-400"
                       }`}>
                         {scoreDisplay}
@@ -138,6 +144,8 @@ export default function DashboardPage() {
                     ? `${getScoreBorder(v.totalScore)} bg-white`
                     : v.status === "待执行"
                     ? "border-amber-200 bg-amber-50/30"
+                    : v.status === "已归档"
+                    ? "border-gray-200 bg-gray-50/30"
                     : "border-slate-200 bg-white"
                 }`}
               >
@@ -150,6 +158,10 @@ export default function DashboardPage() {
                   ) : v.status === "待执行" ? (
                     <span className="text-sm font-medium text-amber-600">
                       {v.issues.length}项修复计划中
+                    </span>
+                  ) : v.status === "已归档" ? (
+                    <span className="text-sm font-medium text-gray-400">
+                      未评分
                     </span>
                   ) : null}
                 </div>

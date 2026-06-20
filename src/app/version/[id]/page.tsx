@@ -27,6 +27,7 @@ export default function VersionDetailPage() {
   const prevVersion = allVersions[allVersions.findIndex((v) => v.id === id) - 1];
   const hasScore = version.totalScore !== null;
   const isPending = version.status === "待执行" || version.status === "规划中";
+  const isArchived = version.status === "已归档";
 
   return (
     <div className="min-h-screen bg-[#f7fafc]">
@@ -76,6 +77,13 @@ export default function VersionDetailPage() {
                 </div>
                 <div className="text-xs text-[#64748b] mt-1">尚未测试</div>
               </div>
+            ) : isArchived ? (
+              <div className="text-center px-6 py-3 rounded-lg bg-gray-50 border border-gray-200">
+                <div className="text-2xl font-bold text-gray-400">
+                  未评分
+                </div>
+                <div className="text-xs text-[#64748b] mt-1">早期版本</div>
+              </div>
             ) : null}
           </div>
 
@@ -114,8 +122,74 @@ export default function VersionDetailPage() {
           )}
         </div>
 
-        {/* For pending/planned versions: show simplified layout */}
-        {isPending ? (
+        {/* For archived versions: show core issues + QA + next steps */}
+        {isArchived ? (
+          <>
+            {/* Core Issues */}
+            {version.coreIssues && version.coreIssues.length > 0 && (
+              <Section title="核心问题">
+                <div className="space-y-3">
+                  {version.coreIssues.map((issue, i) => (
+                    <div key={i} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-400 text-white text-xs flex items-center justify-center font-bold">
+                        {i + 1}
+                      </span>
+                      <div className="font-medium text-[#1a365d]">{issue}</div>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* Test QA Records */}
+            {version.qaRecords.length > 0 && (
+              <Section title="测试问答记录">
+                <div className="space-y-4">
+                  {version.qaRecords.map((qa, i) => (
+                    <div key={i} className="p-4 bg-[#f0f4f8] rounded-lg space-y-3">
+                      <div className="flex items-center gap-2 text-sm text-[#64748b]">
+                        <span className="font-mono font-bold text-[#1a365d]">{qa.round}</span>
+                        <span>·</span>
+                        <span>{qa.pressurePoint}</span>
+                      </div>
+                      <div>
+                        <div className="text-xs font-medium text-[#64748b] mb-1">测试问题</div>
+                        <div className="text-[#1e293b]">{qa.question}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs font-medium text-[#1a365d] mb-1">教练回答（摘要）</div>
+                        <div className="text-[#475569]">{qa.coachAnswer}</div>
+                      </div>
+                      <div>
+                        <div className="text-xs font-medium text-red-700 mb-1">审计层记录</div>
+                        <div className="text-[#64748b] text-sm">{qa.auditNote}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+
+            {/* Next Steps for archived versions */}
+            {version.nextSteps.length > 0 && (
+              <Section title="演进方向">
+                <div className="space-y-4">
+                  {version.nextSteps.map((step, i) => (
+                    <div key={i} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a365d] text-white text-xs flex items-center justify-center font-bold">
+                        {i + 1}
+                      </span>
+                      <div>
+                        <div className="font-medium text-[#1a365d]">{step.phase}</div>
+                        <div className="text-sm text-[#475569] mt-1">{step.desc}</div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </Section>
+            )}
+          </>
+        ) : isPending ? (
           <>
             {/* Planned Issues / Iteration Directions */}
             {version.issues.length > 0 && (

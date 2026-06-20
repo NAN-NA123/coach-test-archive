@@ -128,10 +128,83 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-[#f7fafc] text-foreground;
   }
 }
 
 body {
   @apply font-sans;
+}
+
+/* Custom data table styles */
+.data-table {
+  @apply w-full text-sm;
+}
+
+.data-table thead th {
+  @apply bg-[#1a365d] text-white px-4 py-3 text-left font-medium text-xs uppercase tracking-wider;
+}
+
+.data-table tbody td {
+  @apply px-4 py-3 border-b border-[#e2e8f0];
+}
+
+.data-table tbody tr:nth-child(even) {
+  @apply bg-[#f8fafc];
+}
+
+.data-table tbody tr:hover {
+  @apply bg-[#edf2f7];
+}
+
+/* Score badge */
+.score-badge {
+  @apply inline-flex items-center justify-center rounded-md px-2.5 py-0.5 text-sm font-mono font-bold;
+}
+
+/* Timeline node */
+.timeline-node {
+  @apply relative flex flex-col items-center;
+}
+
+.timeline-dot {
+  @apply w-4 h-4 rounded-full border-2 border-[#1a365d] bg-white z-10;
+}
+
+.timeline-dot.active {
+  @apply bg-[#1a365d] shadow-[0_0_0_4px_rgba(26,54,93,0.2)];
+}
+
+.timeline-dot.completed {
+  @apply bg-emerald-500 border-emerald-500;
+}
+
+.timeline-dot.pending {
+  @apply bg-amber-400 border-amber-400;
+}
+
+.timeline-dot.planned {
+  @apply bg-slate-300 border-slate-300;
+}
+
+.timeline-line {
+  @apply absolute top-2 left-0 right-0 h-0.5 bg-[#cbd5e0];
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  @apply bg-transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-[#cbd5e0] rounded-full;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  @apply bg-[#a0aec0];
 }

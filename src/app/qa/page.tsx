@@ -142,6 +142,10 @@ function QARecordCard({ record, versionId }: { record: QARecord; versionId: stri
           <span className="font-mono font-bold text-sm">{record.round}</span>
           <span className="text-white/60 text-xs">|</span>
           <span className="text-sm text-white/80 uppercase">{versionId}</span>
+          <span className="text-white/60 text-xs">|</span>
+          <span className="font-mono font-bold text-sm" style={{ color: getScoreColor(record.score) }}>
+            {record.score}/100
+          </span>
         </div>
         <button
           onClick={() => setShowAudit(!showAudit)}
@@ -152,6 +156,15 @@ function QARecordCard({ record, versionId }: { record: QARecord; versionId: stri
       </div>
 
       <div className="p-5 space-y-4">
+        {/* Pressure Point */}
+        <div className="flex items-start gap-2">
+          <span className="inline-flex items-center justify-center w-5 h-5 rounded-full bg-orange-500 text-white text-[10px] font-bold flex-shrink-0 mt-0.5">压</span>
+          <div>
+            <span className="text-xs font-medium text-[#64748b] uppercase tracking-wider">压测点</span>
+            <p className="text-sm text-[#475569] mt-0.5">{record.pressurePoint}</p>
+          </div>
+        </div>
+
         {/* Question */}
         <div>
           <div className="flex items-center gap-2 mb-2">

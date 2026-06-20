@@ -87,6 +87,8 @@ export interface NextStep {
 export interface QARecord {
   round: string;
   question: string;
+  pressurePoint: string;
+  score: number;
   coachAnswer: string;
   auditNote: string;
 }

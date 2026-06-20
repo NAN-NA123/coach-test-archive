@@ -37,6 +37,7 @@ const severityColor: Record<string, string> = {
   "阻断": "bg-[#dc2626] text-white",
   "高": "bg-[#ea580c] text-white",
   "中": "bg-[#f59e0b] text-white",
+  "一般": "bg-[#0ea5e9] text-white",
   "低": "bg-[#64748b] text-white",
 };
 

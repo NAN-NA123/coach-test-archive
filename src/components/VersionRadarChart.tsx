@@ -62,14 +62,14 @@ export function VersionRadarChart({ version }: VersionRadarChartProps) {
     <div className="h-[280px] w-full max-w-[400px]">
       <ResponsiveContainer width="100%" height="100%">
         <RadarChart data={data} cx="50%" cy="50%" outerRadius="70%">
-          <PolarGrid stroke="#e2e8f0" />
-          <PolarAngleAxis dataKey="dimension" tick={{ fontSize: 12, fill: "#64748b" }} />
-          <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10, fill: "#94a3b8" }} />
+          <PolarGrid stroke="#2a3a5c" />
+          <PolarAngleAxis dataKey="dimension" tick={{ fontSize: 12, fill: "#8ba3c7" }} />
+          <PolarRadiusAxis angle={90} domain={[0, 100]} tick={{ fontSize: 10, fill: "#6b8ab5" }} />
           <Radar
             name="得分率(%)"
             dataKey="pct"
-            stroke="#1a365d"
-            fill="#1a365d"
+            stroke="#4a9eff"
+            fill="#4a9eff"
             fillOpacity={0.15}
             strokeWidth={2}
           />

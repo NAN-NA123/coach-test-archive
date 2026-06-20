@@ -33,19 +33,19 @@ const clusters = [
 ];
 
 const severityColor: Record<string, string> = {
-  "最高": "bg-[#7f1d1d] text-white",
-  "阻断": "bg-[#dc2626] text-white",
-  "高": "bg-[#ea580c] text-white",
-  "中": "bg-[#f59e0b] text-white",
-  "一般": "bg-[#0ea5e9] text-white",
-  "低": "bg-[#64748b] text-white",
+  "最高": "bg-red-900/60 text-red-300",
+  "阻断": "bg-red-800/50 text-red-300",
+  "高": "bg-amber-900/50 text-amber-300",
+  "中": "bg-yellow-900/40 text-yellow-300",
+  "一般": "bg-sky-900/50 text-sky-300",
+  "低": "bg-slate-700/50 text-slate-400",
 };
 
 const statusStyle: Record<FixStatus, string> = {
-  "已修复": "bg-[#16a34a]/10 text-[#16a34a]",
-  "修复中": "bg-[#ea580c]/10 text-[#ea580c]",
-  "未修复": "bg-[#dc2626]/10 text-[#dc2626]",
-  "待修正": "bg-[#7c3aed]/10 text-[#7c3aed]",
+  "已修复": "bg-emerald-900/40 text-emerald-400",
+  "修复中": "bg-amber-900/40 text-amber-400",
+  "未修复": "bg-red-900/40 text-red-400",
+  "待修正": "bg-violet-900/40 text-violet-400",
 };
 
 export default function FailuresPage() {
@@ -62,43 +62,43 @@ export default function FailuresPage() {
   const totalUnfixed = cases.filter((c) => c.fixStatus === "未修复" || c.fixStatus === "待修正").length;
 
   return (
-    <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">
+    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
       {/* 页面标题 */}
-      <div className="mb-8">
-        <h1 className="text-2xl font-semibold text-[#1e293b] mb-2">失败案例库</h1>
-        <p className="text-[#64748b] text-sm">记录系统从V1到当前版本所有已发现的问题，追踪修复状态</p>
+      <div className="mb-10">
+        <h1 className="text-3xl font-bold text-white mb-3">失败案例库</h1>
+        <p className="text-[#8ba3c7]">记录系统从V1到当前版本所有已发现的问题，追踪修复状态</p>
       </div>
 
       {/* 统计卡片 */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
-        <div className="bg-white rounded-lg border border-[#e2e8f0] p-4 text-center">
-          <div className="text-2xl font-bold text-[#1a365d] font-mono">{cases.length}</div>
-          <div className="text-xs text-[#64748b] mt-1">总案例</div>
+      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-10">
+        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
+          <div className="text-3xl font-bold text-white font-mono">{cases.length}</div>
+          <div className="text-xs text-[#6b8ab5] mt-1.5">总案例</div>
         </div>
-        <div className="bg-white rounded-lg border border-[#e2e8f0] p-4 text-center">
-          <div className="text-2xl font-bold text-[#16a34a] font-mono">{totalFixed}</div>
-          <div className="text-xs text-[#64748b] mt-1">已修复</div>
+        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
+          <div className="text-3xl font-bold text-emerald-400 font-mono">{totalFixed}</div>
+          <div className="text-xs text-[#6b8ab5] mt-1.5">已修复</div>
         </div>
-        <div className="bg-white rounded-lg border border-[#e2e8f0] p-4 text-center">
-          <div className="text-2xl font-bold text-[#ea580c] font-mono">{totalFixing}</div>
-          <div className="text-xs text-[#64748b] mt-1">修复中</div>
+        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
+          <div className="text-3xl font-bold text-amber-400 font-mono">{totalFixing}</div>
+          <div className="text-xs text-[#6b8ab5] mt-1.5">修复中</div>
         </div>
-        <div className="bg-white rounded-lg border border-[#e2e8f0] p-4 text-center">
-          <div className="text-2xl font-bold text-[#dc2626] font-mono">{totalUnfixed}</div>
-          <div className="text-xs text-[#64748b] mt-1">未修复</div>
+        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
+          <div className="text-3xl font-bold text-red-400 font-mono">{totalUnfixed}</div>
+          <div className="text-xs text-[#6b8ab5] mt-1.5">未修复</div>
         </div>
       </div>
 
       {/* 聚类筛选 */}
-      <div className="flex flex-wrap gap-2 mb-6">
+      <div className="flex flex-wrap gap-2 mb-8">
         {clusters.map((cl) => (
           <button
             key={cl.key}
             onClick={() => setActiveCluster(cl.key)}
-            className={`px-3 py-1.5 rounded-md text-xs font-medium transition-colors ${
+            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
               activeCluster === cl.key
-                ? "bg-[#1a365d] text-white"
-                : "bg-white text-[#64748b] border border-[#e2e8f0] hover:border-[#1a365d]/30 hover:text-[#1a365d]"
+                ? "bg-[#4a9eff] text-white shadow-lg shadow-[#4a9eff]/20"
+                : "bg-[#141d33] text-[#8ba3c7] border border-[#2a3a5c] hover:border-[#4a9eff]/40 hover:text-white"
             }`}
           >
             {cl.label}
@@ -113,38 +113,38 @@ export default function FailuresPage() {
           return (
             <div
               key={c.id}
-              className="bg-white rounded-lg border border-[#e2e8f0] overflow-hidden"
+              className="bg-[#141d33] border border-[#2a3a5c] rounded-xl overflow-hidden hover:border-[#3a4a6c] transition-colors"
             >
               <button
                 onClick={() => setExpandedId(isExpanded ? null : c.id)}
-                className="w-full text-left px-5 py-4 flex items-start gap-4 hover:bg-gray-50/50 transition-colors"
+                className="w-full text-left px-5 py-4 flex items-start gap-4 hover:bg-[#1a2744]/50 transition-colors"
               >
                 {/* 编号 */}
-                <span className="text-xs font-mono font-bold text-[#1a365d] whitespace-nowrap mt-0.5">{c.id}</span>
+                <span className="text-xs font-mono font-bold text-[#4a9eff] whitespace-nowrap mt-0.5">{c.id}</span>
                 {/* 主体 */}
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-medium text-[#1e293b] text-sm">{c.name}</span>
+                    <span className="font-medium text-white text-sm">{c.name}</span>
                     {c.components.map((comp) => (
-                      <span key={comp} className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#1a365d]/10 text-[#1a365d]">
+                      <span key={comp} className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#4a9eff]/10 text-[#4a9eff]">
                         {comp}
                       </span>
                     ))}
                   </div>
                   {!isExpanded && (
-                    <p className="text-xs text-[#64748b] mt-1 truncate">{c.description}</p>
+                    <p className="text-xs text-[#6b8ab5] mt-1 truncate">{c.description}</p>
                   )}
                 </div>
                 {/* 状态标签 */}
                 <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${severityColor[c.severity] || "bg-gray-400 text-white"}`}>
+                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${severityColor[c.severity] || "bg-slate-700/50 text-slate-400"}`}>
                     {c.severity}
                   </span>
                   <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${statusStyle[c.fixStatus]}`}>
                     {c.fixStatus}
                   </span>
                   <svg
-                    className={`w-4 h-4 text-[#64748b] transition-transform flex-shrink-0 ${isExpanded ? "rotate-180" : ""}`}
+                    className={`w-4 h-4 text-[#6b8ab5] transition-transform flex-shrink-0 ${isExpanded ? "rotate-180" : ""}`}
                     fill="none"
                     viewBox="0 0 24 24"
                     stroke="currentColor"
@@ -157,32 +157,32 @@ export default function FailuresPage() {
 
               {/* 展开详情 */}
               {isExpanded && (
-                <div className="px-5 pb-5 border-t border-[#e2e8f0] pt-4">
+                <div className="px-5 pb-5 border-t border-[#2a3a5c] pt-4">
                   <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-sm">
                     <div>
-                      <span className="text-[#64748b] text-xs">错误类型</span>
-                      <div className="font-medium text-[#1e293b]">{c.errorType}</div>
+                      <span className="text-[#6b8ab5] text-xs">错误类型</span>
+                      <div className="font-medium text-white">{c.errorType}</div>
                     </div>
                     <div>
-                      <span className="text-[#64748b] text-xs">发现版本</span>
-                      <div className="font-medium text-[#1e293b]">{c.foundVersion}</div>
+                      <span className="text-[#6b8ab5] text-xs">发现版本</span>
+                      <div className="font-medium text-white">{c.foundVersion}</div>
                     </div>
                     <div>
-                      <span className="text-[#64748b] text-xs">修复版本</span>
-                      <div className="font-medium text-[#1e293b]">{c.fixVersion}</div>
+                      <span className="text-[#6b8ab5] text-xs">修复版本</span>
+                      <div className="font-medium text-white">{c.fixVersion}</div>
                     </div>
                     <div>
-                      <span className="text-[#64748b] text-xs">聚类</span>
-                      <div className="font-medium text-[#1e293b]">{c.clusterName}</div>
+                      <span className="text-[#6b8ab5] text-xs">聚类</span>
+                      <div className="font-medium text-white">{c.clusterName}</div>
                     </div>
                   </div>
                   <div className="mb-3">
-                    <div className="text-xs font-semibold text-[#64748b] mb-1">问题描述</div>
-                    <p className="text-sm text-[#1e293b] leading-relaxed">{c.description}</p>
+                    <div className="text-xs font-semibold text-[#6b8ab5] mb-1">问题描述</div>
+                    <p className="text-sm text-[#8ba3c7] leading-relaxed">{c.description}</p>
                   </div>
                   <div>
-                    <div className="text-xs font-semibold text-[#64748b] mb-1">修复方向</div>
-                    <p className="text-sm text-[#1a365d] font-medium">{c.fixDirection}</p>
+                    <div className="text-xs font-semibold text-[#6b8ab5] mb-1">修复方向</div>
+                    <p className="text-sm text-[#4a9eff] font-medium">{c.fixDirection}</p>
                   </div>
                 </div>
               )}
@@ -192,7 +192,7 @@ export default function FailuresPage() {
       </div>
 
       {filtered.length === 0 && (
-        <div className="text-center py-12 text-[#64748b] text-sm">当前筛选条件下没有案例</div>
+        <div className="text-center py-16 text-[#6b8ab5] text-sm">当前筛选条件下没有案例</div>
       )}
     </div>
   );

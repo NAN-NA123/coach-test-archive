@@ -1,108 +1,108 @@
-"use client";
-
-import { useParams } from "next/navigation";
 import Link from "next/link";
-import { getVersionById, getAllVersions, getScoreColor, getScoreBg, getScoreBorder, getStatusBadge } from "@/lib/data";
-import { Navbar } from "@/components/Navbar";
+import { notFound } from "next/navigation";
+import { getAllVersions, getVersionById, getScoreColor, getStatusBadge } from "@/lib/data";
 import { VersionRadarChart } from "@/components/VersionRadarChart";
 
-export default function VersionDetailPage() {
-  const params = useParams();
-  const id = params.id as string;
+export function generateStaticParams() {
+  return getAllVersions().map((v) => ({ id: v.id }));
+}
+
+export function generateMetadata({ params }: { params: Promise<{ id: string }> }) {
+  return params.then((p) => {
+    const version = getVersionById(p.id);
+    if (!version) return { title: "未找到版本" };
+    return {
+      title: `${version.fullName} - Coach教练测试档案`,
+      description: `${version.fullName}测试评估结果：总分${version.totalScore ?? "待测"}`,
+    };
+  });
+}
+
+export default async function VersionDetailPage({ params }: { params: Promise<{ id: string }> }) {
+  const { id } = await params;
   const version = getVersionById(id);
+  if (!version) notFound();
+
   const allVersions = getAllVersions();
+  const currentIdx = allVersions.findIndex((v) => v.id === id);
+  const prevVersion = currentIdx > 0 ? allVersions[currentIdx - 1] : null;
 
-  if (!version) {
-    return (
-      <div className="min-h-screen bg-[#f7fafc]">
-        <Navbar />
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center">
-          <h1 className="text-2xl font-bold text-[#1a365d]">版本未找到</h1>
-          <Link href="/test-archive" className="text-[#2563eb] mt-4 inline-block hover:underline">返回测试档案</Link>
-        </div>
-      </div>
-    );
-  }
-
-  const prevVersion = allVersions[allVersions.findIndex((v) => v.id === id) - 1];
   const hasScore = version.totalScore !== null;
-  const isPending = version.status === "待执行" || version.status === "规划中";
+  const isPending = version.status === "待执行" || version.status === "规划中" || version.status === "上线后迭代";
   const isArchived = version.status === "已归档";
 
   return (
-    <div className="min-h-screen bg-[#f7fafc]">
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div className="min-h-screen" style={{ background: "#0a0f1e" }}>
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-8">
         {/* Breadcrumb */}
-        <nav className="mb-6 text-sm text-[#64748b]">
-          <Link href="/test-archive" className="hover:text-[#1a365d]">档案</Link>
-          <span className="mx-2">/</span>
-          <span className="text-[#1a365d] font-medium">{version.fullName}</span>
+        <nav className="flex items-center gap-2 text-sm text-[#6b8ab5] mb-8">
+          <Link href="/test-archive" className="hover:text-[#4a9eff] transition-colors">测试档案</Link>
+          <span>/</span>
+          <span className="text-white">{version.fullName}</span>
         </nav>
 
-        {/* Version Overview */}
-        <div className="bg-white rounded-lg border border-[#e2e8f0] p-6 mb-6">
-          <div className="flex items-start justify-between flex-wrap gap-4">
-            <div>
+        {/* Version Overview Card */}
+        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-6 sm:p-8 mb-6">
+          <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4">
+            <div className="flex-1">
               <div className="flex items-center gap-3">
-                <h1 className="text-2xl font-bold text-[#1a365d]">{version.fullName}</h1>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">{version.fullName}</h1>
                 <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${getStatusBadge(version.status).bg} ${getStatusBadge(version.status).text}`}>
                   {version.status}
                 </span>
               </div>
-              <p className="text-[#475569] mt-2">{version.coreChange}</p>
-              <div className="flex items-center gap-4 mt-3 text-sm text-[#64748b]">
+              <p className="text-[#8ba3c7] mt-2">{version.coreChange}</p>
+              <div className="flex items-center gap-4 mt-3 text-sm text-[#6b8ab5]">
                 {version.testRounds !== null && (
                   <span>测试轮次：{version.testRounds}</span>
                 )}
                 {version.improvement && (
-                  <span className="text-emerald-600 font-medium">
+                  <span className="text-emerald-400 font-medium">
                     较上版本 +{version.improvement.total}分
                   </span>
                 )}
               </div>
             </div>
             {hasScore ? (
-              <div className={`text-center px-6 py-3 rounded-lg ${getScoreBg(version.totalScore)} ${getScoreBorder(version.totalScore)} border`}>
+              <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-[#2a3a5c]">
                 <div className={`text-4xl font-mono font-bold ${getScoreColor(version.totalScore)}`}>
                   {version.totalScore}
                 </div>
-                <div className="text-xs text-[#64748b] mt-1">/100</div>
+                <div className="text-xs text-[#6b8ab5] mt-1">/100</div>
               </div>
             ) : isPending ? (
-              <div className="text-center px-6 py-3 rounded-lg bg-amber-50 border border-amber-200">
-                <div className="text-2xl font-bold text-amber-600">
+              <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-amber-500/30">
+                <div className="text-2xl font-bold text-amber-400">
                   {version.status === "待执行" ? "待测" : "规划中"}
                 </div>
-                <div className="text-xs text-[#64748b] mt-1">尚未测试</div>
+                <div className="text-xs text-[#6b8ab5] mt-1">尚未测试</div>
               </div>
             ) : isArchived ? (
-              <div className="text-center px-6 py-3 rounded-lg bg-gray-50 border border-gray-200">
-                <div className="text-2xl font-bold text-gray-400">
+              <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-[#2a3a5c]">
+                <div className="text-2xl font-bold text-[#4a5e80]">
                   未评分
                 </div>
-                <div className="text-xs text-[#64748b] mt-1">早期版本</div>
+                <div className="text-xs text-[#6b8ab5] mt-1">早期版本</div>
               </div>
             ) : null}
           </div>
 
           {/* Dimension Scores - only for scored versions */}
           {hasScore && (
-            <div className="mt-6 pt-6 border-t border-[#e2e8f0]">
+            <div className="mt-6 pt-6 border-t border-[#2a3a5c]">
               <div className="grid grid-cols-5 gap-4">
                 {Object.entries(version.dimensions).map(([key, dim]) => {
                   const pct = dim.score !== null ? Math.round((dim.score / dim.max) * 100) : 0;
                   return (
                     <div key={key} className="text-center">
-                      <div className="text-xs text-[#64748b] mb-1">{dim.label}({dim.max})</div>
+                      <div className="text-xs text-[#6b8ab5] mb-1">{dim.label}({dim.max})</div>
                       <div className={`text-xl font-mono font-bold ${getScoreColor(dim.score)}`}>
                         {dim.score ?? "—"}
                       </div>
-                      <div className="mt-2 h-1.5 bg-[#e2e8f0] rounded-full overflow-hidden">
+                      <div className="mt-2 h-1.5 bg-[#2a3a5c] rounded-full overflow-hidden">
                         <div
                           className={`h-full rounded-full transition-all ${
-                            pct >= 90 ? "bg-emerald-500" : pct >= 80 ? "bg-orange-500" : "bg-red-500"
+                            pct >= 90 ? "bg-emerald-500" : pct >= 80 ? "bg-amber-500" : "bg-red-500"
                           }`}
                           style={{ width: `${pct}%` }}
                         />
@@ -125,44 +125,42 @@ export default function VersionDetailPage() {
         {/* For archived versions: show core issues + QA + next steps */}
         {isArchived ? (
           <>
-            {/* Core Issues */}
             {version.coreIssues && version.coreIssues.length > 0 && (
               <Section title="核心问题">
                 <div className="space-y-3">
                   {version.coreIssues.map((issue, i) => (
-                    <div key={i} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-gray-400 text-white text-xs flex items-center justify-center font-bold">
+                    <div key={i} className="flex items-start gap-3 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#4a5e80] text-white text-xs flex items-center justify-center font-bold">
                         {i + 1}
                       </span>
-                      <div className="font-medium text-[#1a365d]">{issue}</div>
+                      <div className="font-medium text-[#e0e6f0]">{issue}</div>
                     </div>
                   ))}
                 </div>
               </Section>
             )}
 
-            {/* Test QA Records */}
             {version.qaRecords.length > 0 && (
               <Section title="测试问答记录">
                 <div className="space-y-4">
                   {version.qaRecords.map((qa, i) => (
-                    <div key={i} className="p-4 bg-[#f0f4f8] rounded-lg space-y-3">
-                      <div className="flex items-center gap-2 text-sm text-[#64748b]">
-                        <span className="font-mono font-bold text-[#1a365d]">{qa.round}</span>
+                    <div key={i} className="p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c] space-y-3">
+                      <div className="flex items-center gap-2 text-sm text-[#6b8ab5]">
+                        <span className="font-mono font-bold text-[#4a9eff]">{qa.round}</span>
                         <span>·</span>
                         <span>{qa.pressurePoint}</span>
                       </div>
                       <div>
-                        <div className="text-xs font-medium text-[#64748b] mb-1">测试问题</div>
-                        <div className="text-[#1e293b]">{qa.question}</div>
+                        <div className="text-xs font-medium text-[#6b8ab5] mb-1">测试问题</div>
+                        <div className="text-[#e0e6f0]">{qa.question}</div>
                       </div>
                       <div>
-                        <div className="text-xs font-medium text-[#1a365d] mb-1">教练回答（摘要）</div>
-                        <div className="text-[#475569]">{qa.coachAnswer}</div>
+                        <div className="text-xs font-medium text-[#4a9eff] mb-1">教练回答（摘要）</div>
+                        <div className="text-[#8ba3c7]">{qa.coachAnswer}</div>
                       </div>
                       <div>
-                        <div className="text-xs font-medium text-red-700 mb-1">审计层记录</div>
-                        <div className="text-[#64748b] text-sm">{qa.auditNote}</div>
+                        <div className="text-xs font-medium text-rose-400 mb-1">审计层记录</div>
+                        <div className="text-[#6b8ab5] text-sm">{qa.auditNote}</div>
                       </div>
                     </div>
                   ))}
@@ -170,18 +168,17 @@ export default function VersionDetailPage() {
               </Section>
             )}
 
-            {/* Next Steps for archived versions */}
             {version.nextSteps.length > 0 && (
               <Section title="演进方向">
                 <div className="space-y-4">
                   {version.nextSteps.map((step, i) => (
-                    <div key={i} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a365d] text-white text-xs flex items-center justify-center font-bold">
+                    <div key={i} className="flex items-start gap-3 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#4a9eff] text-white text-xs flex items-center justify-center font-bold">
                         {i + 1}
                       </span>
                       <div>
-                        <div className="font-medium text-[#1a365d]">{step.phase}</div>
-                        <div className="text-sm text-[#475569] mt-1">{step.desc}</div>
+                        <div className="font-medium text-[#4a9eff]">{step.phase}</div>
+                        <div className="text-sm text-[#8ba3c7] mt-1">{step.desc}</div>
                       </div>
                     </div>
                   ))}
@@ -191,33 +188,32 @@ export default function VersionDetailPage() {
           </>
         ) : isPending ? (
           <>
-            {/* Planned Issues / Iteration Directions */}
             {version.issues.length > 0 && (
               <Section title={version.status === "待执行" ? "计划修复项" : "迭代方向"}>
                 <div className="space-y-3">
                   {version.issues.map((issue) => (
-                    <div key={issue.id} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a365d] text-white text-xs flex items-center justify-center font-bold">
+                    <div key={issue.id} className="flex items-start gap-3 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#4a9eff] text-white text-xs flex items-center justify-center font-bold">
                         {issue.id}
                       </span>
                       <div className="flex-1">
-                        <div className="font-medium text-[#1a365d]">{issue.desc}</div>
+                        <div className="font-medium text-[#e0e6f0]">{issue.desc}</div>
                         {issue.fix && (
-                          <div className="text-sm text-[#475569] mt-1">方案：{issue.fix}</div>
+                          <div className="text-sm text-[#8ba3c7] mt-1">方案：{issue.fix}</div>
                         )}
                         <div className="flex items-center gap-2 mt-2">
                           <span className={`text-xs font-medium ${
-                            issue.severity.includes("阻断") ? "text-red-600" :
-                            issue.severity.includes("重要") ? "text-amber-600" :
-                            issue.severity.includes("一般") ? "text-orange-600" :
-                            "text-emerald-600"
+                            issue.severity.includes("阻断") ? "text-red-400" :
+                            issue.severity.includes("重要") ? "text-amber-400" :
+                            issue.severity.includes("一般") ? "text-orange-400" :
+                            "text-emerald-400"
                           }`}>
                             {issue.severity}
                           </span>
                           <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                             issue.status === "计划中"
-                              ? "bg-amber-50 text-amber-700"
-                              : "bg-blue-50 text-blue-700"
+                              ? "bg-amber-500/10 text-amber-400"
+                              : "bg-[#4a9eff]/10 text-[#4a9eff]"
                           }`}>
                             {issue.status}
                           </span>
@@ -229,18 +225,17 @@ export default function VersionDetailPage() {
               </Section>
             )}
 
-            {/* Next Steps for pending versions */}
             {version.nextSteps.length > 0 && (
               <Section title="下一步说明">
                 <div className="space-y-4">
                   {version.nextSteps.map((step, i) => (
-                    <div key={i} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a365d] text-white text-xs flex items-center justify-center font-bold">
+                    <div key={i} className="flex items-start gap-3 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#4a9eff] text-white text-xs flex items-center justify-center font-bold">
                         {i + 1}
                       </span>
                       <div>
-                        <div className="font-medium text-[#1a365d]">{step.phase}</div>
-                        <div className="text-sm text-[#475569] mt-1">{step.desc}</div>
+                        <div className="font-medium text-[#4a9eff]">{step.phase}</div>
+                        <div className="text-sm text-[#8ba3c7] mt-1">{step.desc}</div>
                       </div>
                     </div>
                   ))}
@@ -268,20 +263,20 @@ export default function VersionDetailPage() {
                     <tbody>
                       {version.rounds.map((r) => (
                         <tr key={r.id}>
-                          <td className="font-mono font-bold text-[#1a365d]">{r.id}</td>
-                          <td className="max-w-[200px]">{r.target}</td>
-                          <td className="max-w-[240px] text-[#475569]">{r.scenario}</td>
+                          <td className="font-mono font-bold text-[#4a9eff]">{r.id}</td>
+                          <td className="max-w-[200px] text-[#e0e6f0]">{r.target}</td>
+                          <td className="max-w-[240px] text-[#8ba3c7]">{r.scenario}</td>
                           <td>
                             <span className={`text-xs font-mono ${
-                              r.rTriggers.includes("✅") ? "text-emerald-600" :
-                              r.rTriggers.includes("⚠️") ? "text-orange-600" :
-                              r.rTriggers.includes("❌") ? "text-red-600" :
-                              "text-[#64748b]"
+                              r.rTriggers.includes("✅") ? "text-emerald-400" :
+                              r.rTriggers.includes("⚠️") ? "text-amber-400" :
+                              r.rTriggers.includes("❌") ? "text-red-400" :
+                              "text-[#6b8ab5]"
                             }`}>
                               {r.rTriggers}
                             </span>
                           </td>
-                          <td className="max-w-[200px] text-[#475569]">{r.keyPoints}</td>
+                          <td className="max-w-[200px] text-[#8ba3c7]">{r.keyPoints}</td>
                           <td>
                             <span className={`score-badge ${getScoreBg(r.score)} ${getScoreColor(r.score)}`}>
                               {r.score}
@@ -313,17 +308,17 @@ export default function VersionDetailPage() {
                     <tbody>
                       {version.dimensionDetails.map((d, i) => (
                         <tr key={i}>
-                          <td className="font-mono font-bold text-[#1a365d]">{d.round}</td>
-                          <td className="font-mono">{d.rLibrary}</td>
-                          <td className="font-mono">{d.kLibrary}</td>
-                          <td className="font-mono">{d.cLibrary}</td>
-                          <td className="font-mono">{d.output}</td>
-                          <td className="font-mono">{d.stability}</td>
+                          <td className="font-mono font-bold text-[#4a9eff]">{d.round}</td>
+                          <td className="font-mono text-[#e0e6f0]">{d.rLibrary}</td>
+                          <td className="font-mono text-[#e0e6f0]">{d.kLibrary}</td>
+                          <td className="font-mono text-[#e0e6f0]">{d.cLibrary}</td>
+                          <td className="font-mono text-[#e0e6f0]">{d.output}</td>
+                          <td className="font-mono text-[#e0e6f0]">{d.stability}</td>
                         </tr>
                       ))}
                       {version.dimensionDetails.length > 0 && (
-                        <tr className="font-bold bg-[#f0f4f8]">
-                          <td className="text-[#1a365d]">均分</td>
+                        <tr className="font-bold bg-[#1a2744]">
+                          <td className="text-[#4a9eff]">均分</td>
                           <td className={`font-mono ${getScoreColor(version.dimensions.rLibrary.score)}`}>
                             {version.dimensions.rLibrary.score}
                           </td>
@@ -362,40 +357,40 @@ export default function VersionDetailPage() {
                     </thead>
                     <tbody>
                       <tr className="font-bold">
-                        <td>总分</td>
-                        <td className="font-mono">{prevVersion.totalScore}</td>
-                        <td className="font-mono">{version.totalScore}</td>
-                        <td className="font-mono text-emerald-600">+{version.improvement.total}</td>
+                        <td className="text-[#e0e6f0]">总分</td>
+                        <td className="font-mono text-[#e0e6f0]">{prevVersion.totalScore}</td>
+                        <td className="font-mono text-[#e0e6f0]">{version.totalScore}</td>
+                        <td className="font-mono text-emerald-400">+{version.improvement.total}</td>
                       </tr>
                       <tr>
-                        <td>R库</td>
-                        <td className="font-mono">{prevVersion.dimensions.rLibrary.score}</td>
-                        <td className="font-mono">{version.dimensions.rLibrary.score}</td>
-                        <td className="font-mono text-emerald-600">+{version.improvement.rLibrary}</td>
+                        <td className="text-[#e0e6f0]">R库</td>
+                        <td className="font-mono text-[#8ba3c7]">{prevVersion.dimensions.rLibrary.score}</td>
+                        <td className="font-mono text-[#8ba3c7]">{version.dimensions.rLibrary.score}</td>
+                        <td className="font-mono text-emerald-400">+{version.improvement.rLibrary}</td>
                       </tr>
                       <tr>
-                        <td>K库</td>
-                        <td className="font-mono">{prevVersion.dimensions.kLibrary.score}</td>
-                        <td className="font-mono">{version.dimensions.kLibrary.score}</td>
-                        <td className="font-mono text-emerald-600">+{version.improvement.kLibrary}</td>
+                        <td className="text-[#e0e6f0]">K库</td>
+                        <td className="font-mono text-[#8ba3c7]">{prevVersion.dimensions.kLibrary.score}</td>
+                        <td className="font-mono text-[#8ba3c7]">{version.dimensions.kLibrary.score}</td>
+                        <td className="font-mono text-emerald-400">+{version.improvement.kLibrary}</td>
                       </tr>
                       <tr>
-                        <td>C库</td>
-                        <td className="font-mono">{prevVersion.dimensions.cLibrary.score}</td>
-                        <td className="font-mono">{version.dimensions.cLibrary.score}</td>
-                        <td className="font-mono text-emerald-600">+{version.improvement.cLibrary}</td>
+                        <td className="text-[#e0e6f0]">C库</td>
+                        <td className="font-mono text-[#8ba3c7]">{prevVersion.dimensions.cLibrary.score}</td>
+                        <td className="font-mono text-[#8ba3c7]">{version.dimensions.cLibrary.score}</td>
+                        <td className="font-mono text-emerald-400">+{version.improvement.cLibrary}</td>
                       </tr>
                       <tr>
-                        <td>输出</td>
-                        <td className="font-mono">{prevVersion.dimensions.output.score}</td>
-                        <td className="font-mono">{version.dimensions.output.score}</td>
-                        <td className="font-mono text-emerald-600">+{version.improvement.output}</td>
+                        <td className="text-[#e0e6f0]">输出</td>
+                        <td className="font-mono text-[#8ba3c7]">{prevVersion.dimensions.output.score}</td>
+                        <td className="font-mono text-[#8ba3c7]">{version.dimensions.output.score}</td>
+                        <td className="font-mono text-emerald-400">+{version.improvement.output}</td>
                       </tr>
                       <tr>
-                        <td>稳定性</td>
-                        <td className="font-mono">{prevVersion.dimensions.stability.score}</td>
-                        <td className="font-mono">{version.dimensions.stability.score}</td>
-                        <td className="font-mono text-emerald-600">+{version.improvement.stability}</td>
+                        <td className="text-[#e0e6f0]">稳定性</td>
+                        <td className="font-mono text-[#8ba3c7]">{prevVersion.dimensions.stability.score}</td>
+                        <td className="font-mono text-[#8ba3c7]">{version.dimensions.stability.score}</td>
+                        <td className="font-mono text-emerald-400">+{version.improvement.stability}</td>
                       </tr>
                     </tbody>
                   </table>
@@ -420,28 +415,28 @@ export default function VersionDetailPage() {
                     <tbody>
                       {version.issues.map((issue) => (
                         <tr key={issue.id}>
-                          <td className="font-mono text-[#64748b]">#{issue.id}</td>
-                          <td className="max-w-[280px]">{issue.desc}</td>
+                          <td className="font-mono text-[#6b8ab5]">#{issue.id}</td>
+                          <td className="max-w-[280px] text-[#e0e6f0]">{issue.desc}</td>
                           <td>
                             <span className={`text-xs font-medium ${
-                              issue.severity.includes("阻断") ? "text-red-600" :
-                              issue.severity.includes("重要") ? "text-amber-600" :
-                              issue.severity.includes("一般") ? "text-orange-600" :
-                              "text-emerald-600"
+                              issue.severity.includes("阻断") ? "text-red-400" :
+                              issue.severity.includes("重要") ? "text-amber-400" :
+                              issue.severity.includes("一般") ? "text-orange-400" :
+                              "text-emerald-400"
                             }`}>
                               {issue.severity}
                             </span>
                           </td>
-                          <td className="max-w-[280px] text-[#475569]">{issue.fix}</td>
+                          <td className="max-w-[280px] text-[#8ba3c7]">{issue.fix}</td>
                           <td>
                             <span className={`text-xs font-medium px-2 py-0.5 rounded-full ${
                               issue.status.includes("已修复")
-                                ? "bg-emerald-50 text-emerald-700"
+                                ? "bg-emerald-500/10 text-emerald-400"
                                 : issue.status === "未修复"
-                                ? "bg-red-50 text-red-700"
+                                ? "bg-red-500/10 text-red-400"
                                 : issue.status === "计划中"
-                                ? "bg-amber-50 text-amber-700"
-                                : "bg-blue-50 text-blue-700"
+                                ? "bg-amber-500/10 text-amber-400"
+                                : "bg-[#4a9eff]/10 text-[#4a9eff]"
                             }`}>
                               {issue.status}
                             </span>
@@ -470,10 +465,10 @@ export default function VersionDetailPage() {
                     <tbody>
                       {version.refactorList.map((item, i) => (
                         <tr key={i}>
-                          <td className="font-medium text-[#1a365d]">{item.item}</td>
-                          <td className="max-w-[320px] text-[#475569]">{item.content}</td>
-                          <td className="text-[#475569]">{item.scope}</td>
-                          <td className="font-mono text-[#64748b]">{item.round}</td>
+                          <td className="font-medium text-[#4a9eff]">{item.item}</td>
+                          <td className="max-w-[320px] text-[#8ba3c7]">{item.content}</td>
+                          <td className="text-[#8ba3c7]">{item.scope}</td>
+                          <td className="font-mono text-[#6b8ab5]">{item.round}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -498,10 +493,10 @@ export default function VersionDetailPage() {
                     <tbody>
                       {version.deductionItems.map((item, i) => (
                         <tr key={i}>
-                          <td className="font-mono font-bold text-[#1a365d]">{item.round}</td>
-                          <td className="text-[#475569]">{item.item}</td>
-                          <td className="font-mono text-red-600">{item.value}</td>
-                          <td className="text-[#64748b]">{item.dimension}</td>
+                          <td className="font-mono font-bold text-[#4a9eff]">{item.round}</td>
+                          <td className="text-[#8ba3c7]">{item.item}</td>
+                          <td className="font-mono text-red-400">{item.value}</td>
+                          <td className="text-[#6b8ab5]">{item.dimension}</td>
                         </tr>
                       ))}
                     </tbody>
@@ -515,13 +510,13 @@ export default function VersionDetailPage() {
               <Section title="下一步建议">
                 <div className="space-y-4">
                   {version.nextSteps.map((step, i) => (
-                    <div key={i} className="flex items-start gap-3 p-4 bg-[#f0f4f8] rounded-lg">
-                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#1a365d] text-white text-xs flex items-center justify-center font-bold">
+                    <div key={i} className="flex items-start gap-3 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">
+                      <span className="flex-shrink-0 w-6 h-6 rounded-full bg-[#4a9eff] text-white text-xs flex items-center justify-center font-bold">
                         {i + 1}
                       </span>
                       <div>
-                        <div className="font-medium text-[#1a365d]">{step.phase}</div>
-                        <div className="text-sm text-[#475569] mt-1">{step.desc}</div>
+                        <div className="font-medium text-[#4a9eff]">{step.phase}</div>
+                        <div className="text-sm text-[#8ba3c7] mt-1">{step.desc}</div>
                       </div>
                     </div>
                   ))}
@@ -532,11 +527,11 @@ export default function VersionDetailPage() {
         )}
 
         {/* Version Navigation */}
-        <div className="flex justify-between mt-8 pt-6 border-t border-[#e2e8f0]">
+        <div className="flex justify-between mt-8 pt-6 border-t border-[#2a3a5c]">
           {prevVersion ? (
             <Link
               href={`/version/${prevVersion.id}`}
-              className="text-[#2563eb] hover:underline text-sm"
+              className="text-[#4a9eff] hover:text-[#7bb8ff] transition-colors text-sm"
             >
               ← {prevVersion.fullName}
             </Link>
@@ -549,7 +544,7 @@ export default function VersionDetailPage() {
             return nextVersion ? (
               <Link
                 href={`/version/${nextVersion.id}`}
-                className="text-[#2563eb] hover:underline text-sm"
+                className="text-[#4a9eff] hover:text-[#7bb8ff] transition-colors text-sm"
               >
                 {nextVersion.fullName} →
               </Link>
@@ -565,9 +560,16 @@ export default function VersionDetailPage() {
 
 function Section({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="bg-white rounded-lg border border-[#e2e8f0] p-6 mb-6">
-      <h2 className="text-lg font-semibold text-[#1a365d] mb-4">{title}</h2>
+    <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-6 mb-6">
+      <h2 className="text-lg font-semibold text-white mb-4">{title}</h2>
       {children}
     </div>
   );
+}
+
+function getScoreBg(score: number | null): string {
+  if (score === null) return "bg-[#1a2744]";
+  if (score >= 90) return "bg-emerald-500/10";
+  if (score >= 80) return "bg-amber-500/10";
+  return "bg-red-500/10";
 }

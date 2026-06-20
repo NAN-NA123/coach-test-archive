@@ -1,184 +1,208 @@
 "use client";
 
 import Link from "next/link";
-import { getAllVersions, getScoreColor, getScoreBg, getScoreBorder, getStatusBadge } from "@/lib/data";
+import { versions } from "@/data/versions.json";
 import { ScoreChart } from "@/components/ScoreChart";
 import { DimensionChart } from "@/components/DimensionChart";
-import { Navbar } from "@/components/Navbar";
+import { getScoreColor } from "@/lib/data";
 
-export default function DashboardPage() {
-  const versions = getAllVersions();
-  const scoredVersions = versions.filter((v) => v.totalScore !== null);
+type VersionData = (typeof versions)[number];
+
+export default function TestArchivePage() {
+  const scoredVersions: VersionData[] = versions.filter(
+    (v) => v.totalScore !== null
+  );
+  const bestVersion = scoredVersions.reduce(
+    (a, b) => ((a.totalScore ?? 0) > (b.totalScore ?? 0) ? a : b),
+    scoredVersions[0]
+  );
 
   return (
-    <div className="min-h-screen bg-[#f7fafc]">
-      <Navbar />
-
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
+    <div className="min-h-screen bg-[#0a0f1e]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-2xl font-bold text-[#1a365d]">版本演进总览</h1>
-          <p className="text-[#64748b] mt-1">AI瘦子增重执行教练系统 - 从V1规则雏形到最新版本的测试评估结果</p>
+        <div className="mb-10">
+          <h1 className="text-2xl sm:text-3xl font-bold text-white mb-2">
+            测试档案
+          </h1>
+          <p className="text-[#8ba3c7] text-base">
+            从V1规则雏形到最新版本的测试评估结果
+          </p>
         </div>
 
-        {/* Timeline */}
-        <div className="bg-white rounded-lg border border-[#e2e8f0] p-6 mb-8">
-          <h2 className="text-lg font-semibold text-[#1a365d] mb-6">版本演进时间线</h2>
-          <div className="relative">
-            <div className="absolute top-[7px] left-[8%] right-[8%] h-0.5 bg-[#cbd5e0]" />
-            <div className="flex justify-between relative">
-              {versions.map((v, i) => {
-                const dotClass =
-                  v.status === "已归档"
-                    ? "bg-gray-400 border-gray-400"
-                    : v.status === "基线"
-                    ? "bg-[#1a365d] border-[#1a365d] shadow-[0_0_0_4px_rgba(26,54,93,0.15)]"
-                    : v.status === "已完成"
-                    ? "bg-emerald-500 border-emerald-500 shadow-[0_0_0_4px_rgba(16,185,129,0.15)]"
-                    : v.status === "待执行"
-                    ? "bg-amber-400 border-amber-400 shadow-[0_0_0_4px_rgba(251,191,36,0.15)]"
-                    : "bg-slate-300 border-slate-300";
-
-                const scoreDisplay =
-                  v.totalScore !== null
-                    ? `${v.totalScore}`
-                    : v.status === "待执行"
-                    ? "待测"
-                    : v.status === "已归档"
-                    ? "—"
-                    : "—";
-
-                return (
-                  <Link
-                    key={v.id}
-                    href={`/version/${v.id}`}
-                    className="flex flex-col items-center group"
-                    style={{ width: `${100 / versions.length}%` }}
+        {/* Version Timeline */}
+        <section className="mb-12">
+          <h2 className="text-lg font-semibold text-white mb-6">
+            版本演进
+          </h2>
+          <div className="flex items-center justify-between overflow-x-auto pb-4 px-2">
+            {versions.map((v, i) => (
+              <div key={v.id} className="flex items-center">
+                <Link
+                  href={`/version/${v.id}`}
+                  className="flex flex-col items-center min-w-[80px] group"
+                >
+                  <div
+                    className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all group-hover:scale-110 ${
+                      v.status === "已归档"
+                        ? "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]"
+                        : v.status === "待执行" || v.status === "规划中"
+                        ? "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400"
+                        : v.totalScore !== null && v.totalScore >= 90
+                        ? "bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400"
+                        : v.totalScore !== null && v.totalScore >= 80
+                        ? "bg-amber-500/20 border-2 border-amber-500/50 text-amber-400"
+                        : v.totalScore !== null
+                        ? "bg-rose-500/20 border-2 border-rose-500/50 text-rose-400"
+                        : "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]"
+                    }`}
                   >
-                    <div className={`w-4 h-4 rounded-full border-2 z-10 transition-transform group-hover:scale-125 ${dotClass}`} />
-                    <div className="mt-3 text-center">
-                      <div className="text-sm font-bold text-[#1a365d]">{v.name}</div>
-                      <div className={`text-xl font-mono font-bold mt-1 ${
-                        v.totalScore !== null
-                          ? getScoreColor(v.totalScore)
-                          : v.status === "待执行"
-                          ? "text-amber-500"
-                          : v.status === "已归档"
-                          ? "text-gray-400"
-                          : "text-slate-400"
-                      }`}>
-                        {scoreDisplay}
-                      </div>
-                      <div className={`text-xs mt-1 px-2 py-0.5 rounded-full inline-block ${getStatusBadge(v.status).bg} ${getStatusBadge(v.status).text}`}>
-                        {v.status}
-                      </div>
-                    </div>
-                  </Link>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-
-        {/* Highlight Card - only show if there are scored versions */}
-        {scoredVersions.length > 0 && (() => {
-          const best = scoredVersions.reduce((a, b) =>
-            (a.totalScore ?? 0) > (b.totalScore ?? 0) ? a : b
-          );
-          return (
-            <div className={`rounded-lg border-2 p-6 mb-8 ${getScoreBorder(best.totalScore)} ${getScoreBg(best.totalScore)}`}>
-              <div className="flex items-start justify-between flex-wrap gap-4">
-                <div>
-                  <div className="text-sm font-medium text-[#64748b]">当前最高分版本</div>
-                  <div className="text-2xl font-bold text-[#1a365d] mt-1">{best.fullName}</div>
-                  <div className="text-[#475569] mt-2 text-sm">{best.coreChange}</div>
-                </div>
-                <div className="text-right">
-                  <div className={`text-4xl font-mono font-bold ${getScoreColor(best.totalScore)}`}>
-                    {best.totalScore}
+                    {v.name.replace("V", "")}
                   </div>
-                  <div className="text-sm text-[#64748b]">/100</div>
-                  <div className="text-xs text-[#64748b] mt-1">
-                    {best.testRounds}轮均分
-                  </div>
-                </div>
+                  <span className="text-[#8ba3c7] text-xs mt-1.5 font-medium">
+                    {v.name}
+                  </span>
+                  <span
+                    className={`text-xs mt-0.5 font-mono ${
+                      v.totalScore !== null
+                        ? `text-[${getScoreColor(v.totalScore)}]`
+                        : v.status === "已归档"
+                        ? "text-[#4a5e80]"
+                        : "text-amber-400"
+                    }`}
+                  >
+                    {v.totalScore !== null
+                      ? `${v.totalScore}`
+                      : v.status === "已归档"
+                      ? "—"
+                      : "待测"}
+                  </span>
+                </Link>
+                {i < versions.length - 1 && (
+                  <div className="w-6 sm:w-12 h-0.5 bg-[#2a3a5c] mx-1 flex-shrink-0" />
+                )}
               </div>
-              {best.issues && best.issues.length > 0 && (
-                <div className="mt-4 pt-4 border-t border-[#e2e8f0]">
-                  <div className="flex items-center gap-2">
-                    <span className="text-sm text-[#64748b]">问题修复状态：</span>
-                    <span className="text-sm font-medium text-emerald-600">
-                      {best.issues.filter((i) => i.status.includes("已修复")).length}/{best.issues.length} 修复完成
-                    </span>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })()}
+            ))}
+          </div>
+        </section>
 
-        {/* Charts - only scored versions */}
+        {/* Best Score Highlight */}
+        {bestVersion && (
+          <section className="mb-12">
+            <div className="bg-gradient-to-r from-[#1a2744] to-[#141d33] rounded-xl border border-[#2a3a5c] p-6 sm:p-8">
+              <div className="flex items-center gap-2 mb-4">
+                <span className="text-xs font-medium text-emerald-400 bg-emerald-500/10 px-2 py-1 rounded-lg">
+                  当前最高分
+                </span>
+              </div>
+              <div className="flex items-baseline gap-3 mb-4">
+                <span className="text-white text-2xl font-bold">
+                  {bestVersion.name}
+                </span>
+                <span
+                  className="text-4xl font-bold font-mono"
+                  style={{ color: getScoreColor(bestVersion.totalScore ?? 0) }}
+                >
+                  {bestVersion.totalScore}
+                </span>
+                <span className="text-[#6b8ab5] text-lg">/100</span>
+              </div>
+              <div className="flex flex-wrap gap-4 text-sm text-[#8ba3c7]">
+                <span>
+                  {bestVersion.testRounds}轮均分
+                </span>
+                <span className="text-[#2a3a5c]">|</span>
+                <span>
+                  {bestVersion.issues?.filter((i: { status: string }) => i.status === "已修复").length ?? 0}
+                  /{bestVersion.issues?.length ?? 0} 修复完成
+                </span>
+              </div>
+            </div>
+          </section>
+        )}
+
+        {/* Charts */}
         {scoredVersions.length > 0 && (
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-            <div className="bg-white rounded-lg border border-[#e2e8f0] p-6">
-              <h2 className="text-lg font-semibold text-[#1a365d] mb-4">评分趋势</h2>
+          <section className="mb-12 grid grid-cols-1 lg:grid-cols-2 gap-6">
+            <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-6">
+              <h3 className="text-base font-semibold text-white mb-4">
+                评分趋势
+              </h3>
               <ScoreChart versions={scoredVersions} />
             </div>
-            <div className="bg-white rounded-lg border border-[#e2e8f0] p-6">
-              <h2 className="text-lg font-semibold text-[#1a365d] mb-4">维度评分对比</h2>
+            <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-6">
+              <h3 className="text-base font-semibold text-white mb-4">
+                维度评分对比
+              </h3>
               <DimensionChart versions={scoredVersions} />
             </div>
-          </div>
+          </section>
         )}
 
         {/* Version Navigation Cards */}
-        <div className="mb-8">
-          <h2 className="text-lg font-semibold text-[#1a365d] mb-4">版本详情入口</h2>
+        <section>
+          <h2 className="text-lg font-semibold text-white mb-6">
+            版本详情
+          </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {versions.map((v) => (
-              <Link
-                key={v.id}
-                href={`/version/${v.id}`}
-                className={`block rounded-lg border p-5 transition-all hover:shadow-md hover:-translate-y-0.5 ${
-                  v.totalScore !== null
-                    ? `${getScoreBorder(v.totalScore)} bg-white`
-                    : v.status === "待执行"
-                    ? "border-amber-200 bg-amber-50/30"
-                    : v.status === "已归档"
-                    ? "border-gray-200 bg-gray-50/30"
-                    : "border-slate-200 bg-white"
-                }`}
-              >
-                <div className="flex items-center justify-between mb-3">
-                  <span className="text-lg font-bold text-[#1a365d]">{v.fullName}</span>
-                  {v.totalScore !== null ? (
-                    <span className={`text-2xl font-mono font-bold ${getScoreColor(v.totalScore)}`}>
-                      {v.totalScore}
+              <Link key={v.id} href={`/version/${v.id}`}>
+                <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-5 hover:border-[#4a9eff]/50 transition-all hover:-translate-y-0.5 group">
+                  <div className="flex items-center justify-between mb-3">
+                    <span className="text-white font-bold text-lg">
+                      {v.name}
                     </span>
-                  ) : v.status === "待执行" ? (
-                    <span className="text-sm font-medium text-amber-600">
-                      {v.issues.length}项修复计划中
+                    <span
+                      className={`text-xs px-2 py-1 rounded-lg font-medium ${
+                        v.status === "已归档"
+                          ? "bg-[#1a2744] text-[#6b8ab5]"
+                          : v.status === "基线"
+                          ? "bg-[#1a2744] text-[#8ba3c7]"
+                          : v.status === "已完成"
+                          ? "bg-emerald-500/10 text-emerald-400"
+                          : v.status === "待执行"
+                          ? "bg-amber-500/10 text-amber-400"
+                          : v.status === "规划中"
+                          ? "bg-violet-500/10 text-violet-400"
+                          : "bg-[#1a2744] text-[#6b8ab5]"
+                      }`}
+                    >
+                      {v.status}
                     </span>
-                  ) : v.status === "已归档" ? (
-                    <span className="text-sm font-medium text-gray-400">
-                      未评分
+                  </div>
+                  <p className="text-[#6b8ab5] text-sm mb-3 line-clamp-2">
+                    {v.coreChange}
+                  </p>
+                  <div className="flex items-center justify-between">
+                    {v.totalScore !== null ? (
+                      <span
+                        className="text-xl font-bold font-mono"
+                        style={{ color: getScoreColor(v.totalScore) }}
+                      >
+                        {v.totalScore}
+                        <span className="text-sm text-[#6b8ab5]">
+                          /100
+                        </span>
+                      </span>
+                    ) : (
+                      <span className="text-sm text-[#4a5e80]">
+                        {v.status === "已归档"
+                          ? "未评分"
+                          : v.issues?.length
+                          ? `${v.issues.length}项修复计划中`
+                          : "待测试"}
+                      </span>
+                    )}
+                    <span className="text-[#4a5e80] group-hover:text-[#4a9eff] transition-colors text-sm">
+                      →
                     </span>
-                  ) : null}
-                </div>
-                <p className="text-sm text-[#64748b] line-clamp-2">{v.coreChange}</p>
-                <div className="flex items-center gap-2 mt-3">
-                  <span className={`text-xs px-2 py-0.5 rounded-full ${getStatusBadge(v.status).bg} ${getStatusBadge(v.status).text}`}>
-                    {v.status}
-                  </span>
-                  {v.testRounds && (
-                    <span className="text-xs text-[#64748b]">{v.testRounds}轮测试</span>
-                  )}
+                  </div>
                 </div>
               </Link>
             ))}
           </div>
-        </div>
-      </main>
+        </section>
+      </div>
     </div>
   );
 }

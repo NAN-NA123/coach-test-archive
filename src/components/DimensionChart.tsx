@@ -27,29 +27,31 @@ export function DimensionChart({ versions }: DimensionChartProps) {
   }));
 
   const lines = [
-    { key: "R库(40)", color: "#1a365d" },
-    { key: "K库(15)", color: "#2563eb" },
-    { key: "C库(10)", color: "#7c3aed" },
-    { key: "输出(25)", color: "#ea580c" },
-    { key: "稳定性(10)", color: "#16a34a" },
+    { key: "R库(40)", color: "#4a9eff" },
+    { key: "K库(15)", color: "#34d399" },
+    { key: "C库(10)", color: "#a78bfa" },
+    { key: "输出(25)", color: "#fbbf24" },
+    { key: "稳定性(10)", color: "#f472b6" },
   ];
 
   return (
     <div className="h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-          <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
-          <YAxis domain={[0, 40]} tick={{ fontSize: 12, fill: "#64748b" }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2a3a5c" />
+          <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#6b8ab5" }} axisLine={{ stroke: "#2a3a5c" }} />
+          <YAxis domain={[0, 40]} tick={{ fontSize: 12, fill: "#6b8ab5" }} axisLine={{ stroke: "#2a3a5c" }} />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#fff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
+              backgroundColor: "#141d33",
+              border: "1px solid #2a3a5c",
+              borderRadius: "12px",
               fontSize: "13px",
+              color: "#e2e8f0",
             }}
+            labelStyle={{ color: "#8bb4e8" }}
           />
-          <Legend wrapperStyle={{ fontSize: "12px" }} />
+          <Legend wrapperStyle={{ fontSize: "12px", color: "#8ba3c7" }} />
           {lines.map((line) => (
             <Line
               key={line.key}

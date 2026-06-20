@@ -31,15 +31,15 @@ export function Navbar() {
   ];
 
   return (
-    <nav className="sticky top-0 z-50 bg-[#1a365d] text-white shadow-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+    <nav className="sticky top-0 z-50 bg-[#0d1424]/95 backdrop-blur-md border-b border-[#2a3a5c]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
-          <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight whitespace-nowrap">
-            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="2" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M7 8h8M7 11h8M7 14h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+          <Link href="/" className="flex items-center gap-2.5 font-bold text-lg tracking-tight whitespace-nowrap text-white">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="3" y="3" width="18" height="18" rx="4" stroke="#4a9eff" strokeWidth="1.5" />
+              <path d="M8 9h8M8 12h8M8 15h5" stroke="#4a9eff" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            Coach教练
+            <span>Coach教练</span>
           </Link>
           <div className="flex items-center gap-1 overflow-x-auto">
             {navItems.map((item) => {
@@ -48,10 +48,10 @@ export function Navbar() {
                 <Link
                   key={item.href}
                   href={item.href}
-                  className={`px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
+                  className={`px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-colors ${
                     isActive
-                      ? "bg-white/20 text-white"
-                      : "text-white/70 hover:text-white hover:bg-white/10"
+                      ? "bg-[#4a9eff]/20 text-[#4a9eff]"
+                      : "text-[#6b8ab5] hover:text-white hover:bg-[#1a2744]"
                   }`}
                 >
                   {item.label}
@@ -63,10 +63,10 @@ export function Navbar() {
             <div className="relative" ref={dropdownRef}>
               <button
                 onClick={() => setDropdownOpen(!dropdownOpen)}
-                className={`px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors flex items-center gap-1 ${
+                className={`px-3 py-1.5 rounded-lg text-sm font-medium whitespace-nowrap transition-colors flex items-center gap-1 ${
                   isVersionActive
-                    ? "bg-white/20 text-white"
-                    : "text-white/70 hover:text-white hover:bg-white/10"
+                    ? "bg-[#4a9eff]/20 text-[#4a9eff]"
+                    : "text-[#6b8ab5] hover:text-white hover:bg-[#1a2744]"
                 }`}
               >
                 测试档案
@@ -81,20 +81,20 @@ export function Navbar() {
                 </svg>
               </button>
               {dropdownOpen && (
-                <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 max-h-[70vh] overflow-y-auto">
+                <div className="absolute right-0 mt-2 w-52 bg-[#141d33] rounded-xl border border-[#2a3a5c] shadow-2xl py-2 z-50 max-h-[70vh] overflow-y-auto">
                   <Link
                     href="/test-archive"
                     onClick={() => setDropdownOpen(false)}
-                    className={`block px-3 py-1.5 text-sm font-medium transition-colors ${
+                    className={`block px-4 py-2 text-sm font-medium transition-colors ${
                       pathname === "/test-archive"
-                        ? "bg-[#1a365d]/10 text-[#1a365d]"
-                        : "text-[#1a365d] hover:bg-gray-50"
+                        ? "bg-[#4a9eff]/15 text-[#4a9eff]"
+                        : "text-[#8ba3c7] hover:text-white hover:bg-[#1a2744]"
                     }`}
                   >
                     测试档案总览
                   </Link>
-                  <div className="border-t border-gray-100 my-1" />
-                  <div className="px-3 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                  <div className="border-t border-[#2a3a5c] my-1" />
+                  <div className="px-4 py-1.5 text-xs font-semibold text-[#4a5e80] uppercase tracking-wider">
                     版本
                   </div>
                   {versions.map((v) => (
@@ -102,26 +102,26 @@ export function Navbar() {
                       key={v.id}
                       href={`/version/${v.id}`}
                       onClick={() => setDropdownOpen(false)}
-                      className={`block px-3 py-1.5 text-sm transition-colors ${
+                      className={`block px-4 py-2 text-sm transition-colors ${
                         pathname === `/version/${v.id}`
-                          ? "bg-[#1a365d]/10 text-[#1a365d] font-medium"
-                          : "text-gray-700 hover:bg-gray-50"
+                          ? "bg-[#4a9eff]/15 text-[#4a9eff] font-medium"
+                          : "text-[#8ba3c7] hover:text-white hover:bg-[#1a2744]"
                       }`}
                     >
                       <span className="font-medium">{v.name}</span>
                       {v.totalScore !== null && (
-                        <span className="ml-2 text-xs text-gray-400">{v.totalScore}分</span>
+                        <span className="ml-2 text-xs text-[#4a5e80]">{v.totalScore}分</span>
                       )}
                     </Link>
                   ))}
-                  <div className="border-t border-gray-100 my-1" />
+                  <div className="border-t border-[#2a3a5c] my-1" />
                   <Link
                     href="/qa"
                     onClick={() => setDropdownOpen(false)}
-                    className={`block px-3 py-1.5 text-sm transition-colors ${
+                    className={`block px-4 py-2 text-sm transition-colors ${
                       pathname === "/qa"
-                        ? "bg-[#1a365d]/10 text-[#1a365d] font-medium"
-                        : "text-gray-700 hover:bg-gray-50"
+                        ? "bg-[#4a9eff]/15 text-[#4a9eff] font-medium"
+                        : "text-[#8ba3c7] hover:text-white hover:bg-[#1a2744]"
                     }`}
                   >
                     测试问答

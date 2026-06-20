@@ -22,33 +22,31 @@ export function ScoreChart({ versions }: ScoreChartProps) {
     总分: v.totalScore,
   }));
 
-  const config = {
-    总分: { color: "#1a365d" },
-  };
-
   return (
     <div className="h-[300px]">
       <ResponsiveContainer width="100%" height="100%">
         <LineChart data={data} margin={{ top: 5, right: 20, left: 0, bottom: 5 }}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#e2e8f0" />
-          <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#64748b" }} />
-          <YAxis domain={[50, 100]} tick={{ fontSize: 12, fill: "#64748b" }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#2a3a5c" />
+          <XAxis dataKey="name" tick={{ fontSize: 12, fill: "#6b8ab5" }} axisLine={{ stroke: "#2a3a5c" }} />
+          <YAxis domain={[50, 100]} tick={{ fontSize: 12, fill: "#6b8ab5" }} axisLine={{ stroke: "#2a3a5c" }} />
           <Tooltip
             contentStyle={{
-              backgroundColor: "#fff",
-              border: "1px solid #e2e8f0",
-              borderRadius: "8px",
+              backgroundColor: "#141d33",
+              border: "1px solid #2a3a5c",
+              borderRadius: "12px",
               fontSize: "13px",
+              color: "#e2e8f0",
             }}
+            labelStyle={{ color: "#8bb4e8" }}
           />
-          <Legend wrapperStyle={{ fontSize: "13px" }} />
+          <Legend wrapperStyle={{ fontSize: "13px", color: "#8ba3c7" }} />
           <Line
             type="monotone"
             dataKey="总分"
-            stroke={config.总分.color}
+            stroke="#4a9eff"
             strokeWidth={2.5}
-            dot={{ r: 5, fill: config.总分.color, strokeWidth: 0 }}
-            activeDot={{ r: 7 }}
+            dot={{ r: 5, fill: "#4a9eff", strokeWidth: 0 }}
+            activeDot={{ r: 7, fill: "#4a9eff" }}
           />
         </LineChart>
       </ResponsiveContainer>

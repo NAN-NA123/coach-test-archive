@@ -11,41 +11,41 @@ export function getVersionById(id: string): VersionData | undefined {
 }
 
 export function getScoreColor(score: number | null): string {
-  if (score === null) return "text-slate-400";
-  if (score >= 90) return "text-emerald-600";
-  if (score >= 80) return "text-orange-600";
-  return "text-red-600";
+  if (score === null) return "text-[#6b8ab5]";
+  if (score >= 90) return "text-emerald-400";
+  if (score >= 80) return "text-amber-400";
+  return "text-red-400";
 }
 
 export function getScoreBg(score: number | null): string {
-  if (score === null) return "bg-slate-100";
-  if (score >= 90) return "bg-emerald-50";
-  if (score >= 80) return "bg-orange-50";
-  return "bg-red-50";
+  if (score === null) return "bg-[#1a2744]";
+  if (score >= 90) return "bg-emerald-500/10";
+  if (score >= 80) return "bg-amber-500/10";
+  return "bg-red-500/10";
 }
 
 export function getScoreBorder(score: number | null): string {
-  if (score === null) return "border-slate-200";
-  if (score >= 90) return "border-emerald-200";
-  if (score >= 80) return "border-orange-200";
-  return "border-red-200";
+  if (score === null) return "border-[#2a3a5c]";
+  if (score >= 90) return "border-emerald-500/30";
+  if (score >= 80) return "border-amber-500/30";
+  return "border-red-500/30";
 }
 
 export function getStatusBadge(status: string): { bg: string; text: string } {
   switch (status) {
     case "基线":
-      return { bg: "bg-slate-100", text: "text-slate-700" };
+      return { bg: "bg-[#2a3a5c]", text: "text-[#8bb4e8]" };
     case "已完成":
-      return { bg: "bg-emerald-50", text: "text-emerald-700" };
+      return { bg: "bg-emerald-500/15", text: "text-emerald-400" };
     case "待执行":
-      return { bg: "bg-amber-50", text: "text-amber-700" };
+      return { bg: "bg-amber-500/15", text: "text-amber-400" };
     case "上线后迭代":
-      return { bg: "bg-blue-50", text: "text-blue-700" };
+      return { bg: "bg-sky-500/15", text: "text-sky-400" };
     case "规划中":
-      return { bg: "bg-slate-100", text: "text-slate-600" };
+      return { bg: "bg-violet-500/15", text: "text-violet-400" };
     case "已归档":
-      return { bg: "bg-gray-100", text: "text-gray-500" };
+      return { bg: "bg-[#1a2744]", text: "text-[#6b8ab5]" };
     default:
-      return { bg: "bg-slate-100", text: "text-slate-700" };
+      return { bg: "bg-[#2a3a5c]", text: "text-[#8bb4e8]" };
   }
 }

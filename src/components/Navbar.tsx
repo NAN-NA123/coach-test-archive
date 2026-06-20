@@ -25,6 +25,7 @@ export function Navbar() {
 
   const navItems = [
     { href: "/philosophy", label: "产品理念" },
+    { href: "/decisions", label: "决策日志" },
     { href: "/failures", label: "失败案例库" },
     { href: "/roadmap", label: "产品线路图" },
   ];

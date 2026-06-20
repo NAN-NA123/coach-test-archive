@@ -3,7 +3,7 @@
 import { useState } from "react";
 import failuresData from "@/data/failures.json";
 
-type FixStatus = "已修复" | "修复中" | "未修复";
+type FixStatus = "已修复" | "修复中" | "未修复" | "待修正";
 
 interface FailureCase {
   id: string;
@@ -45,6 +45,7 @@ const statusStyle: Record<FixStatus, string> = {
   "已修复": "bg-[#16a34a]/10 text-[#16a34a]",
   "修复中": "bg-[#ea580c]/10 text-[#ea580c]",
   "未修复": "bg-[#dc2626]/10 text-[#dc2626]",
+  "待修正": "bg-[#7c3aed]/10 text-[#7c3aed]",
 };
 
 export default function FailuresPage() {
@@ -58,7 +59,7 @@ export default function FailuresPage() {
 
   const totalFixed = cases.filter((c) => c.fixStatus === "已修复").length;
   const totalFixing = cases.filter((c) => c.fixStatus === "修复中").length;
-  const totalUnfixed = cases.filter((c) => c.fixStatus === "未修复").length;
+  const totalUnfixed = cases.filter((c) => c.fixStatus === "未修复" || c.fixStatus === "待修正").length;
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-8">

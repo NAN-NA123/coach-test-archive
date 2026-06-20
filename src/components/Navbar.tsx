@@ -11,7 +11,7 @@ export function Navbar() {
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  const isVersionActive = pathname.startsWith("/version/") || pathname === "/qa";
+  const isVersionActive = pathname.startsWith("/version/") || pathname === "/qa" || pathname === "/test-archive";
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -35,11 +35,11 @@ export function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
         <div className="flex items-center justify-between h-14">
           <Link href="/" className="flex items-center gap-2 font-bold text-lg tracking-tight whitespace-nowrap">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <rect x="2" y="2" width="16" height="16" rx="3" stroke="currentColor" strokeWidth="1.5" />
-              <path d="M6 7h8M6 10h8M6 13h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            <svg width="22" height="22" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <rect x="2" y="2" width="18" height="18" rx="4" stroke="currentColor" strokeWidth="1.5" />
+              <path d="M7 8h8M7 11h8M7 14h5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
             </svg>
-            教练系统测试档案
+            Coach教练
           </Link>
           <div className="flex items-center gap-1 overflow-x-auto">
             {navItems.map((item) => {
@@ -82,6 +82,18 @@ export function Navbar() {
               </button>
               {dropdownOpen && (
                 <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 max-h-[70vh] overflow-y-auto">
+                  <Link
+                    href="/test-archive"
+                    onClick={() => setDropdownOpen(false)}
+                    className={`block px-3 py-1.5 text-sm font-medium transition-colors ${
+                      pathname === "/test-archive"
+                        ? "bg-[#1a365d]/10 text-[#1a365d]"
+                        : "text-[#1a365d] hover:bg-gray-50"
+                    }`}
+                  >
+                    测试档案总览
+                  </Link>
+                  <div className="border-t border-gray-100 my-1" />
                   <div className="px-3 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wider">
                     版本
                   </div>

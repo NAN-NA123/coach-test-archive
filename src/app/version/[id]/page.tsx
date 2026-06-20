@@ -18,7 +18,7 @@ export default function VersionDetailPage() {
         <Navbar />
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 text-center">
           <h1 className="text-2xl font-bold text-[#1a365d]">版本未找到</h1>
-          <Link href="/" className="text-[#2563eb] mt-4 inline-block hover:underline">返回首页</Link>
+          <Link href="/test-archive" className="text-[#2563eb] mt-4 inline-block hover:underline">返回测试档案</Link>
         </div>
       </div>
     );
@@ -36,7 +36,7 @@ export default function VersionDetailPage() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 py-8">
         {/* Breadcrumb */}
         <nav className="mb-6 text-sm text-[#64748b]">
-          <Link href="/" className="hover:text-[#1a365d]">首页</Link>
+          <Link href="/test-archive" className="hover:text-[#1a365d]">档案</Link>
           <span className="mx-2">/</span>
           <span className="text-[#1a365d] font-medium">{version.fullName}</span>
         </nav>

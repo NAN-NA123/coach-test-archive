@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { getAllVersions } from "@/lib/data";
@@ -7,6 +8,26 @@ import { getAllVersions } from "@/lib/data";
 export function Navbar() {
   const versions = getAllVersions();
   const pathname = usePathname();
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const isVersionActive = pathname.startsWith("/version/") || pathname === "/qa";
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
+        setDropdownOpen(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
+
+  const navItems = [
+    { href: "/philosophy", label: "产品理念" },
+    { href: "/failures", label: "失败案例库" },
+    { href: "/roadmap", label: "产品线路图" },
+  ];
 
   return (
     <nav className="sticky top-0 z-50 bg-[#1a365d] text-white shadow-md">
@@ -20,33 +41,81 @@ export function Navbar() {
             教练系统测试档案
           </Link>
           <div className="flex items-center gap-1 overflow-x-auto">
-            {versions.map((v) => {
-              const isActive =
-                pathname === `/version/${v.id}`;
+            {navItems.map((item) => {
+              const isActive = pathname === item.href;
               return (
                 <Link
-                  key={v.id}
-                  href={`/version/${v.id}`}
+                  key={item.href}
+                  href={item.href}
                   className={`px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
                     isActive
                       ? "bg-white/20 text-white"
                       : "text-white/70 hover:text-white hover:bg-white/10"
                   }`}
                 >
-                  {v.name}
+                  {item.label}
                 </Link>
               );
             })}
-            <Link
-              href="/qa"
-              className={`px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors ${
-                pathname === "/qa"
-                  ? "bg-white/20 text-white"
-                  : "text-white/70 hover:text-white hover:bg-white/10"
-              }`}
-            >
-              测试问答
-            </Link>
+
+            {/* 测试档案下拉菜单 */}
+            <div className="relative" ref={dropdownRef}>
+              <button
+                onClick={() => setDropdownOpen(!dropdownOpen)}
+                className={`px-3 py-1.5 rounded-md text-sm font-medium whitespace-nowrap transition-colors flex items-center gap-1 ${
+                  isVersionActive
+                    ? "bg-white/20 text-white"
+                    : "text-white/70 hover:text-white hover:bg-white/10"
+                }`}
+              >
+                测试档案
+                <svg
+                  className={`w-3.5 h-3.5 transition-transform ${dropdownOpen ? "rotate-180" : ""}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                  strokeWidth={2}
+                >
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
+                </svg>
+              </button>
+              {dropdownOpen && (
+                <div className="absolute right-0 mt-1 w-48 bg-white rounded-lg shadow-lg border border-gray-200 py-1 z-50 max-h-[70vh] overflow-y-auto">
+                  <div className="px-3 py-1.5 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    版本
+                  </div>
+                  {versions.map((v) => (
+                    <Link
+                      key={v.id}
+                      href={`/version/${v.id}`}
+                      onClick={() => setDropdownOpen(false)}
+                      className={`block px-3 py-1.5 text-sm transition-colors ${
+                        pathname === `/version/${v.id}`
+                          ? "bg-[#1a365d]/10 text-[#1a365d] font-medium"
+                          : "text-gray-700 hover:bg-gray-50"
+                      }`}
+                    >
+                      <span className="font-medium">{v.name}</span>
+                      {v.totalScore !== null && (
+                        <span className="ml-2 text-xs text-gray-400">{v.totalScore}分</span>
+                      )}
+                    </Link>
+                  ))}
+                  <div className="border-t border-gray-100 my-1" />
+                  <Link
+                    href="/qa"
+                    onClick={() => setDropdownOpen(false)}
+                    className={`block px-3 py-1.5 text-sm transition-colors ${
+                      pathname === "/qa"
+                        ? "bg-[#1a365d]/10 text-[#1a365d] font-medium"
+                        : "text-gray-700 hover:bg-gray-50"
+                    }`}
+                  >
+                    测试问答
+                  </Link>
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>

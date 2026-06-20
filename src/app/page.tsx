@@ -37,6 +37,13 @@ export default function DashboardPage() {
                     ? "bg-amber-400 border-amber-400 shadow-[0_0_0_4px_rgba(251,191,36,0.15)]"
                     : "bg-slate-300 border-slate-300";
 
+                const scoreDisplay =
+                  v.totalScore !== null
+                    ? `${v.totalScore}`
+                    : v.status === "待执行"
+                    ? "待测"
+                    : "—";
+
                 return (
                   <Link
                     key={v.id}
@@ -47,8 +54,14 @@ export default function DashboardPage() {
                     <div className={`w-4 h-4 rounded-full border-2 z-10 transition-transform group-hover:scale-125 ${dotClass}`} />
                     <div className="mt-3 text-center">
                       <div className="text-sm font-bold text-[#1a365d]">{v.name}</div>
-                      <div className={`text-xl font-mono font-bold mt-1 ${getScoreColor(v.totalScore)}`}>
-                        {v.totalScore !== null ? `${v.totalScore}` : "—"}
+                      <div className={`text-xl font-mono font-bold mt-1 ${
+                        v.totalScore !== null
+                          ? getScoreColor(v.totalScore)
+                          : v.status === "待执行"
+                          ? "text-amber-500"
+                          : "text-slate-400"
+                      }`}>
+                        {scoreDisplay}
                       </div>
                       <div className={`text-xs mt-1 px-2 py-0.5 rounded-full inline-block ${getStatusBadge(v.status).bg} ${getStatusBadge(v.status).text}`}>
                         {v.status}
@@ -61,7 +74,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Highlight Card */}
+        {/* Highlight Card - only show if there are scored versions */}
         {scoredVersions.length > 0 && (() => {
           const best = scoredVersions.reduce((a, b) =>
             (a.totalScore ?? 0) > (b.totalScore ?? 0) ? a : b
@@ -98,17 +111,19 @@ export default function DashboardPage() {
           );
         })()}
 
-        {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-          <div className="bg-white rounded-lg border border-[#e2e8f0] p-6">
-            <h2 className="text-lg font-semibold text-[#1a365d] mb-4">评分趋势</h2>
-            <ScoreChart versions={scoredVersions} />
+        {/* Charts - only scored versions */}
+        {scoredVersions.length > 0 && (
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
+            <div className="bg-white rounded-lg border border-[#e2e8f0] p-6">
+              <h2 className="text-lg font-semibold text-[#1a365d] mb-4">评分趋势</h2>
+              <ScoreChart versions={scoredVersions} />
+            </div>
+            <div className="bg-white rounded-lg border border-[#e2e8f0] p-6">
+              <h2 className="text-lg font-semibold text-[#1a365d] mb-4">维度评分对比</h2>
+              <DimensionChart versions={scoredVersions} />
+            </div>
           </div>
-          <div className="bg-white rounded-lg border border-[#e2e8f0] p-6">
-            <h2 className="text-lg font-semibold text-[#1a365d] mb-4">维度评分对比</h2>
-            <DimensionChart versions={scoredVersions} />
-          </div>
-        </div>
+        )}
 
         {/* Version Navigation Cards */}
         <div className="mb-8">
@@ -118,13 +133,25 @@ export default function DashboardPage() {
               <Link
                 key={v.id}
                 href={`/version/${v.id}`}
-                className={`block rounded-lg border p-5 transition-all hover:shadow-md hover:-translate-y-0.5 ${getScoreBorder(v.totalScore)} bg-white`}
+                className={`block rounded-lg border p-5 transition-all hover:shadow-md hover:-translate-y-0.5 ${
+                  v.totalScore !== null
+                    ? `${getScoreBorder(v.totalScore)} bg-white`
+                    : v.status === "待执行"
+                    ? "border-amber-200 bg-amber-50/30"
+                    : "border-slate-200 bg-white"
+                }`}
               >
                 <div className="flex items-center justify-between mb-3">
                   <span className="text-lg font-bold text-[#1a365d]">{v.fullName}</span>
-                  <span className={`text-2xl font-mono font-bold ${getScoreColor(v.totalScore)}`}>
-                    {v.totalScore !== null ? v.totalScore : "—"}
-                  </span>
+                  {v.totalScore !== null ? (
+                    <span className={`text-2xl font-mono font-bold ${getScoreColor(v.totalScore)}`}>
+                      {v.totalScore}
+                    </span>
+                  ) : v.status === "待执行" ? (
+                    <span className="text-sm font-medium text-amber-600">
+                      {v.issues.length}项修复计划中
+                    </span>
+                  ) : null}
                 </div>
                 <p className="text-sm text-[#64748b] line-clamp-2">{v.coreChange}</p>
                 <div className="flex items-center gap-2 mt-3">

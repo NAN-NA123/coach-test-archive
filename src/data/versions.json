@@ -319,24 +319,17 @@
       "name": "V6.2",
       "fullName": "V6.2（计划中）",
       "status": "待执行",
-      "totalScore": 96.5,
-      "testRounds": 6,
+      "totalScore": null,
+      "testRounds": null,
       "coreChange": "4项精细化修复（路由B质量检查正式化、补剂场景强制扫描、数值模糊化、比喻篇幅压缩）",
       "dimensions": {
-        "rLibrary": { "score": 38.8, "max": 40, "label": "R库" },
-        "kLibrary": { "score": 14.8, "max": 15, "label": "K库" },
-        "cLibrary": { "score": 9.9, "max": 10, "label": "C库" },
-        "output": { "score": 24.0, "max": 25, "label": "输出" },
-        "stability": { "score": 9.8, "max": 10, "label": "稳定性" }
+        "rLibrary": { "score": null, "max": 40, "label": "R库" },
+        "kLibrary": { "score": null, "max": 15, "label": "K库" },
+        "cLibrary": { "score": null, "max": 10, "label": "C库" },
+        "output": { "score": null, "max": 25, "label": "输出" },
+        "stability": { "score": null, "max": 10, "label": "稳定性" }
       },
-      "rounds": [
-        { "id": "Q1", "target": "待定", "scenario": "待定", "rTriggers": "—", "keyPoints": "待定", "score": 96 },
-        { "id": "Q2", "target": "待定", "scenario": "待定", "rTriggers": "—", "keyPoints": "待定", "score": 97 },
-        { "id": "Q3", "target": "待定", "scenario": "待定", "rTriggers": "—", "keyPoints": "待定", "score": 96 },
-        { "id": "Q4", "target": "待定", "scenario": "待定", "rTriggers": "—", "keyPoints": "待定", "score": 97 },
-        { "id": "Q5", "target": "待定", "scenario": "待定", "rTriggers": "—", "keyPoints": "待定", "score": 97 },
-        { "id": "Q6", "target": "待定", "scenario": "待定", "rTriggers": "—", "keyPoints": "待定", "score": 96 }
-      ],
+      "rounds": [],
       "dimensionDetails": [],
       "issues": [
         { "id": "1", "desc": "PC-10路由B质量检查正式化", "severity": "🟠一般", "fix": "建立路由B输出质量检查门控，含术语泄漏扫描", "status": "计划中" },
@@ -344,12 +337,7 @@
         { "id": "3", "desc": "PC-2数值模糊化", "severity": "🟠一般", "fix": "数值表达改为范围式（如'2-3次'代替'2.5次'）", "status": "计划中" },
         { "id": "4", "desc": "比喻篇幅压缩规范", "severity": "🟢优化", "fix": "比喻解释控制在1句话内，避免过长类比", "status": "计划中" }
       ],
-      "refactorList": [
-        { "item": "PC-10路由B质量检查", "content": "路由B输出质量检查门控正式化，含术语泄漏扫描+逻辑完整性检查", "scope": "路由B→输出层", "round": "Q3" },
-        { "item": "CM005补剂强制扫描", "content": "补剂相关场景强制触发K库扫描，确保不遗漏", "scope": "K库→输出层", "round": "Q5" },
-        { "item": "PC-2数值模糊化", "content": "数值表达改为范围式，避免过于精确的不合理数字", "scope": "输出层", "round": "Q1-Q6" },
-        { "item": "比喻篇幅压缩", "content": "比喻解释控制在1句话内", "scope": "输出层", "round": "Q1-Q6" }
-      ],
+      "refactorList": [],
       "deductionItems": [],
       "nextSteps": [
         { "phase": "V7 数据驱动", "desc": "R002疲劳量化、K库实操条目、用户反馈闭环" }
@@ -360,7 +348,7 @@
       "id": "v7",
       "name": "V7",
       "fullName": "V7（规划中）",
-      "status": "上线后迭代",
+      "status": "规划中",
       "totalScore": null,
       "testRounds": null,
       "coreChange": "数据驱动（R002疲劳量化、K库实操条目、用户反馈闭环）",
@@ -374,15 +362,11 @@
       "rounds": [],
       "dimensionDetails": [],
       "issues": [
-        { "id": "1", "desc": "R002疲劳量化", "severity": "🟡重要", "fix": "建立疲劳量化的数据模型，精确判断训练停滞原因", "status": "规划中" },
-        { "id": "2", "desc": "K库实操条目", "severity": "🟡重要", "fix": "K库从触发词映射升级为实操条目库", "status": "规划中" },
-        { "id": "3", "desc": "用户反馈闭环", "severity": "🟢优化", "fix": "建立用户反馈收集→规则优化的闭环机制", "status": "规划中" }
+        { "id": "1", "desc": "R002疲劳量化：建立疲劳量化的数据模型，从定性判断升级为定量判断", "severity": "🟡重要", "fix": "建立疲劳量化的数据模型，精确判断训练停滞原因", "status": "规划中" },
+        { "id": "2", "desc": "K库实操条目：K库从触发词映射升级为实操条目库，提供可执行的指导", "severity": "🟡重要", "fix": "K库从触发词映射升级为实操条目库", "status": "规划中" },
+        { "id": "3", "desc": "用户反馈闭环：建立用户反馈收集→规则优化的闭环机制", "severity": "🟢优化", "fix": "建立用户反馈收集→规则优化的闭环机制", "status": "规划中" }
       ],
-      "refactorList": [
-        { "item": "R002疲劳量化", "content": "建立疲劳量化的数据模型，从定性判断升级为定量判断", "scope": "R库→决策层", "round": "—" },
-        { "item": "K库实操条目", "content": "K库从触发词映射升级为实操条目库，提供可执行的指导", "scope": "K库→输出层", "round": "—" },
-        { "item": "用户反馈闭环", "content": "建立用户反馈收集→规则优化的闭环机制", "scope": "全链路", "round": "—" }
-      ],
+      "refactorList": [],
       "deductionItems": [],
       "nextSteps": [],
       "qaRecords": []

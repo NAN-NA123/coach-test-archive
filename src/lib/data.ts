@@ -41,6 +41,8 @@ export function getStatusBadge(status: string): { bg: string; text: string } {
       return { bg: "bg-amber-50", text: "text-amber-700" };
     case "上线后迭代":
       return { bg: "bg-blue-50", text: "text-blue-700" };
+    case "规划中":
+      return { bg: "bg-slate-100", text: "text-slate-600" };
     default:
       return { bg: "bg-slate-100", text: "text-slate-700" };
   }

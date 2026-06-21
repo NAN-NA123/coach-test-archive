@@ -4,7 +4,7 @@ export default function PhilosophyPage() {
       {/* 页面标题 */}
       <div className="mb-12">
         <h1 className="text-3xl font-bold text-white mb-3">产品理念</h1>
-        <p className="text-[#8bb4e8] text-base">Coach教练 — 瘦子增重动态系统的设计哲学</p>
+        <p className="text-[#8bb4e8] text-base">Coach教练 — 面向体型增长受阻用户的私人定制AI教练</p>
       </div>
 
       {/* 产品本质 */}
@@ -88,6 +88,75 @@ export default function PhilosophyPage() {
           <div className="bg-[#1a2744] rounded-lg px-5 py-4 text-center border border-[#2a3a5c]">
             <div className="font-semibold text-white">可执行方案</div>
             <div className="text-[#6b8ab5] text-xs mt-1">持续调整</div>
+          </div>
+        </div>
+      </div>
+
+      {/* 产品定位更新 */}
+      <div className="bg-gradient-to-br from-[#1a2744] to-[#141d33] rounded-xl border-2 border-[#4a9eff]/30 p-8 mb-10">
+        <div className="flex items-center gap-3 mb-5">
+          <div className="text-xs font-semibold text-[#4a9eff] uppercase tracking-wider">产品定位更新</div>
+          <span className="text-xs bg-[#4a9eff] text-white px-2 py-0.5 rounded-full">2026-06-21</span>
+        </div>
+        <div className="space-y-5">
+          <div>
+            <div className="text-base font-semibold text-white mb-2">新定位</div>
+            <p className="text-[#8ba3c7] leading-relaxed">
+              Coach教练不再只定位为「瘦子增重工具」，而是升级为<span className="text-white font-semibold">「AI时代的私人定制AI教练」</span>。
+            </p>
+          </div>
+          <div>
+            <div className="text-base font-semibold text-white mb-2">服务对象</div>
+            <p className="text-[#8ba3c7] leading-relaxed">
+              不再统一称为「瘦子」。新的用户总称：<span className="text-white font-semibold">体型增长受阻用户</span>。
+            </p>
+          </div>
+          <div>
+            <div className="text-base font-semibold text-white mb-2">核心功能</div>
+            <ol className="space-y-2.5 text-sm text-[#8ba3c7]">
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">1.</span>
+                <span>制定训练计划</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">2.</span>
+                <span>每天提醒打卡</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">3.</span>
+                <span>记录营养摄入</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">4.</span>
+                <span>记录体重、围度、训练、睡眠、食欲、消化状态</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">5.</span>
+                <span>根据反馈动态调整饮食、训练和恢复方案</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">6.</span>
+                <span>判断增肌/增重失败原因</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">7.</span>
+                <span>降低执行难度</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">8.</span>
+                <span>阶段性复盘</span>
+              </li>
+              <li className="flex gap-2">
+                <span className="text-[#4a9eff] font-medium shrink-0">9.</span>
+                <span>风险边界提醒</span>
+              </li>
+            </ol>
+          </div>
+          <div className="bg-[#1a2744] rounded-lg p-4 border border-[#2a3a5c]">
+            <div className="text-xs font-semibold text-[#4a9eff] uppercase tracking-wider mb-2">一句话表达</div>
+            <p className="text-white font-medium leading-relaxed">
+              Coach教练是面向体型增长受阻用户的私人定制AI教练，通过记录、判断和动态调整，帮助用户持续解决增肌/增重过程中的问题。
+            </p>
           </div>
         </div>
       </div>

@@ -321,6 +321,87 @@ export default function RoadmapPage() {
           </div>
         </div>
       </div>
+
+      {/* 九、四库整理流程调整 */}
+      <div className="mt-12">
+        <h2 className="text-xl font-bold text-white mb-6">九、2026-06-21 四库整理流程调整</h2>
+        <div className="space-y-4">
+
+          {/* 1. 本阶段定位 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-[#4a9eff] text-white text-xs font-bold flex items-center justify-center">1</span>
+              <h3 className={head}>本阶段定位</h3>
+            </div>
+            <div className={body}>本阶段不记录具体新增知识，只记录四库整理流程和架构调整。</div>
+          </div>
+
+          {/* 2. K库定位调整 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-emerald-600 text-white text-xs font-bold flex items-center justify-center">2</span>
+              <h3 className={head}>K库定位调整</h3>
+            </div>
+            <div className={body}>K库不再只服务增肌解释。之后K库知识应尽量同时考虑：增肌、减脂、训练表现、恢复状态、健康边界。</div>
+          </div>
+
+          {/* 3. 跨库联动规则 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-violet-600 text-white text-xs font-bold flex items-center justify-center">3</span>
+              <h3 className={head}>跨库联动规则</h3>
+            </div>
+            <div className={body}>每次录入K库知识时，必须即时判断是否需要同步更新：R库、C库、P库、PC库。</div>
+          </div>
+
+          {/* 4. 五条复审机制 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-amber-500 text-white text-xs font-bold flex items-center justify-center">4</span>
+              <h3 className={head}>五条复审机制</h3>
+            </div>
+            <div className={body}>每连续录入5条K库内容后，必须复审是否产生新的规则、案例、原则或输出控制。</div>
+          </div>
+
+          {/* 5. 入库格式要求 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-red-600 text-white text-xs font-bold flex items-center justify-center">5</span>
+              <h3 className={head}>入库格式要求</h3>
+            </div>
+            <div className={body}>所有入库内容必须严格遵守对应库格式。规则类内容必须用代码块作为完整整体记录。发送前必须检查：编号、库别、格式、代码块完整性、是否重复、是否遗漏。</div>
+          </div>
+
+          {/* 6. 重复知识处理 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-blue-600 text-white text-xs font-bold flex items-center justify-center">6</span>
+              <h3 className={head}>重复知识处理</h3>
+            </div>
+            <div className={body}>如果用户输入重复知识，必须提醒，并判断是补充、修正，还是新建编号。</div>
+          </div>
+
+          {/* 7. RAG适配意识 */}
+          <div className={`${sectionBg} p-5`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-teal-600 text-white text-xs font-bold flex items-center justify-center">7</span>
+              <h3 className={head}>RAG适配意识</h3>
+            </div>
+            <div className={body}>四库格式本身就是未来RAG质量的基础。四库记录必须服务于后续检索、调用、审计和回写。</div>
+          </div>
+
+          {/* 8. 阶段结论 */}
+          <div className="bg-gradient-to-r from-[#4a9eff]/20 to-[#141d33] border border-[#4a9eff]/30 rounded-xl p-5">
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-[#4a9eff] text-white text-xs font-bold flex items-center justify-center">8</span>
+              <h3 className="text-base font-semibold text-white">阶段结论</h3>
+            </div>
+            <div className="text-sm text-[#8ba3c7]">
+              四库系统从<span className="text-white font-medium">「边整理边记录」</span>，升级为<span className="text-[#4a9eff] font-medium">「边整理知识，边提取规则，边识别案例，边结构化准备」</span>。
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

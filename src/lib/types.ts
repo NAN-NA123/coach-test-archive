@@ -4,6 +4,8 @@ export interface VersionData {
   fullName: string;
   status: string;
   totalScore: number | null;
+  /** 2.0用户满意度均分（V6.2起有值，之前版本为null） */
+  totalScore2?: number | null;
   testRounds: number | null;
   coreChange: string;
   dimensions: {
@@ -13,6 +15,8 @@ export interface VersionData {
     output: DimensionScore;
     stability: DimensionScore;
   };
+  /** 2.0维度评分（V6.2起有值） */
+  dimensions2?: Dimensions2;
   improvement?: VersionImprovement;
   rounds: RoundData[];
   dimensionDetails: DimensionDetail[];
@@ -28,6 +32,18 @@ export interface DimensionScore {
   score: number | null;
   max: number;
   label: string;
+}
+
+/** 2.0评分维度 */
+export interface Dimensions2 {
+  needIdent: DimensionScore;   // 需求识别 20
+  libQuality: DimensionScore;  // 四库质量 20
+  rootCause: DimensionScore;   // 主因判断 15
+  feasibility: DimensionScore; // 可执行性 15
+  expression: DimensionScore;  // 表达舒适 15
+  safety: DimensionScore;      // 安全边界 10
+  feedback: DimensionScore;    // 反馈闭环 5
+  conciseness: DimensionScore; // 简洁度 5
 }
 
 export interface VersionImprovement {
@@ -46,6 +62,8 @@ export interface RoundData {
   rTriggers: string;
   keyPoints: string;
   score: number;
+  /** 2.0评分（V6.2起有值） */
+  score2?: number;
 }
 
 export interface DimensionDetail {
@@ -90,6 +108,8 @@ export interface QARecord {
   pressurePoint: string;
   rTrigger?: string;
   score: number;
+  /** 2.0评分（V6.2起有值） */
+  score2?: number;
   coachAnswer: string;
   auditNote: string;
   auditConclusion?: string;

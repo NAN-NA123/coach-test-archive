@@ -25,6 +25,7 @@ export function Navbar() {
 
   const navItems = [
     { href: "/philosophy", label: "产品理念" },
+    { href: "/scoring", label: "评分系统" },
     { href: "/decisions", label: "决策日志" },
     { href: "/failures", label: "失败案例库" },
     { href: "/roadmap", label: "产品线路图" },
@@ -110,7 +111,11 @@ export function Navbar() {
                     >
                       <span className="font-medium">{v.name}</span>
                       {v.totalScore !== null && (
-                        <span className="ml-2 text-xs text-[#4a5e80]">{v.totalScore}分</span>
+                        <span className="ml-2 text-xs text-[#4a9eff]">{v.totalScore}<span className="text-[#4a5e80]">1.0</span>
+                          {v.totalScore2 !== null && v.totalScore2 !== undefined && (
+                            <span className="text-[#a78bfa] ml-1">{v.totalScore2}<span className="text-[#4a5e80]">2.0</span></span>
+                          )}
+                        </span>
                       )}
                     </Link>
                   ))}

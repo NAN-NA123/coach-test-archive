@@ -344,6 +344,19 @@ export default function LandingPage() {
             <p className="text-sm text-[#8ba3c7] mb-4">29条关键产品决策的完整记录</p>
             <span className="text-sm text-violet-400 group-hover:underline">查看详情 →</span>
           </Link>
+
+          <Link href="/scoring" className="group rounded-xl bg-[#141d33] border border-[#2a3a5c] p-6 hover:border-cyan-400/40 transition-all hover:-translate-y-0.5">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="w-10 h-10 rounded-lg bg-cyan-500/10 flex items-center justify-center">
+                <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
+                </svg>
+              </div>
+              <h3 className="text-lg font-bold text-white">评分系统</h3>
+            </div>
+            <p className="text-sm text-[#8ba3c7] mb-4">双轨评分制：1.0系统合规性 + 2.0用户满意度</p>
+            <span className="text-sm text-cyan-400 group-hover:underline">查看详情 →</span>
+          </Link>
         </div>
       </section>
 

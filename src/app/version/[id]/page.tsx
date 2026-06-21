@@ -63,12 +63,24 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
                 )}
               </div>
             </div>
-            {hasScore ? (
-              <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-[#2a3a5c]">
-                <div className={`text-4xl font-mono font-bold ${getScoreColor(version.totalScore)}`}>
-                  {version.totalScore}
+              {hasScore ? (
+              <div className="flex gap-3">
+                <div className="text-center px-5 py-3 rounded-lg bg-[#1a2744] border border-[#2a3a5c]">
+                  <div className="text-[10px] text-[#6b8ab5] mb-1 font-medium">1.0 合规</div>
+                  <div className={`text-3xl font-mono font-bold ${getScoreColor(version.totalScore)}`}>
+                    {version.totalScore}
+                  </div>
+                  <div className="text-[10px] text-[#6b8ab5] mt-0.5">/100</div>
                 </div>
-                <div className="text-xs text-[#6b8ab5] mt-1">/100</div>
+                {version.totalScore2 !== null && version.totalScore2 !== undefined && (
+                  <div className="text-center px-5 py-3 rounded-lg bg-[#1a2744] border border-[#2a3a5c]">
+                    <div className="text-[10px] text-[#6b8ab5] mb-1 font-medium">2.0 满意度</div>
+                    <div className={`text-3xl font-mono font-bold ${getScoreColor(version.totalScore2)}`}>
+                      {version.totalScore2}
+                    </div>
+                    <div className="text-[10px] text-[#6b8ab5] mt-0.5">/100</div>
+                  </div>
+                )}
               </div>
             ) : isPending ? (
               <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-amber-500/30">
@@ -229,7 +241,7 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
           <>
             {/* Test Matrix */}
             {version.rounds.length > 0 && version.rounds[0].target !== "待定" && (
-              <Section title="六轮测试矩阵">
+              <Section title={`${version.rounds.length}轮测试矩阵`}>
                 <div className="overflow-x-auto">
                   <table className="data-table">
                     <thead>
@@ -239,33 +251,62 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
                         <th>场景描述</th>
                         <th>R库触发</th>
                         <th>核心验证点</th>
-                        <th>得分</th>
+                        <th>1.0</th>
+                        {version.rounds.some(r => r.score2 !== null && r.score2 !== undefined) && <th>2.0</th>}
+                        {version.rounds.some(r => r.score2 !== null && r.score2 !== undefined) && <th>双轨判断</th>}
                       </tr>
                     </thead>
                     <tbody>
-                      {version.rounds.map((r) => (
-                        <tr key={r.id}>
-                          <td className="font-mono font-bold text-[#4a9eff]">{r.id}</td>
-                          <td className="max-w-[200px] text-[#e0e6f0]">{r.target}</td>
-                          <td className="max-w-[240px] text-[#8ba3c7]">{r.scenario}</td>
-                          <td>
-                            <span className={`text-xs font-mono ${
-                              r.rTriggers.includes("✅") ? "text-emerald-400" :
-                              r.rTriggers.includes("⚠️") ? "text-amber-400" :
-                              r.rTriggers.includes("❌") ? "text-red-400" :
-                              "text-[#6b8ab5]"
-                            }`}>
-                              {r.rTriggers}
-                            </span>
-                          </td>
-                          <td className="max-w-[200px] text-[#8ba3c7]">{r.keyPoints}</td>
-                          <td>
-                            <span className={`score-badge ${getScoreBg(r.score)} ${getScoreColor(r.score)}`}>
-                              {r.score}
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
+                      {version.rounds.map((r) => {
+                        const has2 = r.score2 !== null && r.score2 !== undefined;
+                        const s2 = r.score2 ?? 0;
+                        let dualTrack = "";
+                        if (has2) {
+                          if (r.score >= 80 && s2 < 70) dualTrack = "系统OK+用户不满意";
+                          else if (r.score >= 80 && s2 >= 80) dualTrack = "双高→方向对了";
+                          else if (r.score < 60 && s2 < 60) dualTrack = "双低→回到画板";
+                          else if (r.score >= 80 && s2 >= 70) dualTrack = "系统OK+用户基本满意";
+                          else if (r.score < 60) dualTrack = "系统崩溃+用户崩溃";
+                          else dualTrack = "系统基本OK+用户及格";
+                        }
+                        return (
+                          <tr key={r.id}>
+                            <td className="font-mono font-bold text-[#4a9eff]">{r.id}</td>
+                            <td className="max-w-[200px] text-[#e0e6f0]">{r.target}</td>
+                            <td className="max-w-[240px] text-[#8ba3c7]">{r.scenario}</td>
+                            <td>
+                              <span className={`text-xs font-mono ${
+                                r.rTriggers.includes("✅") ? "text-emerald-400" :
+                                r.rTriggers.includes("⚠️") ? "text-amber-400" :
+                                r.rTriggers.includes("❌") ? "text-red-400" :
+                                "text-[#6b8ab5]"
+                              }`}>
+                                {r.rTriggers}
+                              </span>
+                            </td>
+                            <td className="max-w-[200px] text-[#8ba3c7]">{r.keyPoints}</td>
+                            <td>
+                              <span className={`score-badge ${getScoreBg(r.score)} ${getScoreColor(r.score)}`}>
+                                {r.score}
+                              </span>
+                            </td>
+                            {version.rounds.some(rr => rr.score2 !== null && rr.score2 !== undefined) && (
+                              <td>
+                                {has2 ? (
+                                  <span className={`score-badge ${getScoreBg(s2)} ${getScoreColor(s2)}`}>
+                                    {r.score2}
+                                  </span>
+                                ) : (
+                                  <span className="text-[#6b8ab5] text-xs">—</span>
+                                )}
+                              </td>
+                            )}
+                            {version.rounds.some(rr => rr.score2 !== null && rr.score2 !== undefined) && (
+                              <td className="text-xs text-[#8ba3c7] max-w-[180px]">{has2 ? dualTrack : "—"}</td>
+                            )}
+                          </tr>
+                        );
+                      })}
                     </tbody>
                   </table>
                 </div>
@@ -320,6 +361,61 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
                       )}
                     </tbody>
                   </table>
+                </div>
+              </Section>
+            )}
+
+            {/* 2.0 User Satisfaction Dimensions */}
+            {version.dimensions2 && (
+              <Section title="2.0 用户满意度维度（双轨评分）">
+                <div className="overflow-x-auto">
+                  <table className="data-table">
+                    <thead>
+                      <tr>
+                        <th>维度</th>
+                        {Object.values(version.dimensions2).map((d: { label: string; max: number }) => (
+                          <th key={d.label}>{d.label}({d.max})</th>
+                        ))}
+                        <th>总分</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td className="text-[#4a9eff] font-medium">2.0评分</td>
+                        {Object.values(version.dimensions2).map((d: { label: string; score: number }) => (
+                          <td key={d.label} className={`font-mono ${getScoreColor(d.score)}`}>{d.score}</td>
+                        ))}
+                        <td className={`font-mono font-bold ${getScoreColor(version.totalScore2 ?? 0)}`}>
+                          {version.totalScore2}
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div className="mt-4 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">
+                  <div className="text-xs text-[#6b8ab5] mb-2 font-medium">双轨关系判断</div>
+                  <div className="flex items-center gap-4 text-xs">
+                    <span className={`${(version.totalScore ?? 0) >= 80 ? "text-emerald-400" : "text-amber-400"}`}>
+                      1.0={version.totalScore}
+                    </span>
+                    <span className="text-[#6b8ab5]">+</span>
+                    <span className={`${(version.totalScore2 ?? 0) >= 80 ? "text-emerald-400" : (version.totalScore2 ?? 0) >= 70 ? "text-amber-400" : "text-red-400"}`}>
+                      2.0={version.totalScore2}
+                    </span>
+                    <span className="text-[#6b8ab5]">→</span>
+                    <span className="text-[#e0e6f0] font-medium">
+                      {(version.totalScore ?? 0) >= 80 && (version.totalScore2 ?? 0) >= 80
+                        ? "双高→产品方向对了"
+                        : (version.totalScore ?? 0) >= 80 && (version.totalScore2 ?? 0) < 70
+                        ? "系统OK+用户不满意→产品有问题"
+                        : (version.totalScore ?? 0) < 60 && (version.totalScore2 ?? 0) < 60
+                        ? "双低→回到画板"
+                        : (version.totalScore ?? 0) >= 80 && (version.totalScore2 ?? 0) >= 70
+                        ? "系统OK+用户基本满意"
+                        : "系统基本OK+用户及格"
+                      }
+                    </span>
+                  </div>
                 </div>
               </Section>
             )}
@@ -592,8 +688,13 @@ function TestDialogueCard({ qa }: { qa: import("@/lib/types").QARecord }) {
             </span>
           )}
           <span className={`score-badge text-xs ${getScoreBg(qa.score)} ${getScoreColor(qa.score)}`}>
-            {qa.score}分
+            1.0:{qa.score}
           </span>
+          {qa.score2 !== null && qa.score2 !== undefined && (
+            <span className={`score-badge text-xs ${getScoreBg(qa.score2)} ${getScoreColor(qa.score2)}`}>
+              2.0:{qa.score2}
+            </span>
+          )}
         </div>
       </div>
 

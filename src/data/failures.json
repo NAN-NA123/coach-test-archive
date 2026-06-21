@@ -263,11 +263,12 @@
       "errorType": "K错误+输出错误",
       "foundVersion": "V6.1",
       "fixVersion": "V6.2",
-      "fixStatus": "修复中",
+      "fixStatus": "已修复",
       "cluster": "F",
       "clusterName": "四库实操性",
       "description": "Q4手机电量比喻和Q6道路比喻均超过3句话，比喻本身成为输出主体，稀释了核心行动信息。比喻应辅助理解而非替代说明。",
-      "fixDirection": "比喻篇幅压缩规范，每个比喻不超过2句话，比喻后必须接行动指令。"
+      "fixDirection": "比喻篇幅压缩规范，每个比喻不超过2句话，比喻后必须接行动指令。",
+      "fixNote": "V6.2测试验证修复"
     },
     {
       "id": "F018",
@@ -278,12 +279,13 @@
       "severity": "中",
       "errorType": "C错误",
       "foundVersion": "V6.1",
-      "fixVersion": "V6.2",
-      "fixStatus": "修复中",
+      "fixVersion": null,
+      "fixStatus": "未修复",
       "cluster": "G",
       "clusterName": "执行不彻底",
       "description": "用户提到蛋白粉/增肌粉等补剂时，C库未主动扫描补剂相关失败案例（CM005），导致遗漏吸收不良等风险提示。",
-      "fixDirection": "CM005补剂场景强制扫描，用户提到补剂关键词时C库必须检查。"
+      "fixDirection": "CM005补剂场景强制扫描，用户提到补剂关键词时C库必须检查。",
+      "fixNote": "V6.3 Prompt已写R009分类管理，四库docx未更新"
     },
     {
       "id": "F019",
@@ -296,11 +298,12 @@
       "errorType": "P错误",
       "foundVersion": "V6.1",
       "fixVersion": "V6.2",
-      "fixStatus": "修复中",
+      "fixStatus": "已修复",
       "cluster": "G",
       "clusterName": "执行不彻底",
       "description": "Q5中出现15000大卡等精确数值，虽然是在引用K库知识时附带，但违反PC-2禁止编造数值的原则。系统对数值边界的判断存在灰色地带。",
-      "fixDirection": "PC-2数值模糊化规范，所有数值必须标注来源或使用范围表达。"
+      "fixDirection": "PC-2数值模糊化规范，所有数值必须标注来源或使用范围表达。",
+      "fixNote": "V6.2测试验证修复"
     },
     {
       "id": "F020",
@@ -313,11 +316,12 @@
       "errorType": "P错误+系统结构",
       "foundVersion": "V6.1",
       "fixVersion": "V6.2",
-      "fixStatus": "修复中",
+      "fixStatus": "已修复",
       "cluster": "G",
       "clusterName": "执行不彻底",
       "description": "当R库所有规则未触发时进入路由B自由推理，但路由B没有任何质量约束和自检机制，可能输出与已触发规则矛盾的结论。",
-      "fixDirection": "PC-10路由B质量检查正式化，增加路由B输出前的强制校验。"
+      "fixDirection": "PC-10路由B质量检查正式化，增加路由B输出前的强制校验。",
+      "fixNote": "V6.2测试验证修复"
     },
     {
       "id": "F021",
@@ -362,12 +366,13 @@
       "severity": "中",
       "errorType": "R错误+K错误",
       "foundVersion": "V6.1真实测试",
-      "fixVersion": "V6.2",
-      "fixStatus": "未修复",
+      "fixVersion": "V6.1",
+      "fixStatus": "已修复",
       "cluster": "I",
       "clusterName": "真实场景盲区",
       "description": "V6.1真实用户测试（2026-06-21），用户全天胀气+饭后加重，练前2根香蕉，教练判断R007未触发（「非大体积高脂肪高消化负担餐食」），仅建议「香蕉从2根减到1根」。香蕉是典型高FODMAP食物，对IBS/胀气患者是常见触发物。R007的判断条件只考虑了「体积/脂肪/消化负担」三个维度，完全未考虑「特定食物不耐受风险」。教练只说减量，没有提示「香蕉本身可能是触发物，记录期间可尝试替换低FODMAP替代（如米饭球/白面包）」。R007的触发条件设计存在结构性缺陷——只评估「量的维度」（体积/脂肪/负担），不评估「质的维度」（食物特异性不耐受风险）。在用户已有胀气症状时，高FODMAP食物应自动进入「疑似触发物」排查路径。",
-      "fixDirection": "①R007补充触发条件：增加「已知高FODMAP食物（香蕉/洋葱/大蒜/豆类/小麦等）+ 用户有胀气症状」作为候选触发路径，动作建议改为「建议记录期间替换为低FODMAP替代食物测试」②K库新增条目：高FODMAP食物清单+低FODMAP替代方案"
+      "fixDirection": "①R007补充触发条件：增加「已知高FODMAP食物（香蕉/洋葱/大蒜/豆类/小麦等）+ 用户有胀气症状」作为候选触发路径，动作建议改为「建议记录期间替换为低FODMAP替代食物测试」②K库新增条目：高FODMAP食物清单+低FODMAP替代方案",
+      "fixNote": "R010新增FODMAP子路径+R010补充完整，K047候选+K062/K067已含FODMAP，四库文档已更新"
     },
     {
       "id": "F024",
@@ -415,11 +420,12 @@
       "errorType": "需求识别不足+主因判断不充分",
       "foundVersion": "V6.2",
       "fixVersion": null,
-      "fixStatus": "未修复",
+      "fixStatus": "V6.3 Prompt已写待测试",
       "cluster": "J",
       "clusterName": "系统合规但用户不满意",
       "description": "V6.2 Q2（吃2500大卡没追问够不够）+ Q10（「和之前一样吃」没追问具体多少）+ Q11（48kg女性没深挖摄入量）。系统缺少「识别深度自检」机制——在给出方案前，不会问自己「我对这个用户的了解是否足以给出个性化方案？」",
-      "fixDirection": "方案输出前增加「识别深度自检」——模糊回答（「差不多」「和之前一样」）必须追问具体数字"
+      "fixDirection": "方案输出前增加「识别深度自检」——模糊回答（「差不多」「和之前一样」）必须追问具体数字",
+      "fixNote": "STEP 0信息充分度判断+PC-14，四库无对应改动"
     },
     {
       "id": "F027",
@@ -470,7 +476,8 @@
       "cluster": "K",
       "clusterName": "产品定位与系统输出冲突",
       "description": "V6.2 Q8，学生预算有限+吃不够，CM005触发后教练说「别买补剂」，但产品定位是「蛋白粉是增肌增重中非常有必要的工具，瘦子吃不下饭时液体热量是必要手段」。CM005匹配只看「补剂」关键词，不区分「依赖补剂」和「需要补剂」。P库蛋白粉定位未被C库匹配时调用。",
-      "fixDirection": "CM005增加场景区分——触发时必须同时检查P库蛋白粉定位"
+      "fixDirection": "CM005增加场景区分——触发时必须同时检查P库蛋白粉定位",
+      "fixNote": "V6.3 Prompt已写R009分类管理，四库docx未更新"
     },
     {
       "id": "F030",
@@ -483,11 +490,12 @@
       "errorType": "需求识别不足+可执行性缺失",
       "foundVersion": "V6.2",
       "fixVersion": null,
-      "fixStatus": "未修复",
+      "fixStatus": "V6.3 Prompt已写待测试",
       "cluster": "J",
       "clusterName": "系统合规但用户不满意",
       "description": "V6.2 Q12，教练问了3个精准问题但没解释为什么问，也没给等待期间的微行动。系统把「信息不足」当「数据收集等待期」，只设计了「问→等→答」。但用户等待期间也有行动需求，追问不解释动机=用户不知道为什么配合你。",
-      "fixDirection": "追问+为什么问（1句话）+等回答期间可做的微行动（1-2项）"
+      "fixDirection": "追问+为什么问（1句话）+等回答期间可做的微行动（1-2项）",
+      "fixNote": "STEP 0分级处理，四库无对应改动"
     },
     {
       "id": "F031",
@@ -526,10 +534,11 @@
   ],
   "summary": {
     "totalCount": 31,
-    "fixed": 13,
-    "fixing": 4,
+    "fixed": 17,
+    "fixing": 0,
     "pendingFix": 1,
-    "unfixed": 13,
+    "promptWritten": 2,
+    "unfixed": 11,
     "dateRange": "V1 - V6.2",
     "lastUpdate": "2026-06-22"
   }

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import failuresData from "@/data/failures.json";
 
-type FixStatus = "已修复" | "修复中" | "未修复" | "待修正";
+type FixStatus = "已修复" | "修复中" | "未修复" | "待修正" | "V6.3 Prompt已写待测试";
 
 interface FailureCase {
   id: string;
@@ -58,11 +58,12 @@ const severityColor: Record<string, string> = {
   "低": "bg-slate-700/50 text-slate-400",
 };
 
-const statusStyle: Record<FixStatus, string> = {
+const statusStyle: Record<string, string> = {
   "已修复": "bg-emerald-900/40 text-emerald-400",
   "修复中": "bg-amber-900/40 text-amber-400",
   "未修复": "bg-red-900/40 text-red-400",
   "待修正": "bg-violet-900/40 text-violet-400",
+  "V6.3 Prompt已写待测试": "bg-cyan-900/40 text-cyan-400",
 };
 
 const migrationTrends = [
@@ -88,8 +89,8 @@ const migrationTrends = [
   },
   {
     version: "V6.1真实测试",
-    clusters: "聚类I（+F/G/H已识别）",
-    insight: "真实场景交互缺口 — 合成测试的结构性盲区暴露，交互决策和规则维度完整性是下一攻坚方向",
+    clusters: "聚类I（+G验证修复）",
+    insight: "真实场景交互缺口 — F019/F020由V6.2测试验证修复；F018四库docx未更新（R009分类管理仅写入V6.3 Prompt，四库文档未同步）；F023已修复（R010新增FODMAP子路径，四库文档已更新）；F022未修复",
     highlight: true,
   },
   {
@@ -112,6 +113,7 @@ export default function FailuresPage() {
   const totalFixed = cases.filter((c) => c.fixStatus === "已修复").length;
   const totalFixing = cases.filter((c) => c.fixStatus === "修复中").length;
   const totalPendingFix = cases.filter((c) => c.fixStatus === "待修正").length;
+  const totalPromptWritten = cases.filter((c) => c.fixStatus === "V6.3 Prompt已写待测试").length;
   const totalUnfixed = cases.filter((c) => c.fixStatus === "未修复").length;
 
   return (
@@ -160,7 +162,7 @@ export default function FailuresPage() {
       </div>
 
       {/* 统计卡片 */}
-      <div className="grid grid-cols-2 sm:grid-cols-5 gap-4 mb-10">
+      <div className="grid grid-cols-2 sm:grid-cols-6 gap-4 mb-10">
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
           <div className="text-3xl font-bold text-white font-mono">{cases.length}</div>
           <div className="text-xs text-[#6b8ab5] mt-1.5">总案例</div>
@@ -172,6 +174,10 @@ export default function FailuresPage() {
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
           <div className="text-3xl font-bold text-amber-400 font-mono">{totalFixing}</div>
           <div className="text-xs text-[#6b8ab5] mt-1.5">修复中</div>
+        </div>
+        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
+          <div className="text-3xl font-bold text-cyan-400 font-mono">{totalPromptWritten}</div>
+          <div className="text-xs text-[#6b8ab5] mt-1.5">Prompt已写待测试</div>
         </div>
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
           <div className="text-3xl font-bold text-violet-400 font-mono">{totalPendingFix}</div>

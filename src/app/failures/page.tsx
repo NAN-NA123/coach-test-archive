@@ -1,248 +1,73 @@
-"use client";
-
-import { useState } from "react";
-import failuresData from "@/data/failures.json";
-
-type FixStatus = "已修复" | "修复中" | "未修复" | "待修正" | "V6.3 Prompt已写待测试";
-
-interface FailureCase {
-  id: string;
-  name: string;
-  components: string[];
-  severity: string;
-  errorType: string;
-  foundVersion: string;
-  fixVersion: string;
-  fixStatus: FixStatus;
-  cluster: string;
-  clusterName: string;
-  description: string;
-  fixDirection: string;
-}
-
-const clusters = [
-  { key: "all", label: "全部" },
-  { key: "A", label: "A · 规则体系", color: "#ef4444" },
-  { key: "B", label: "B · K库越权", color: "#f97316" },
-  { key: "C", label: "C · 输出不可控", color: "#eab308" },
-  { key: "D", label: "D · 自主性缺失", color: "#84cc16" },
-  { key: "E", label: "E · 输出层分离", color: "#22c55e" },
-  { key: "F", label: "F · 四库实操性", color: "#06b6d4" },
-  { key: "G", label: "G · 执行不彻底", color: "#3b82f6" },
-  { key: "H", label: "H · 评估层误判", color: "#8b5cf6" },
-  { key: "I", label: "I · 真实场景盲区 ★", color: "#ec4899" },
-  { key: "J", label: "J · 系统合规用户不满意 ★", color: "#f59e0b" },
-  { key: "K", label: "K · 产品定位冲突 ★", color: "#a855f7" },
-];
-
-const clusterColorMap: Record<string, string> = {
-  "A": "bg-red-900/40 text-red-300 border-red-700/40",
-  "B": "bg-orange-900/40 text-orange-300 border-orange-700/40",
-  "C": "bg-yellow-900/40 text-yellow-300 border-yellow-700/40",
-  "D": "bg-lime-900/40 text-lime-300 border-lime-700/40",
-  "E": "bg-emerald-900/40 text-emerald-300 border-emerald-700/40",
-  "F": "bg-cyan-900/40 text-cyan-300 border-cyan-700/40",
-  "G": "bg-blue-900/40 text-blue-300 border-blue-700/40",
-  "H": "bg-violet-900/40 text-violet-300 border-violet-700/40",
-  "I": "bg-pink-900/40 text-pink-300 border-pink-700/40",
-  "J": "bg-amber-900/40 text-amber-300 border-amber-700/40",
-  "K": "bg-purple-900/40 text-purple-300 border-purple-700/40",
-};
-
-const severityColor: Record<string, string> = {
-  "最高": "bg-red-900/60 text-red-300",
-  "阻断": "bg-red-800/50 text-red-300",
-  "高": "bg-amber-900/50 text-amber-300",
-  "中": "bg-yellow-900/40 text-yellow-300",
-  "一般": "bg-sky-900/50 text-sky-300",
-  "低": "bg-slate-700/50 text-slate-400",
-};
-
-const statusStyle: Record<string, string> = {
-  "已修复": "bg-emerald-900/40 text-emerald-400",
-  "修复中": "bg-amber-900/40 text-amber-400",
-  "未修复": "bg-red-900/40 text-red-400",
-  "待修正": "bg-violet-900/40 text-violet-400",
-  "V6.3 Prompt已写待测试": "bg-cyan-900/40 text-cyan-400",
-};
-
-const migrationTrends = [
-  {
-    version: "V1-V4",
-    clusters: "聚类A+B+C+D",
-    insight: "系统性缺陷暴露期 — 规则体系空白、K库越权、输出失控、自主性缺失",
-  },
-  {
-    version: "V5",
-    clusters: "聚类E+F+G萌芽",
-    insight: "规则引入后的新问题 — C库边缘化、输出结构化不彻底、执行一致性下降",
-  },
-  {
-    version: "V6",
-    clusters: "聚类E爆发+G延续",
-    insight: "结构化输出的双刃剑 — 系统语言泄漏、行动方案位置过深，输出层分离成为关键瓶颈",
-  },
-  {
-    version: "V6.1",
-    clusters: "聚类F+G+H已识别",
-    insight: "实操精度攻坚期 — 量化缺失、补剂盲区、路由B质检、评估层误判",
-  },
-  {
-    version: "V6.1真实测试",
-    clusters: "聚类I（+G验证修复）",
-    insight: "真实场景交互缺口 — F019/F020由V6.2测试验证修复；F018四库docx未更新（R009分类管理仅写入V6.3 Prompt，四库文档未同步）；F023已修复（R010新增FODMAP子路径，四库文档已更新）；F022未修复",
-    highlight: true,
-  },
-  {
-    version: "V6.2",
-    clusters: "聚类J+K（+E回归）★",
-    insight: "1.0系统合规但2.0用户不满意 — 双轨评分暴露的核心矛盾：系统能跑但用户用着不好。聚类J（6条）占比最高，反映产品层面问题。聚类E回归（F028格式崩塌）说明F012修复不彻底。聚类K（产品定位冲突）首次出现，提示P库与C库的对齐是新产品定位下的必答题",
-    highlight: true,
-  },
-];
-
 export default function FailuresPage() {
-  const cases = failuresData.cases as FailureCase[];
-  const [activeCluster, setActiveCluster] = useState("all");
-  const [expandedId, setExpandedId] = useState<string | null>(null);
-
-  const filtered = activeCluster === "all"
-    ? cases
-    : cases.filter((c) => c.cluster === activeCluster);
-
-  const totalFixed = cases.filter((c) => c.fixStatus === "已修复").length;
-  const totalFixing = cases.filter((c) => c.fixStatus === "修复中").length;
-  const totalPendingFix = cases.filter((c) => c.fixStatus === "待修正").length;
-  const totalPromptWritten = cases.filter((c) => c.fixStatus === "V6.3 Prompt已写待测试").length;
-  const totalUnfixed = cases.filter((c) => c.fixStatus === "未修复").length;
-
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
       {/* 页面标题 */}
       <div className="mb-10">
         <h1 className="text-3xl font-bold text-white mb-3">失败案例库</h1>
-        <p className="text-[#8ba3c7]">记录系统从V1到当前版本所有已发现的问题，追踪修复状态</p>
-        <p className="text-xs text-[#4a5c7a] mt-2">最近更新：2026-06-22（F024-F032，来源V6.2双轨评分测试）</p>
+        <p className="text-[#8ba3c7] mb-2">AI增肌教练系统 — 产品失败案例库（C库升级版）</p>
+        <p className="text-xs text-[#4a5c7a]">
+          来源：基于2026-06-19~22 执行AI（"教练"AI）V1-V6.2多轮测试实录提取<br />
+          编号规则：F = Failure，从F002开始 | 用途：供战略AI审计与系统迭代参考
+        </p>
       </div>
 
-      {/* 阅读指南 */}
-      <div className="mb-10 bg-[#141d33] border border-[#4a9eff]/20 rounded-xl p-5">
-        <div className="flex items-center gap-2 mb-3">
-          <svg className="w-4 h-4 text-[#4a9eff]" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <span className="text-sm font-bold text-[#4a9eff]">阅读指南</span>
-        </div>
-        <div className="grid sm:grid-cols-2 gap-4 text-sm text-[#8ba3c7]">
-          <div>
-            <div className="text-xs font-semibold text-white mb-2">聚类颜色含义</div>
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["A"]}`}>A</span> 规则体系 — R库设计缺陷</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["B"]}`}>B</span> K库越权 — 知识库越位推理</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["C"]}`}>C</span> 输出不可控 — 格式/语气失控</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["D"]}`}>D</span> 自主性缺失 — 无独立判断</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["E"]}`}>E</span> 输出层分离 — 系统语言泄漏</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["F"]}`}>F</span> 四库实操性 — 规则难落地</div>
-            </div>
-          </div>
-          <div>
-            <div className="text-xs font-semibold text-white mb-2">&nbsp;</div>
-            <div className="space-y-1.5">
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["G"]}`}>G</span> 执行不彻底 — 修一半留一半</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["H"]}`}>H</span> 评估层误判 — 评分偏差</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["I"]}`}>I ★</span> 真实场景盲区 — 合成测试无法覆盖</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["J"]}`}>J ★</span> 系统合规但用户不满意 — 1.0高2.0低</div>
-              <div className="flex items-center gap-2"><span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap["K"]}`}>K ★</span> 产品定位与系统输出冲突</div>
-            </div>
-            <div className="text-xs text-[#6b8ab5] mt-3">
-              ★ 标记为真实测试/V6.2新增聚类 — 反映双轨评分后的新认知
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* 统计卡片 */}
-      <div className="grid grid-cols-2 sm:grid-cols-6 gap-4 mb-10">
-        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
-          <div className="text-3xl font-bold text-white font-mono">{cases.length}</div>
-          <div className="text-xs text-[#6b8ab5] mt-1.5">总案例</div>
-        </div>
-        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
-          <div className="text-3xl font-bold text-emerald-400 font-mono">{totalFixed}</div>
-          <div className="text-xs text-[#6b8ab5] mt-1.5">已修复</div>
-        </div>
-        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
-          <div className="text-3xl font-bold text-amber-400 font-mono">{totalFixing}</div>
-          <div className="text-xs text-[#6b8ab5] mt-1.5">修复中</div>
-        </div>
-        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
-          <div className="text-3xl font-bold text-cyan-400 font-mono">{totalPromptWritten}</div>
-          <div className="text-xs text-[#6b8ab5] mt-1.5">Prompt已写待测试</div>
-        </div>
-        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
-          <div className="text-3xl font-bold text-violet-400 font-mono">{totalPendingFix}</div>
-          <div className="text-xs text-[#6b8ab5] mt-1.5">待修正</div>
-        </div>
-        <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5 text-center">
-          <div className="text-3xl font-bold text-red-400 font-mono">{totalUnfixed}</div>
-          <div className="text-xs text-[#6b8ab5] mt-1.5">未修复</div>
-        </div>
-      </div>
-
-      {/* 案例总览表 */}
-      <div className="mb-10">
-        <h2 className="text-lg font-bold text-white mb-4">案例总览</h2>
+      {/* 失败案例总览 */}
+      <div className="mb-12">
+        <h2 className="text-xl font-bold text-white mb-5">失败案例总览</h2>
         <div className="overflow-x-auto">
           <table className="w-full text-xs border-collapse">
             <thead>
               <tr className="bg-[#1a2744]">
                 <th className="text-left px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">编号</th>
                 <th className="text-left px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">失败名称</th>
-                <th className="text-center px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">聚类</th>
-                <th className="text-left px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">影响组件</th>
                 <th className="text-center px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">严重度</th>
-                <th className="text-left px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">错误类型</th>
                 <th className="text-left px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">发现版本</th>
-                <th className="text-center px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">修复状态</th>
+                <th className="text-left px-3 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">修复状态</th>
               </tr>
             </thead>
             <tbody>
-              {cases.map((c, i) => (
+              {[
+                { id: "F002", name: "K库越权决策 — 编造精确数值", severity: "🔴 高", found: "V1", status: "✅ V5已修复" },
+                { id: "F003", name: "R库覆盖面缺失 — 系统退化为自由解释", severity: "🔴 最高", found: "V1-V4", status: "🔄 持续补充" },
+                { id: "F004", name: "同类问题输出结构不一致 — 规则漂移", severity: "🟡 中", found: "V1-V4", status: "✅ V5已修复" },
+                { id: "F005", name: "C库被边缘化后消失", severity: "🟡 中", found: "V5", status: "✅ V6已修复" },
+                { id: "F006", name: "多假设并列 — 违反唯一主因原则", severity: "🟡 中", found: "V3", status: "✅ V5已修复" },
+                { id: "F007", name: "K库解释冗长 — 知识堆砌替代决策", severity: "🟢 低", found: "V2", status: "✅ V6已修复" },
+                { id: "F008", name: "决策来源不可追溯", severity: "🟡 中", found: "全版本", status: "✅ V6已修复" },
+                { id: "F009", name: "L1/L2/L3分层未实现", severity: "🟡 中", found: "V1-V4", status: "✅ V5已修复" },
+                { id: "F010", name: "系统依赖用户手动修正", severity: "🔴 高", found: "全版本", status: "✅ V6已修复" },
+                { id: "F011", name: "错误归因风险 — \"体质问题\"未被拦截", severity: "🟡 中", found: "V2", status: "✅ V6已修复" },
+                { id: "F012", name: "系统语言泄漏 — 内部审计内容直接暴露", severity: "🔴 阻断", found: "V6", status: "✅ V6.1已修复" },
+                { id: "F013", name: "行动方案位置过深", severity: "🔴 阻断", found: "V6", status: "✅ V6.1已修复" },
+                { id: "F014", name: "R002待量化标记缺失", severity: "🟠 一般", found: "V5-V6.1", status: "✅ V6.1已修复" },
+                { id: "F015", name: "K库实操量化缺失", severity: "🟡 中", found: "V6.1", status: "⬜ 未修复" },
+                { id: "F016", name: "K库餐具换算缺失", severity: "🟡 中", found: "V6.1", status: "⬜ 未修复" },
+                { id: "F017", name: "K库比喻篇幅失控", severity: "🟡 中", found: "V6.1", status: "🔄 V6.2修复中" },
+                { id: "F018", name: "C库CM005补剂场景匹配盲区", severity: "🟡 中", found: "V6.1", status: "🔄 V6.2修复中" },
+                { id: "F019", name: "PC-2数值模糊化未彻底落地", severity: "🟡 中", found: "V6.1", status: "🔄 V6.2修复中" },
+                { id: "F020", name: "PC-10路由B无强制质检", severity: "🟡 中", found: "V6.1", status: "🔄 V6.2修复中" },
+                { id: "F021", name: "规则触发状态误标", severity: "🔴 高", found: "V6.1", status: "⬜ 待修正" },
+                { id: "F022", name: "用户增重构成疑虑未回应", severity: "🟡 中", found: "V6.1真实测试", status: "📋 有修复方案" },
+                { id: "F023", name: "R007未考虑食物不耐受风险", severity: "🟡 中", found: "V6.1真实测试", status: "📋 已有修复方案" },
+                { id: "F024", name: "用户情感信号被过滤", severity: "🔴 高", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F025", name: "主因优先级偏移 — 极瘦用户\"先练后吃\"", severity: "🔴 高", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F026", name: "追问深度不足 — 7成识别就出方案", severity: "🟠 一般", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F027", name: "方案个性化不足 — 通用方案替代个体方案", severity: "🟠 一般", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F028", name: "格式崩塌 — 输出结构完全瓦解", severity: "🔴 阻断", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F029", name: "产品定位与输出矛盾 — 蛋白粉一刀切否定", severity: "🟠 一般", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F030", name: "信息不足场景只做本分 — 追问无动机无微行动", severity: "🟠 一般", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F031", name: "7天后闭环缺失 — 用户不知如何返回", severity: "🟡 中", found: "V6.2", status: "⬜ 未修复" },
+                { id: "F032", name: "BMI偏瘦未触发安全边界", severity: "🟡 中", found: "V6.2", status: "⬜ 未修复" },
+              ].map((c, i) => (
                 <tr
                   key={c.id}
-                  className={`border-b border-[#1a2744] hover:bg-[#1a2744]/60 transition-colors cursor-pointer ${i % 2 === 1 ? "bg-[#0d1525]/40" : ""}`}
-                  onClick={() => setExpandedId(expandedId === c.id ? null : c.id)}
+                  className={`border-b border-[#1a2744] ${i % 2 === 1 ? "bg-[#0d1525]/40" : ""}`}
                 >
                   <td className="px-3 py-2 font-mono font-bold text-[#4a9eff]">{c.id}</td>
-                  <td className="px-3 py-2 text-[#c8d6e5] max-w-[280px]">
-                    <span className="line-clamp-1">{c.name}</span>
-                  </td>
-                  <td className="px-3 py-2 text-center">
-                    <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap[c.cluster] || "bg-slate-700/50 text-slate-400 border-slate-600/40"}`}>
-                      {c.cluster}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2">
-                    <div className="flex flex-wrap gap-1">
-                      {c.components.map((comp) => (
-                        <span key={comp} className="px-1.5 py-0.5 rounded text-[10px] font-medium bg-[#4a9eff]/10 text-[#4a9eff]">
-                          {comp}
-                        </span>
-                      ))}
-                    </div>
-                  </td>
-                  <td className="px-3 py-2 text-center">
-                    <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-bold ${severityColor[c.severity] || "bg-slate-700/50 text-slate-400"}`}>
-                      {c.severity}
-                    </span>
-                  </td>
-                  <td className="px-3 py-2 text-[#8ba3c7]">{c.errorType}</td>
-                  <td className="px-3 py-2 text-[#8ba3c7]">{c.foundVersion}</td>
-                  <td className="px-3 py-2 text-center">
-                    <span className={`inline-block px-2 py-0.5 rounded text-[10px] font-medium ${statusStyle[c.fixStatus]}`}>
-                      {c.fixStatus}
-                    </span>
-                  </td>
+                  <td className="px-3 py-2 text-[#c8d6e5]">{c.name}</td>
+                  <td className="px-3 py-2 text-center whitespace-nowrap">{c.severity}</td>
+                  <td className="px-3 py-2 text-[#8ba3c7] whitespace-nowrap">{c.found}</td>
+                  <td className="px-3 py-2 text-[#8ba3c7] whitespace-nowrap">{c.status}</td>
                 </tr>
               ))}
             </tbody>
@@ -250,158 +75,199 @@ export default function FailuresPage() {
         </div>
       </div>
 
-      {/* 版本间迁移趋势 */}
-      <div className="mb-10">
-        <h2 className="text-lg font-bold text-white mb-4">版本间迁移趋势</h2>
-        <div className="space-y-3">
-          {migrationTrends.map((t, i) => (
-            <div
-              key={i}
-              className={`flex items-start gap-4 rounded-xl border p-4 ${
-                t.highlight
-                  ? "bg-[#1a2744] border-[#4a9eff]/40 shadow-lg shadow-[#4a9eff]/5"
-                  : "bg-[#141d33] border-[#2a3a5c]"
-              }`}
-            >
-              {/* 时间线节点 */}
-              <div className="flex flex-col items-center flex-shrink-0">
-                <div className={`w-3 h-3 rounded-full ${t.highlight ? "bg-[#4a9eff] shadow-lg shadow-[#4a9eff]/50" : "bg-[#2a3a5c]"}`} />
-                {i < migrationTrends.length - 1 && <div className="w-0.5 h-8 bg-[#2a3a5c] mt-1" />}
-              </div>
-              {/* 内容 */}
-              <div className="flex-1 min-w-0">
-                <div className="flex items-center gap-2 mb-1">
-                  <span className={`font-mono font-bold text-sm ${t.highlight ? "text-[#4a9eff]" : "text-white"}`}>{t.version}</span>
-                  <span className="text-xs text-[#6b8ab5]">{t.clusters}</span>
-                  {t.version === "V6.1真实测试" && <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-pink-900/40 text-pink-300 border border-pink-700/40">真实测试新增</span>}
-                  {t.version === "V6.2" && <span className="px-1.5 py-0.5 rounded text-[10px] font-bold bg-amber-900/40 text-amber-300 border border-amber-700/40">双轨评分新增</span>}
-                </div>
-                <p className={`text-sm ${t.highlight ? "text-[#c8d6e5]" : "text-[#8ba3c7]"}`}>{t.insight}</p>
-              </div>
-            </div>
-          ))}
+      {/* 失败模式聚类 */}
+      <div className="mb-12">
+        <h2 className="text-xl font-bold text-white mb-5">失败模式聚类</h2>
+        <div className="space-y-4">
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类A：K库越权与规则缺失（F002 / F003 / F009 / F011）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：V5-V6已修复核心问题，R库持续补充中</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类B：输出不可控（F004 / F006 / F007）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：V5-V6已修复</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类C：系统无自检能力（F005 / F008 / F010）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：V6已修复</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类D：评估层缺失（F014）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：V6.1已修复</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类E：输出层与用户层未分离（F012 / F013）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：V6.1已修复（PC-9双层输出架构）</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类F：四库内容实操性不足（F015 / F016 / F017）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：F017由V6.2修复；F015/F016待四库补充</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类G：规则/约束执行不彻底（F018 / F019 / F020）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：V6.2测试验证修复中</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类H：评估层系统性误判（F021）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：待修正</p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">聚类I：真实场景盲区（F022 / F023）</h3>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：F023已修复；F022未修复</p>
+            <p className="text-sm text-[#6b8ab5] mt-1">→ 启示：真实用户测试暴露了合成测试的结构性盲区</p>
+          </div>
+
+          <div className="bg-[#1a2744] border-2 border-amber-700/40 rounded-xl p-5">
+            <h3 className="text-sm font-bold text-amber-300 mb-2">聚类J：系统合规但用户不满意（F024 / F026 / F027 / F030 / F031）</h3>
+            <p className="text-sm text-[#8ba3c7] mb-1">根因：1.0均分80.8 vs 2.0均分71.8，差值9分=合规与满意的系统性落差</p>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：⬜ 未修复 — V6.3需系统性修复</p>
+            <p className="text-sm text-[#6b8ab5] mt-1">→ 启示：后续所有修改必须同时通过1.0和2.0两套标准验证</p>
+          </div>
+
+          <div className="bg-[#1a2744] border-2 border-purple-700/40 rounded-xl p-5">
+            <h3 className="text-sm font-bold text-purple-300 mb-2">聚类K：产品定位与系统输出冲突（F029 / F032）</h3>
+            <p className="text-sm text-[#8ba3c7] mb-1">根因：P库写的是"原则"但没有"执行强制力"</p>
+            <p className="text-sm text-[#8ba3c7]">→ 状态：⬜ 未修复</p>
+            <p className="text-sm text-[#6b8ab5] mt-1">→ 修复关键：P库约束必须"硬传导"到R库和C库</p>
+          </div>
+
         </div>
       </div>
 
-      {/* 聚类筛选 */}
-      <div className="flex flex-wrap gap-2 mb-8">
-        {clusters.map((cl) => (
-          <button
-            key={cl.key}
-            onClick={() => setActiveCluster(cl.key)}
-            className={`px-3.5 py-1.5 rounded-lg text-xs font-medium transition-all ${
-              activeCluster === cl.key
-                ? "bg-[#4a9eff] text-white shadow-lg shadow-[#4a9eff]/20"
-                : "bg-[#141d33] text-[#8ba3c7] border border-[#2a3a5c] hover:border-[#4a9eff]/40 hover:text-white"
-            }`}
-          >
-            {cl.label}
-            {cl.key !== "all" && (
-              <span className="ml-1 text-[10px] opacity-60">
-                ({cases.filter((c) => c.cluster === cl.key).length})
-              </span>
-            )}
-          </button>
-        ))}
+      {/* 版本间失败模式迁移趋势 */}
+      <div className="mb-12">
+        <h2 className="text-xl font-bold text-white mb-5">版本间失败模式迁移趋势</h2>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm border-collapse">
+            <thead>
+              <tr className="bg-[#1a2744]">
+                <th className="text-left px-4 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">版本阶段</th>
+                <th className="text-left px-4 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">主要失败模式</th>
+                <th className="text-left px-4 py-2.5 text-[#8ba3c7] font-semibold border-b border-[#2a3a5c]">核心特征</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="border-b border-[#1a2744]">
+                <td className="px-4 py-3 text-white font-medium">V1-V5</td>
+                <td className="px-4 py-3 text-[#8ba3c7]">聚类A/B/C/D</td>
+                <td className="px-4 py-3 text-[#c8d6e5] font-semibold">系统骨架缺失</td>
+              </tr>
+              <tr className="border-b border-[#1a2744] bg-[#0d1525]/40">
+                <td className="px-4 py-3 text-white font-medium">V6</td>
+                <td className="px-4 py-3 text-[#8ba3c7]">聚类E</td>
+                <td className="px-4 py-3 text-[#c8d6e5] font-semibold">决策层通过、输出层阻断</td>
+              </tr>
+              <tr className="border-b border-[#1a2744]">
+                <td className="px-4 py-3 text-white font-medium">V6.1</td>
+                <td className="px-4 py-3 text-[#8ba3c7]">聚类F/G/H</td>
+                <td className="px-4 py-3 text-[#c8d6e5] font-semibold">输出层打磨、四库内容成瓶颈</td>
+              </tr>
+              <tr className="border-b border-[#1a2744] bg-[#1a2744]/60">
+                <td className="px-4 py-3 text-amber-300 font-bold">V6.2</td>
+                <td className="px-4 py-3 text-amber-200">聚类J/K</td>
+                <td className="px-4 py-3 text-amber-200 font-semibold">系统合规但用户不满意</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div className="mt-4 bg-[#141d33] border border-[#4a9eff]/20 rounded-xl p-4">
+          <p className="text-sm text-[#8ba3c7] leading-relaxed">
+            <span className="text-[#4a9eff] font-semibold">趋势判断：</span>
+            失败模式从"系统架构缺失"→"输出体验阻断"→"四库内容实操性"→"真实场景交互缺口"→"系统合规但用户不满意"逐层深入。
+            1.0均分80.8/2.0均分71.8的9分差值=合规与满意的系统性落差。
+          </p>
+        </div>
       </div>
 
-      {/* 案例列表 */}
-      <div className="space-y-3">
-        {filtered.map((c) => {
-          const isExpanded = expandedId === c.id;
-          return (
-            <div
-              key={c.id}
-              className="bg-[#141d33] border border-[#2a3a5c] rounded-xl overflow-hidden hover:border-[#3a4a6c] transition-colors"
-            >
-              <button
-                onClick={() => setExpandedId(isExpanded ? null : c.id)}
-                className="w-full text-left px-5 py-4 flex items-start gap-4 hover:bg-[#1a2744]/50 transition-colors"
-              >
-                {/* 编号 */}
-                <span className="text-xs font-mono font-bold text-[#4a9eff] whitespace-nowrap mt-0.5">{c.id}</span>
-                {/* 主体 */}
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="font-medium text-white text-sm">{c.name}</span>
-                    {/* 聚类标签 */}
-                    <span className={`px-2 py-0.5 rounded text-[10px] font-bold border ${clusterColorMap[c.cluster] || "bg-slate-700/50 text-slate-400 border-slate-600/40"}`}>
-                      {c.cluster} · {c.clusterName}
-                    </span>
-                  </div>
-                  {!isExpanded && (
-                    <p className="text-xs text-[#6b8ab5] mt-1 truncate">{c.description}</p>
-                  )}
-                </div>
-                {/* 状态标签 */}
-                <div className="flex items-center gap-2 flex-shrink-0">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-bold ${severityColor[c.severity] || "bg-slate-700/50 text-slate-400"}`}>
-                    {c.severity}
-                  </span>
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-medium ${statusStyle[c.fixStatus]}`}>
-                    {c.fixStatus}
-                  </span>
-                  <svg
-                    className={`w-4 h-4 text-[#6b8ab5] transition-transform flex-shrink-0 ${isExpanded ? "rotate-180" : ""}`}
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                    strokeWidth={2}
-                  >
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M19 9l-7 7-7-7" />
-                  </svg>
-                </div>
-              </button>
+      {/* V6.2新增案例详情 */}
+      <div className="mb-12">
+        <h2 className="text-xl font-bold text-white mb-5">V6.2新增案例详情（F024-F032）</h2>
+        <div className="space-y-3">
 
-              {/* 展开详情 */}
-              {isExpanded && (
-                <div className="px-5 pb-5 border-t border-[#2a3a5c] pt-4">
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 mb-4 text-sm">
-                    <div>
-                      <span className="text-[#6b8ab5] text-xs">错误类型</span>
-                      <div className="font-medium text-white">{c.errorType}</div>
-                    </div>
-                    <div>
-                      <span className="text-[#6b8ab5] text-xs">发现版本</span>
-                      <div className="font-medium text-white">{c.foundVersion}</div>
-                    </div>
-                    <div>
-                      <span className="text-[#6b8ab5] text-xs">修复版本</span>
-                      <div className="font-medium text-white">{c.fixVersion || "—"}</div>
-                    </div>
-                    <div>
-                      <span className="text-[#6b8ab5] text-xs">聚类</span>
-                      <div className="font-medium text-white">{c.cluster} · {c.clusterName}</div>
-                    </div>
-                  </div>
-                  <div className="mb-3">
-                    <div className="text-xs font-semibold text-[#6b8ab5] mb-1">问题描述</div>
-                    <p className="text-sm text-[#8ba3c7] leading-relaxed">{c.description}</p>
-                  </div>
-                  <div>
-                    <div className="text-xs font-semibold text-[#6b8ab5] mb-1">修复方向</div>
-                    <p className="text-sm text-[#4a9eff] font-medium">{c.fixDirection}</p>
-                  </div>
-                </div>
-              )}
-            </div>
-          );
-        })}
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F024 【用户情感信号被过滤】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              用户说"怕副作用"教练完全未回应。系统没有情感信号识别环节。修复：输出层新增"情感信号回显"机制。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F025 【主因优先级偏移 — 极瘦用户"先练后吃"】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              55kg/172cm用户教练判断主因为"训练不足"而非"摄入不足"。修复：R库新增极瘦用户优先级约束。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F026 【追问深度不足】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              识别到7成深度就出方案，少问关键一句。修复：输出层增加"识别深度自检"。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F027 【方案个性化不足】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              方案方向对但像"网上搜来的通用答案"。修复：方案输出前增加"个性化校验"。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-red-900/40 rounded-xl p-5">
+            <h3 className="text-sm font-bold text-red-300 mb-2">F028 【格式崩塌】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              F012在V6.1已修复但Q7回归，PC-9双层分离机制存在覆盖漏洞。1.0=30/2.0=26。修复：增加"用户层清洁度自检"。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F029 【蛋白粉一刀切否定】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              CM005只看关键词不区分"依赖"和"需要"，与产品定位矛盾。修复：CM005增加场景区分。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F030 【追问无动机无微行动】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              信息不足场景只追问不解释为什么问。修复：追问+为什么问+等回答期间微行动。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F031 【7天后闭环缺失】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              9/12题用户不知道7天后怎么回来。修复：7天方案末尾增加"7天后怎么回来"引导语。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
+            <h3 className="text-sm font-bold text-white mb-2">F032 【BMI偏瘦未触发安全边界】</h3>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              BMI=17.6未提示健康风险。修复：R库新增用户状态安全检查规则。
+            </p>
+          </div>
+
+        </div>
       </div>
 
-      {filtered.length === 0 && (
-        <div className="text-center py-16 text-[#6b8ab5] text-sm">当前筛选条件下没有案例</div>
-      )}
-
-      {/* 底部趋势判断 */}
-      <div className="mt-12 bg-[#141d33] border border-[#4a9eff]/20 rounded-xl p-5">
-        <div className="text-xs font-semibold text-[#4a9eff] mb-2">趋势判断</div>
-        <p className="text-sm text-[#8ba3c7] leading-relaxed mb-3">
-          V6.2双轨评分揭示了核心矛盾：<span className="text-white font-medium">1.0系统合规 ≠ 用户满意</span>。聚类J（系统合规但用户不满意）以6条案例成为最大聚类，说明「系统能跑」只是门槛，「用户用着好不好」才是产品价值的核心判断。聚类E回归（F028格式崩塌）说明F012修复不彻底。聚类K首次出现，提示产品定位升级后P库与C库的对齐是新阶段的必答题。
-        </p>
-        <p className="text-sm text-[#8ba3c7] leading-relaxed">
-          真实用户测试的价值远高于合成测试。从V6.1真实测试发现聚类I，到V6.2双轨评分发现聚类J/K，两次真实测试都暴露了合成测试的结构性盲区。后续应以真实场景作为主要测试方式，双轨评分作为核心评价体系。
-        </p>
+      {/* 更新记录 */}
+      <div className="border-t border-[#2a3a5c] pt-6">
+        <div className="text-xs text-[#4a5c7a] space-y-1">
+          <p>更新记录：</p>
+          <p>- 2026-06-19：初版，F002-F011</p>
+          <p>- 2026-06-20：第一次更新，F012-F021</p>
+          <p>- 2026-06-21：第二次更新，F022-F023</p>
+          <p>- 2026-06-22：第三次更新，F024-F032 + 聚类J/K + 趋势更新</p>
+        </div>
       </div>
     </div>
   );

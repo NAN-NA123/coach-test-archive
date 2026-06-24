@@ -302,7 +302,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">测试档案</h3>
             </div>
-            <p className="text-sm text-[#8ba3c7] mb-4">从V1到V6.1的全部测试评估结果和数据</p>
+            <p className="text-sm text-[#8ba3c7] mb-4">Coach教练系统的历史测试评估记录</p>
             <span className="text-sm text-emerald-400 group-hover:underline">查看详情 →</span>
           </Link>
 
@@ -315,7 +315,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">失败案例库</h3>
             </div>
-            <p className="text-sm text-[#8ba3c7] mb-4">22条系统失败案例的完整追踪记录</p>
+            <p className="text-sm text-[#8ba3c7] mb-4">系统失败案例的完整追踪记录</p>
             <span className="text-sm text-rose-400 group-hover:underline">查看详情 →</span>
           </Link>
 
@@ -341,7 +341,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">决策日志</h3>
             </div>
-            <p className="text-sm text-[#8ba3c7] mb-4">29条关键产品决策的完整记录</p>
+            <p className="text-sm text-[#8ba3c7] mb-4">关键产品决策的完整记录</p>
             <span className="text-sm text-violet-400 group-hover:underline">查看详情 →</span>
           </Link>
 

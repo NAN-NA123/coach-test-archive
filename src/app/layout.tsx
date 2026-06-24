@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     default: '教练系统测试档案',
     template: '%s | 教练系统测试档案',
   },
-  description: 'AI瘦子增重执行教练系统 - 从V1雏形到最新版本的测试评估结果档案',
+  description: 'Coach教练 - 体型管理决策系统的历史测试评估记录',
   robots: {
     index: true,
     follow: true,

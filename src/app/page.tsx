@@ -82,7 +82,7 @@ export default function LandingPage() {
               AI时代的私人定制AI教练
             </p>
             <p className="text-base sm:text-lg text-[#6b8ab5] max-w-2xl mx-auto leading-relaxed">
-              面向体型增长受阻用户，通过记录、判断和动态调整，<br className="hidden sm:block" />
+              面向体型管理受阻用户，通过记录、判断和动态调整，<br className="hidden sm:block" />
               帮助用户持续解决增肌/增重过程中的问题
             </p>
           </div>

@@ -4,7 +4,7 @@ export default function PhilosophyPage() {
       {/* 页面标题 */}
       <div className="mb-12">
         <h1 className="text-3xl font-bold text-white mb-3">产品理念</h1>
-        <p className="text-[#8bb4e8] text-base">Coach教练 — 面向体型增长受阻用户的私人定制AI教练</p>
+        <p className="text-[#8bb4e8] text-base">Coach教练 — 面向体型管理受阻用户的私人定制AI教练</p>
       </div>
 
       {/* 第一板块：产品定义 */}
@@ -84,7 +84,10 @@ export default function PhilosophyPage() {
             <div className="text-base font-semibold text-white mb-2">服务对象</div>
             <p className="text-[#8ba3c7] leading-relaxed">
               不再统一称为「瘦子」。<br />
-              新的用户总称：<span className="text-white font-semibold">体型增长受阻用户</span>
+              新的用户总称：<span className="text-white font-semibold">体型管理受阻用户</span>
+            </p>
+            <p className="text-sm text-[#6b8ab5] mt-2 leading-relaxed">
+              当前阶段优先服务增重、增肌、体型增长受阻人群，后续可扩展至减脂、塑形、训练表现和恢复管理场景。
             </p>
           </div>
 
@@ -122,7 +125,7 @@ export default function PhilosophyPage() {
           <div className="bg-[#141d33] rounded-lg p-5 border border-[#2a3a5c]">
             <div className="text-xs font-semibold text-[#4a9eff] uppercase tracking-wider mb-2">一句话表达</div>
             <p className="text-white font-medium leading-relaxed">
-              Coach教练是面向体型增长受阻用户的私人定制AI教练，<br />
+              Coach教练是面向体型管理受阻用户的私人定制AI教练，<br />
               通过记录、判断和动态调整，帮助用户持续解决增肌/增重过程中的问题。
             </p>
           </div>

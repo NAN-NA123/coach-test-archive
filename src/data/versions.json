@@ -1641,6 +1641,303 @@
       }
     },
     {
+      "id": "v6.3.1",
+      "name": "V6.3.1",
+      "fullName": "V6.3.1（去模板化+蛋白粉修正版）",
+      "status": "已完成",
+      "totalScore": 88.2,
+      "totalScore2": 81.8,
+      "testRounds": 18,
+      "coreChange": "去模板化+蛋白粉修正+PC-14追问机制+STEP 0信息充分度判断",
+      "coreIssues": [
+        "部分场景追问深度仍不足",
+        "个别通用方案未个性化"
+      ],
+      "dimensions": {
+        "rLibrary": {
+          "score": 35,
+          "max": 40,
+          "label": "R库"
+        },
+        "kLibrary": {
+          "score": 13,
+          "max": 15,
+          "label": "K库"
+        },
+        "cLibrary": {
+          "score": 9,
+          "max": 10,
+          "label": "C库"
+        },
+        "output": {
+          "score": 22,
+          "max": 25,
+          "label": "输出"
+        },
+        "stability": {
+          "score": 9,
+          "max": 10,
+          "label": "稳定性"
+        }
+      },
+      "dimensions2": {
+        "needIdent": {
+          "score": 16,
+          "max": 20,
+          "label": "需求识别"
+        },
+        "libQuality": {
+          "score": 16,
+          "max": 20,
+          "label": "四库质量"
+        },
+        "rootCause": {
+          "score": 12,
+          "max": 15,
+          "label": "主因判断"
+        },
+        "feasibility": {
+          "score": 12,
+          "max": 15,
+          "label": "可执行性"
+        },
+        "expression": {
+          "score": 12,
+          "max": 15,
+          "label": "表达舒适"
+        },
+        "safety": {
+          "score": 8,
+          "max": 10,
+          "label": "安全边界"
+        },
+        "feedback": {
+          "score": 4,
+          "max": 5,
+          "label": "反馈闭环"
+        },
+        "conciseness": {
+          "score": 4,
+          "max": 5,
+          "label": "简洁度"
+        }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [],
+      "qaRecords": []
+    },
+    {
+      "id": "v6.3.2",
+      "name": "V6.3.2",
+      "fullName": "V6.3.2（回测5项修复版）",
+      "status": "已完成",
+      "totalScore": 87.2,
+      "totalScore2": 83.8,
+      "testRounds": 6,
+      "coreChange": "回测5项修复：R058/R060中文类别名+PC-16统一为PC017+安全红旗引用PC-12/PC-13",
+      "coreIssues": [
+        "军师审查8项修正待整合"
+      ],
+      "dimensions": {
+        "rLibrary": {
+          "score": 35,
+          "max": 40,
+          "label": "R库"
+        },
+        "kLibrary": {
+          "score": 13,
+          "max": 15,
+          "label": "K库"
+        },
+        "cLibrary": {
+          "score": 8,
+          "max": 10,
+          "label": "C库"
+        },
+        "output": {
+          "score": 22,
+          "max": 25,
+          "label": "输出"
+        },
+        "stability": {
+          "score": 9,
+          "max": 10,
+          "label": "稳定性"
+        }
+      },
+      "dimensions2": {
+        "needIdent": {
+          "score": 17,
+          "max": 20,
+          "label": "需求识别"
+        },
+        "libQuality": {
+          "score": 17,
+          "max": 20,
+          "label": "四库质量"
+        },
+        "rootCause": {
+          "score": 13,
+          "max": 15,
+          "label": "主因判断"
+        },
+        "feasibility": {
+          "score": 13,
+          "max": 15,
+          "label": "可执行性"
+        },
+        "expression": {
+          "score": 13,
+          "max": 15,
+          "label": "表达舒适"
+        },
+        "safety": {
+          "score": 8,
+          "max": 10,
+          "label": "安全边界"
+        },
+        "feedback": {
+          "score": 4,
+          "max": 5,
+          "label": "反馈闭环"
+        },
+        "conciseness": {
+          "score": 4,
+          "max": 5,
+          "label": "简洁度"
+        }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [],
+      "qaRecords": []
+    },
+    {
+      "id": "v6.3.3",
+      "name": "V6.3.3",
+      "fullName": "V6.3.3（军师审查统一版）",
+      "status": "待回测",
+      "totalScore": null,
+      "totalScore2": null,
+      "testRounds": null,
+      "coreChange": "军师审查8项修正+回测前3小修：版本号统一v6.3.3，服务对象扩展至体型管理受阻用户，PC编号直接用四库编号，PC-5合并教练闭环，R057五问统一，R009/C库四分类统一，促睾移至风险干预类，PC014按模糊维度追问，转译表降压替换",
+      "coreIssues": [
+        "待回测验证"
+      ],
+      "dimensions": {
+        "rLibrary": {
+          "score": null,
+          "max": 40,
+          "label": "R库"
+        },
+        "kLibrary": {
+          "score": null,
+          "max": 15,
+          "label": "K库"
+        },
+        "cLibrary": {
+          "score": null,
+          "max": 10,
+          "label": "C库"
+        },
+        "output": {
+          "score": null,
+          "max": 25,
+          "label": "输出"
+        },
+        "stability": {
+          "score": null,
+          "max": 10,
+          "label": "稳定性"
+        }
+      },
+      "dimensions2": {
+        "needIdent": {
+          "score": null,
+          "max": 20,
+          "label": "需求识别"
+        },
+        "libQuality": {
+          "score": null,
+          "max": 20,
+          "label": "四库质量"
+        },
+        "rootCause": {
+          "score": null,
+          "max": 15,
+          "label": "主因判断"
+        },
+        "feasibility": {
+          "score": null,
+          "max": 15,
+          "label": "可执行性"
+        },
+        "expression": {
+          "score": null,
+          "max": 15,
+          "label": "表达舒适"
+        },
+        "safety": {
+          "score": null,
+          "max": 10,
+          "label": "安全边界"
+        },
+        "feedback": {
+          "score": null,
+          "max": 5,
+          "label": "反馈闭环"
+        },
+        "conciseness": {
+          "score": null,
+          "max": 5,
+          "label": "简洁度"
+        }
+      },
+      "rounds": [],
+      "dimensionDetails": [],
+      "issues": [],
+      "refactorList": [],
+      "deductionItems": [],
+      "nextSteps": [
+        {
+          "phase": "回测5旧题",
+          "desc": "Q6/N3/N4/N5/N6"
+        },
+        {
+          "phase": "回测6新题",
+          "desc": "N7-N12"
+        },
+        {
+          "phase": "重点观察Q6",
+          "desc": "蛋白粉是否仍误触CM005"
+        },
+        {
+          "phase": "重点观察N6",
+          "desc": "是否展示R057五问"
+        },
+        {
+          "phase": "重点观察N3",
+          "desc": "南非醉茄是否主动问用药史"
+        },
+        {
+          "phase": "重点观察N4",
+          "desc": "是否同时追问不规律和没精神"
+        },
+        {
+          "phase": "重点观察常规方案",
+          "desc": "所有常规方案是否有：为什么/观察什么/然后呢"
+        }
+      ],
+      "qaRecords": []
+    },
+    {
       "id": "v7",
       "name": "V7",
       "fullName": "V7（规划中）",

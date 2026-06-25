@@ -7,11 +7,11 @@ export default function RoadmapPage() {
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
       {/* 页面标题 */}
       <div className="mb-10">
-        <h1 className="text-3xl font-bold text-white mb-3">四库系统线路图</h1>
+        <h1 className="text-3xl font-bold text-white mb-3">四库系统更新线路图</h1>
         <p className="text-[#8ba3c7]">AI增肌教练 · 四大库系统全流程图（设计→演化→升级）</p>
       </div>
 
-      {/* ① 系统设计层 */}
+      {/* 系统设计全流程图 */}
       <div className="mb-12">
         <h2 className="text-xl font-bold text-white mb-6">系统设计全流程图</h2>
         <div className="space-y-4">
@@ -46,7 +46,7 @@ export default function RoadmapPage() {
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 text-sm mb-3">
               <div className="bg-[#1a2744] rounded-lg p-3 text-center">
                 <div className="font-semibold text-white">K库（知识）</div>
-                <div className="text-xs text-[#6b8ab5] mt-1">生理学/营养学/训练原理</div>
+                <div className="text-xs text-[#6b8ab5] mt-1">生理学 / 营养学 / 训练原理</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3 text-center">
                 <div className="font-semibold text-white">C库（案例）</div>
@@ -61,7 +61,7 @@ export default function RoadmapPage() {
                 <div className="text-xs text-[#6b8ab5] mt-1">基础认知（热量、恢复等）</div>
               </div>
             </div>
-            <div className={body}>输出：经验型AI教练（解释为主）</div>
+            <div className={body}>输出：→ 经验型AI教练（解释为主）</div>
           </div>
 
           {/* ③ 测试与问题暴露层 */}
@@ -72,7 +72,7 @@ export default function RoadmapPage() {
             </div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
               <div>
-                <div className="font-medium text-white mb-2">输入 → 输出 → 问题暴露：</div>
+                <div className="font-medium text-white mb-2">用户测试输入 → AI输出 → 问题暴露：</div>
                 <ol className="space-y-1.5 text-[#8ba3c7]">
                   <li><span className="text-[#4a9eff] font-medium">1.</span> K库过度解释（无决策）</li>
                   <li><span className="text-[#4a9eff] font-medium">2.</span> C库只是贴标签</li>
@@ -111,7 +111,7 @@ export default function RoadmapPage() {
                 <span className="text-[#8ba3c7]">成为系统逻辑边界</span>
               </div>
             </div>
-            <div className="mt-3 text-sm font-medium text-[#4a9eff]">系统进入：分层决策AI</div>
+            <div className="mt-3 text-sm font-medium text-[#4a9eff]">→ 系统进入：分层决策AI</div>
           </div>
 
           {/* ⑤ 战略控制层 */}
@@ -166,7 +166,7 @@ export default function RoadmapPage() {
               <span className="text-[#4a9eff]">→</span>
               <span className="bg-[#1a2744] rounded-lg px-3 py-1.5 text-[#8ba3c7]">战略AI评分</span>
               <span className="text-[#4a9eff]">→</span>
-              <span className="bg-[#1a2744] rounded-lg px-3 py-1.5 text-[#8ba3c7]">自动修复</span>
+              <span className="bg-[#1a2744] rounded-lg px-3 py-1.5 text-[#8ba3c7]">自动修复建议</span>
               <span className="text-[#4a9eff]">→</span>
               <span className="bg-[#4a9eff]/20 text-[#4a9eff] rounded-lg px-3 py-1.5 font-medium">回流优化四库</span>
               <span className="text-[#4a9eff]">→</span>
@@ -178,9 +178,9 @@ export default function RoadmapPage() {
         </div>
       </div>
 
-      {/* 版本演化 */}
+      {/* 测试版本演化 */}
       <div>
-        <h2 className="text-xl font-bold text-white mb-6">版本演化</h2>
+        <h2 className="text-xl font-bold text-white mb-6">测试版本演化</h2>
         <div className="space-y-4">
 
           {/* V1 */}
@@ -190,9 +190,19 @@ export default function RoadmapPage() {
               <span className="text-sm font-semibold text-white">规则雏形</span>
               <span className="text-xs bg-[#4a5e80]/40 text-[#6b8ab5] px-2 py-0.5 rounded-lg">已归档</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div><span className="font-medium text-[#4a9eff]">特点：</span><span className="text-[#8ba3c7]">基本依赖K库解释、无规则优先级、输出偏「科普型建议」、能解释但不能裁决</span></div>
-              <div className="bg-[#1a2744] rounded-lg p-2.5 mt-2"><span className="font-medium text-[#4a9eff]">结论：</span><span className="text-[#8ba3c7]">K库可以解释增重失败，但只靠知识解释无法形成动态增重系统</span></div>
+            <div className="space-y-3 text-sm">
+              <div>
+                <span className="font-medium text-[#4a9eff]">系统形态：</span>
+                <span className="text-[#8ba3c7]">主要依赖K库解释。能说明为什么长不胖、为什么可能摄入不足、为什么训练/恢复/吸收都会影响增重。本质偏科普型。</span>
+              </div>
+              <div>
+                <span className="font-medium text-red-400">暴露问题：</span>
+                <span className="text-[#8ba3c7]">无真正决策机制、无收敛能力、容易把所有可能性都列出来、用户看完仍不知道先做什么。</span>
+              </div>
+              <div className="bg-[#1a2744] rounded-lg p-2.5">
+                <span className="font-medium text-[#4a9eff]">版本结论：</span>
+                <span className="text-[#8ba3c7]">K库可以解释增重失败，但只靠知识解释无法形成动态增重系统。</span>
+              </div>
             </div>
           </div>
 
@@ -203,9 +213,19 @@ export default function RoadmapPage() {
               <span className="text-sm font-semibold text-white">引入C库</span>
               <span className="text-xs bg-[#4a5e80]/40 text-[#6b8ab5] px-2 py-0.5 rounded-lg">已归档</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div><span className="font-medium text-[#4a9eff]">特点：</span><span className="text-[#8ba3c7]">引入失败案例分类、可识别「吃很多但不长」、C库开始辅助判断</span></div>
-              <div className="bg-[#1a2744] rounded-lg p-2.5 mt-2"><span className="font-medium text-[#4a9eff]">结论：</span><span className="text-[#8ba3c7]">C库必须存在但C库不能替代R库，案例匹配不等于规则裁决</span></div>
+            <div className="space-y-3 text-sm">
+              <div>
+                <span className="font-medium text-[#4a9eff]">系统形态：</span>
+                <span className="text-[#8ba3c7]">开始引入C库，用失败案例辅助识别用户问题。开始识别「吃很多但不长」「感觉吃够但体重不动」「摄入≠吸收≠利用」。</span>
+              </div>
+              <div>
+                <span className="font-medium text-red-400">暴露问题：</span>
+                <span className="text-[#8ba3c7]">仍然容易「贴案例」、没有真正决策逻辑、案例匹配不等于规则裁决。</span>
+              </div>
+              <div className="bg-[#1a2744] rounded-lg p-2.5">
+                <span className="font-medium text-[#4a9eff]">版本结论：</span>
+                <span className="text-[#8ba3c7]">C库必须存在但C库不能替代R库，案例匹配不等于规则裁决。</span>
+              </div>
             </div>
           </div>
 
@@ -216,9 +236,19 @@ export default function RoadmapPage() {
               <span className="text-sm font-semibold text-white">引入R库</span>
               <span className="text-xs bg-[#4a5e80]/40 text-[#6b8ab5] px-2 py-0.5 rounded-lg">已归档</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div><span className="font-medium text-[#4a9eff]">特点：</span><span className="text-[#8ba3c7]">开始规则化判断（R001/R002/R003）、系统开始具备决策雏形</span></div>
-              <div className="bg-[#1a2744] rounded-lg p-2.5 mt-2"><span className="font-medium text-[#4a9eff]">结论：</span><span className="text-[#8ba3c7]">R库是动态增重系统的核心，但不能只是规则列表，必须结构化</span></div>
+            <div className="space-y-3 text-sm">
+              <div>
+                <span className="font-medium text-[#4a9eff]">系统形态：</span>
+                <span className="text-[#8ba3c7]">开始规则化判断（R001/R002/R003），系统开始具备决策雏形。</span>
+              </div>
+              <div>
+                <span className="font-medium text-red-400">暴露问题：</span>
+                <span className="text-[#8ba3c7]">规则没有优先级、多规则触发时无法判断主因、规则之间可能冲突但无仲裁机制。</span>
+              </div>
+              <div className="bg-[#1a2744] rounded-lg p-2.5">
+                <span className="font-medium text-[#4a9eff]">版本结论：</span>
+                <span className="text-[#8ba3c7]">R库是动态增重系统的核心，但不能只是规则列表，必须结构化。</span>
+              </div>
             </div>
           </div>
 
@@ -229,9 +259,19 @@ export default function RoadmapPage() {
               <span className="text-sm font-semibold text-white">规则执行强化</span>
               <span className="text-xs bg-[#4a5e80]/40 text-[#6b8ab5] px-2 py-0.5 rounded-lg">已归档</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div><span className="font-medium text-[#4a9eff]">特点：</span><span className="text-[#8ba3c7]">R库开始主导决策、输出出现「裁决式逻辑」、系统从建议型变成判断型</span></div>
-              <div className="bg-[#1a2744] rounded-lg p-2.5 mt-2"><span className="font-medium text-[#4a9eff]">结论：</span><span className="text-[#8ba3c7]">R库可以让系统具备裁决能力，但裁决能力必须受P库和输出层控制</span></div>
+            <div className="space-y-3 text-sm">
+              <div>
+                <span className="font-medium text-[#4a9eff]">系统形态：</span>
+                <span className="text-[#8ba3c7]">R库开始主导决策，输出出现「裁决式逻辑」，系统从建议型变成判断型。</span>
+              </div>
+              <div>
+                <span className="font-medium text-red-400">暴露问题：</span>
+                <span className="text-[#8ba3c7]">裁决没有边界控制、K库仍会越权解释、输出不可控、系统依赖用户手动修正。</span>
+              </div>
+              <div className="bg-[#1a2744] rounded-lg p-2.5">
+                <span className="font-medium text-[#4a9eff]">版本结论：</span>
+                <span className="text-[#8ba3c7]">R库可以让系统具备裁决能力，但裁决能力必须受P库和输出层控制。</span>
+              </div>
             </div>
           </div>
 
@@ -242,10 +282,23 @@ export default function RoadmapPage() {
               <span className="text-sm font-semibold text-white">规则强制裁决版</span>
               <span className="text-xs bg-red-900/40 text-red-400 px-2 py-0.5 rounded-lg">基线 · 61分</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div><span className="font-medium text-[#4a9eff]">核心改造：</span><span className="text-[#8ba3c7]">R库按维度拆分+分层（L1/L2/L3）、C库升级为行为模式识别、K库约束为只解释不决策、P库成为系统逻辑边界</span></div>
-              <div><span className="font-medium text-[#4a9eff]">特点：</span><span className="text-[#8ba3c7]">R库开始「强制裁决」、L1类规则开始具备不可覆盖属性</span></div>
-              <div className="bg-red-900/20 rounded-lg p-2.5 mt-2"><span className="font-medium text-red-400">结论：</span><span className="text-[#8ba3c7]">R库强制裁决是必要的，系统必须进入可评估、可审计、可修复阶段</span></div>
+            <div className="space-y-3 text-sm">
+              <div>
+                <span className="font-medium text-[#4a9eff]">核心改造：</span>
+                <span className="text-[#8ba3c7]">R库按维度拆分+分层（L1/L2/L3）、C库升级为行为模式识别、K库约束为只解释不决策、P库成为系统逻辑边界。</span>
+              </div>
+              <div>
+                <span className="font-medium text-[#4a9eff]">系统形态：</span>
+                <span className="text-[#8ba3c7]">R库开始「强制裁决」，L1类规则开始具备不可覆盖属性。</span>
+              </div>
+              <div>
+                <span className="font-medium text-red-400">暴露问题：</span>
+                <span className="text-[#8ba3c7]">输出层与用户层未分离、系统语言泄漏、行动方案位置过深、R002待量化标记缺失。</span>
+              </div>
+              <div className="bg-red-900/20 rounded-lg p-2.5">
+                <span className="font-medium text-red-400">版本结论：</span>
+                <span className="text-[#8ba3c7]">R库强制裁决是必要的，系统必须进入可评估、可审计、可修复阶段。</span>
+              </div>
             </div>
           </div>
 
@@ -256,10 +309,23 @@ export default function RoadmapPage() {
               <span className="text-sm font-semibold text-white">评分评估与系统修复版</span>
               <span className="text-xs bg-amber-900/40 text-amber-400 px-2 py-0.5 rounded-lg">已完成</span>
             </div>
-            <div className="space-y-2 text-sm">
-              <div><span className="font-medium text-[#4a9eff]">核心变化：</span><span className="text-[#8ba3c7]">建立评分评估体系、引入双轨评分制（1.0系统合规性+2.0用户满意度）、系统质量可量化可追踪</span></div>
-              <div><span className="font-medium text-[#4a9eff]">关键进展：</span><span className="text-[#8ba3c7]">建立战略控制层、评分系统驱动问题识别、修复方向从「凭感觉」进入「数据驱动」</span></div>
-              <div className="bg-amber-900/20 rounded-lg p-2.5 mt-2"><span className="font-medium text-amber-400">结论：</span><span className="text-[#8ba3c7]">评分评估让系统进入可量化阶段，自动修复闭环成为可能</span></div>
+            <div className="space-y-3 text-sm">
+              <div>
+                <span className="font-medium text-[#4a9eff]">核心变化：</span>
+                <span className="text-[#8ba3c7]">建立评分评估体系、引入双轨评分制（1.0系统合规性+2.0用户满意度）、系统质量可量化可追踪。</span>
+              </div>
+              <div>
+                <span className="font-medium text-[#4a9eff]">关键进展：</span>
+                <span className="text-[#8ba3c7]">建立战略控制层、评分系统驱动问题识别、修复方向从「凭感觉」进入「数据驱动」、PC-9双层输出架构上线。</span>
+              </div>
+              <div>
+                <span className="font-medium text-red-400">暴露问题：</span>
+                <span className="text-[#8ba3c7]">系统合规但用户不满意（1.0均分80.8 vs 2.0均分71.8，9分差值）、四库内容实操性不足、真实场景交互缺口。</span>
+              </div>
+              <div className="bg-amber-900/20 rounded-lg p-2.5">
+                <span className="font-medium text-amber-400">版本结论：</span>
+                <span className="text-[#8ba3c7]">评分评估让系统进入可量化阶段，双轨评分暴露了合规与满意的系统性落差，自动修复闭环成为可能。</span>
+              </div>
             </div>
           </div>
 

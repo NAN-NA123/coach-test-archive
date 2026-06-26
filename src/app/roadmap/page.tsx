@@ -329,6 +329,17 @@ export default function RoadmapPage() {
             </div>
           </div>
 
+        {/* 2026-06-25 架构更新 */}
+        <div className="border border-[#2a3a5c] rounded-xl p-5 bg-[#141d33]">
+          <div className="flex items-center gap-3 mb-4">
+            <span className="text-2xl">🔄</span>
+            <h3 className="text-lg font-semibold text-white">2026-06-25｜从Prompt补丁转向工作流拆节点</h3>
+          </div>
+          <div className="pl-2">
+            <p className="text-[#6b8ab5] text-sm italic">（内容待补充，标题已创建）</p>
+          </div>
+        </div>
+
         </div>
       </div>
     </div>

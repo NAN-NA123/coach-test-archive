@@ -76,10 +76,10 @@ export default function LandingPage() {
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20 sm:pt-32 sm:pb-28">
           <div className="text-center">
             <h1 className="text-5xl sm:text-7xl font-bold text-white tracking-tight mb-4">
-              Coach<span className="text-[#4a9eff]">教练</span>
+              Coach
             </h1>
             <p className="text-xl sm:text-2xl text-[#8bb4e8] font-medium mb-4">
-              AI时代的私人定制AI教练
+              AI时代的私人定制教练
             </p>
             <p className="text-base sm:text-lg text-[#6b8ab5] max-w-2xl mx-auto leading-relaxed">
               面向体型管理受阻用户，通过记录、判断和动态调整，<br className="hidden sm:block" />
@@ -126,7 +126,7 @@ export default function LandingPage() {
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>记录热量、蛋白质、餐次、食欲、完成率</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>收集用户描述</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>发现饮食执行问题</span></li>
-              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span className="font-medium text-white">为动态增重系统提供判断数据</span></li>
+              <li className="flex gap-2"><span className="font-medium text-white">为动态增重系统提供判断数据</span></li>
             </ul>
           </div>
 

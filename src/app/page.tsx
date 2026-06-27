@@ -126,7 +126,7 @@ export default function LandingPage() {
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>记录热量、蛋白质、餐次、食欲、完成率</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>收集用户描述</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>发现饮食执行问题</span></li>
-              <li className="flex gap-2"><span className="font-medium text-white">为动态增重系统提供判断数据</span></li>
+              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span className="font-medium text-white">为动态增重系统提供判断数据</span></li>
             </ul>
           </div>
 

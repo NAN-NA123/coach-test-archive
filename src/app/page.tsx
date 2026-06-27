@@ -75,8 +75,10 @@ export default function LandingPage() {
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20 sm:pt-32 sm:pb-28">
           <div className="text-center">
-            <h1 className="text-5xl sm:text-7xl font-bold text-white tracking-tight mb-4">
-              Coach
+            <h1 className="mb-5 text-6xl sm:text-8xl lg:text-9xl font-black leading-none tracking-normal">
+              <span className="inline-block bg-gradient-to-b from-white via-[#dcecff] to-[#4a9eff] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(74,158,255,0.35)]">
+                Coach
+              </span>
             </h1>
             <p className="text-xl sm:text-2xl text-[#8bb4e8] font-medium mb-4">
               AI时代的私人定制教练

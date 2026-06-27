@@ -75,10 +75,13 @@ export default function LandingPage() {
 
         <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20 sm:pt-32 sm:pb-28">
           <div className="text-center">
-            <h1 className="mb-5 text-6xl sm:text-8xl lg:text-9xl font-black leading-none tracking-normal">
-              <span className="inline-block bg-gradient-to-b from-white via-[#dcecff] to-[#4a9eff] bg-clip-text text-transparent drop-shadow-[0_0_28px_rgba(74,158,255,0.35)]">
-                Coach
+            <h1 className="mb-5 text-[4.4rem] sm:text-[6.4rem] lg:text-[7rem] font-black leading-none tracking-normal">
+              <span className="inline-flex items-baseline justify-center">
+                <span className="bg-gradient-to-b from-white via-[#eaf4ff] to-[#8bb4e8] bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(74,158,255,0.24)]">C</span>
+                <span className="text-[#f3b35b] drop-shadow-[0_0_22px_rgba(243,179,91,0.35)]">o</span>
+                <span className="bg-gradient-to-b from-white via-[#dcecff] to-[#4a9eff] bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(74,158,255,0.26)]">ach</span>
               </span>
+              <span className="mx-auto mt-3 block h-1.5 w-28 rounded-full bg-gradient-to-r from-[#f3b35b] via-[#49d6a9] to-[#4a9eff]" />
             </h1>
             <p className="text-xl sm:text-2xl text-[#8bb4e8] font-medium mb-4">
               AI时代的私人定制教练

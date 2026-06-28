@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import { Navbar } from "@/components/Navbar";
@@ -34,12 +34,12 @@ export default function LandingPage() {
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 13.125C3 12.504 3.504 12 4.125 12h2.25c.621 0 1.125.504 1.125 1.125v6.75C7.5 20.496 6.996 21 6.375 21h-2.25A1.125 1.125 0 013 19.875v-6.75zM9.75 8.625c0-.621.504-1.125 1.125-1.125h2.25c.621 0 1.125.504 1.125 1.125v11.25c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V8.625zM16.5 4.125c0-.621.504-1.125 1.125-1.125h2.25C20.496 3 21 3.504 21 4.125v15.75c0 .621-.504 1.125-1.125 1.125h-2.25a1.125 1.125 0 01-1.125-1.125V4.125z" />
       </svg>
     )},
-    { num: "5", title: "动态调整饮食训练恢复方案", icon: (
+    { num: "5", title: "动态调整饮食、训练、恢复方案", icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182" />
       </svg>
     )},
-    { num: "6", title: "判断增肌/增重失败原因", icon: (
+    { num: "6", title: "判断体型管理受阻原因", icon: (
       <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M9.75 3.104v5.714a2.25 2.25 0 01-.659 1.591L5 14.5M9.75 3.104c-.251.023-.501.05-.75.082m.75-.082a24.301 24.301 0 014.5 0m0 0v5.714c0 .597.237 1.17.659 1.591L19.8 15.3M14.25 3.104c.251.023.501.05.75.082M19.8 15.3l-1.57.393A9.065 9.065 0 0112 15a9.065 9.065 0 00-6.23.693L5 14.5m14.8.8l1.402 1.402c1.232 1.232.65 3.318-1.067 3.611A48.309 48.309 0 0112 21c-2.773 0-5.491-.235-8.135-.687-1.718-.293-2.3-2.379-1.067-3.61L5 14.5" />
       </svg>
@@ -88,7 +88,7 @@ export default function LandingPage() {
             </p>
             <p className="text-base sm:text-lg text-[#6b8ab5] max-w-2xl mx-auto leading-relaxed">
               面向体型管理受阻用户，通过记录、判断和动态调整，<br className="hidden sm:block" />
-              帮助用户持续解决增肌/增重过程中的问题
+              识别训练、营养、恢复和执行中的主要瓶颈，给出下一步行动
             </p>
           </div>
         </div>
@@ -105,9 +105,9 @@ export default function LandingPage() {
           <blockquote className="relative">
             <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-[#4a9eff] to-[#4a9eff]/20 rounded-full hidden sm:block" />
             <p className="text-xl sm:text-2xl text-white font-medium leading-relaxed">
-              不是生成一次性计划，<br />
-              而是根据用户记录和反馈，<br />
-              <span className="text-[#4a9eff]">持续判断问题、动态调整方案</span>。
+              不是普通健身聊天工具，<br />
+              而是围绕训练、营养、恢复与执行数据，<br />
+              <span className="text-[#4a9eff]">持续判断瓶颈、给出可执行的下一步</span>。
             </p>
           </blockquote>
         </div>
@@ -131,7 +131,7 @@ export default function LandingPage() {
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>记录热量、蛋白质、餐次、食欲、完成率</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>收集用户描述</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>发现饮食执行问题</span></li>
-              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span className="font-medium text-white">为动态增重系统提供判断数据</span></li>
+              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span className="font-medium text-white">为动态Coach决策系统提供判断数据</span></li>
             </ul>
           </div>
 
@@ -139,19 +139,19 @@ export default function LandingPage() {
           <div className="hidden md:flex absolute items-center justify-center" style={{ left: "50%", transform: "translateX(-50%)" }}>
           </div>
 
-          {/* 动态增重系统 */}
+          {/* 动态Coach决策系统 */}
           <div className="bg-gradient-to-br from-[#1a2744] to-[#141d33] rounded-xl border-2 border-[#4a9eff]/40 p-7">
             <div className="flex items-center gap-3 mb-5">
               <span className="w-9 h-9 rounded-lg bg-[#4a9eff] text-white text-sm font-bold flex items-center justify-center">2</span>
-              <h3 className="text-lg font-bold text-white">动态增重系统</h3>
+              <h3 className="text-lg font-bold text-white">动态Coach决策系统</h3>
               <span className="text-xs bg-[#4a9eff] text-white px-2 py-0.5 rounded-full font-medium">核心</span>
             </div>
             <ul className="space-y-3 text-sm text-[#8ba3c7]">
-              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>判断增重失败原因</span></li>
+              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>判断体型管理受阻的主因</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>匹配 R / K / C / P 四库</span></li>
-              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>动态调整方案</span></li>
-              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>处理吃不下、漏餐、消化差、训练停滞、睡眠不足、体重波动等问题</span></li>
-              <li className="flex gap-2 font-medium text-white"><span className="text-[#4a9eff] shrink-0">•</span><span>让用户持续执行，而非只拿计划</span></li>
+              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>动态调整训练、饮食、恢复和执行方案</span></li>
+              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>处理吃不下、漏餐、消化差、训练停滞、睡眠不足、体重波动、减脂卡点和补剂边界</span></li>
+              <li className="flex gap-2 font-medium text-white"><span className="text-[#4a9eff] shrink-0">•</span><span>让用户知道现在做什么、为什么做、观察什么信号</span></li>
             </ul>
           </div>
         </div>
@@ -166,7 +166,7 @@ export default function LandingPage() {
           <svg className="w-6 h-6 text-[#4a9eff] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-          <span className="bg-gradient-to-r from-[#4a9eff] to-[#3b82f6] rounded-lg px-4 py-2 text-white font-medium">动态增重系统</span>
+          <span className="bg-gradient-to-r from-[#4a9eff] to-[#3b82f6] rounded-lg px-4 py-2 text-white font-medium">动态Coach决策系统</span>
         </div>
       </section>
 
@@ -210,7 +210,7 @@ export default function LandingPage() {
             </div>
             <h3 className="text-base font-bold text-white mb-2">训练计划区</h3>
             <p className="text-sm text-[#8ba3c7] leading-relaxed">
-              展示适合用户的训练方案。根据动态增重系统反馈，调整训练频率、训练量、恢复安排和训练重点。
+              展示适合用户当前阶段的训练方案。根据动态Coach决策系统反馈，调整训练频率、训练量、恢复安排和训练重点。
             </p>
           </div>
 
@@ -241,6 +241,43 @@ export default function LandingPage() {
         </div>
       </section>
 
+      {/* Current Baseline */}
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <div className="grid grid-cols-1 lg:grid-cols-[1.05fr_0.95fr] gap-6">
+          <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">当前基线</span>
+              <span className="text-xs text-[#6b8ab5]">2026-06-28</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Dify V6.5 三路主流程稳定</h2>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed mb-5">
+              当前已完成 P0 红旗风险、补剂决策、普通 Coach 三条路径回测。下一步不是继续扩大临时 prompt 测试，而是进入正式四库/RAG 接入前的轻量防回归与节点调用协议验证。
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+              {["CLASS 1 P0 红旗风险", "CLASS 2 补剂决策", "CLASS 3 普通 Coach"].map((item) => (
+                <div key={item} className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] px-4 py-3 text-sm text-white">
+                  {item}
+                  <div className="mt-1 text-xs text-[#49d6a9]">已通过定向复测</div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-semibold bg-[#f3b35b] text-[#1d1305] px-3 py-1 rounded-full">失败案例回写</span>
+            </div>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">测试失败会进入规则和页面同步</h2>
+            <ul className="space-y-3 text-sm text-[#8ba3c7]">
+              <li className="flex gap-2"><span className="text-[#f3b35b] shrink-0">•</span><span>P0 场景禁止危险重试表达，并尽量贴合用户提到的具体物质和症状。</span></li>
+              <li className="flex gap-2"><span className="text-[#f3b35b] shrink-0">•</span><span>普通营养补充品允许安全前提下的耐受观察，风险型燃脂、促睾、激素和不明成分产品禁止试探。</span></li>
+              <li className="flex gap-2"><span className="text-[#f3b35b] shrink-0">•</span><span>减脂停滞必须补齐 7 天均值、水盐、周期、NEAT、睡眠压力等排查字段。</span></li>
+              <li className="flex gap-2"><span className="text-[#f3b35b] shrink-0">•</span><span>伤病升级场景不能给轻重量试探或换动作继续练。</span></li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
       {/* Development Roadmap */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <div className="text-center mb-10">
@@ -252,9 +289,9 @@ export default function LandingPage() {
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#4a9eff] text-white px-3 py-1 rounded-full">第一阶段</span>
             </div>
-            <div className="text-base font-semibold text-white mb-3">只做增重区</div>
+            <div className="text-base font-semibold text-white mb-3">聚焦体型增长受阻</div>
             <p className="text-sm text-[#8ba3c7] leading-relaxed">
-              核心目标是收集瘦子增重失败案例，帮助瘦子持续增重。
+              当前优先服务增重、增肌、体型增长受阻用户，沉淀可回测的失败案例、规则边界和动态调整路径。
             </p>
           </div>
 
@@ -262,12 +299,12 @@ export default function LandingPage() {
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#6b8ab5] text-white px-3 py-1 rounded-full">第二阶段</span>
             </div>
-            <div className="text-base font-semibold text-white mb-3">扩展更多人群和目标</div>
+            <div className="text-base font-semibold text-white mb-3">扩展体型管理目标</div>
             <p className="text-sm text-[#8ba3c7] leading-relaxed mb-4">
-              依靠用户数据和动态增重系统，扩展更多人群和目标。
+              在四库和 RAG 调用稳定后，再逐步扩展到减脂、塑形、训练表现和恢复管理。
             </p>
             <div className="flex flex-wrap gap-2">
-              {["减脂教练", "高级训练/营养教练", "高级决策系统", "专业版教练"].map((item) => (
+              {["减脂", "塑形", "训练表现", "恢复管理"].map((item) => (
                 <span key={item} className="text-xs bg-[#1a2744] text-[#8bb4e8] px-3 py-1.5 rounded-lg border border-[#2a3a5c]">
                   {item}
                 </span>
@@ -294,7 +331,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">产品理念</h3>
             </div>
-            <p className="text-sm text-[#8ba3c7] mb-4">了解Coach教练的核心设计理念和产品架构</p>
+            <p className="text-sm text-[#8ba3c7] mb-4">了解 Coach 作为体型管理决策系统的核心理念和产品架构</p>
             <span className="text-sm text-[#4a9eff] group-hover:underline">查看详情 →</span>
           </Link>
 
@@ -307,7 +344,7 @@ export default function LandingPage() {
               </div>
               <h3 className="text-lg font-bold text-white">测试档案</h3>
             </div>
-            <p className="text-sm text-[#8ba3c7] mb-4">Coach教练系统的历史测试评估记录</p>
+            <p className="text-sm text-[#8ba3c7] mb-4">Coach 系统的历史测试评估记录</p>
             <span className="text-sm text-emerald-400 group-hover:underline">查看详情 →</span>
           </Link>
 
@@ -369,10 +406,12 @@ export default function LandingPage() {
       <footer className="border-t border-[#1a2744] py-8 mt-8">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 text-center">
           <p className="text-sm text-[#4a5e80]">
-            Coach教练 — AI时代的私人定制AI教练
+            Coach — AI时代的私人定制教练
           </p>
         </div>
       </footer>
     </div>
   );
 }
+
+

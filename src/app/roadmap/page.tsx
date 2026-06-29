@@ -1,4 +1,4 @@
-export default function RoadmapPage() {
+﻿export default function RoadmapPage() {
   const sectionBg = "bg-[#141d33] border border-[#2a3a5c] rounded-xl";
   const head = "text-base font-semibold text-white";
   const body = "text-sm text-[#8ba3c7]";
@@ -329,14 +329,33 @@ export default function RoadmapPage() {
             </div>
           </div>
 
-        {/* 2026-06-25 架构更新 */}
+        {/* 2026-06-25 至 2026-06-29 路线更新 */}
         <div className="border border-[#2a3a5c] rounded-xl p-5 bg-[#141d33]">
           <div className="flex items-center gap-3 mb-4">
             <span className="text-2xl">🔄</span>
-            <h3 className="text-lg font-semibold text-white">2026-06-25｜从Prompt补丁转向工作流拆节点</h3>
+            <h3 className="text-lg font-semibold text-white">2026-06-25｜从 Prompt 补丁转向 Dify 工作流拆节点</h3>
           </div>
-          <div className="pl-2">
-            <p className="text-[#6b8ab5] text-sm italic">（内容待补充，标题已创建）</p>
+          <div className="space-y-3 text-sm text-[#8ba3c7]">
+            <p>
+              V6.4 回测证明，继续在单 Agent 长 Prompt 上补安全边界和路径判断，已经难以稳定控制 P0 红旗、补剂分类和普通 Coach 场景。主路线转向 Dify 工作流拆节点。
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
+              <div className="bg-[#0f1729] rounded-lg border border-[#2a3a5c] p-3">
+                <div className="text-xs text-[#4a9eff] mb-1">2026-06-25</div>
+                <div className="text-white font-medium mb-1">冻结单 Agent 补丁路线</div>
+                <div className="text-xs text-[#6b8ab5]">先整理四库更新缺口，不直接包装成正式 RAG 能力。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#2a3a5c] p-3">
+                <div className="text-xs text-[#4a9eff] mb-1">2026-06-28</div>
+                <div className="text-white font-medium mb-1">V6.5 三路主流程稳定</div>
+                <div className="text-xs text-[#6b8ab5]">CLASS 1 P0、CLASS 2 补剂、CLASS 3 普通 Coach 进入 RAG 接入前基线。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#2a3a5c] p-3">
+                <div className="text-xs text-[#4a9eff] mb-1">2026-06-29</div>
+                <div className="text-white font-medium mb-1">网站维护 SOP 固定</div>
+                <div className="text-xs text-[#6b8ab5]">产品理念只放正式表达；失败案例库、测试档案、决策日志更新到当天。</div>
+              </div>
+            </div>
           </div>
         </div>
 

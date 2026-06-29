@@ -47,9 +47,9 @@ export default function DecisionsPage() {
           <div className="text-xs text-[#4a5e80] mt-1">条关键决策</div>
         </div>
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
-          <div className="text-xs text-[#6b8ab5] mb-1">跨越天数</div>
+          <div className="text-xs text-[#6b8ab5] mb-1">记录天数</div>
           <div className="text-3xl font-semibold text-white font-mono">{summary.dayCount}</div>
-          <div className="text-xs text-[#4a5e80] mt-1">{summary.dateRange}</div>
+          <div className="text-xs text-[#4a5e80] mt-1">{summary.dateRange} 有记录</div>
         </div>
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
           <div className="text-xs text-[#6b8ab5] mb-1">日均决策</div>

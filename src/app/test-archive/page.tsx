@@ -107,9 +107,9 @@ export default function TestArchivePage() {
                 >
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all group-hover:scale-110 ${
-                      v.status === "当前稳定基线"
+                      v.id === "v6.5" || v.status === "当前稳定基线"
                         ? "bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400"
-                        : v.status === "已归档"
+                        : v.id === "v6.4" || v.status === "已归档"
                         ? "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]"
                         : v.status === "待执行" || v.status === "规划中"
                         ? "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400"
@@ -130,10 +130,10 @@ export default function TestArchivePage() {
                   <span className="text-xs mt-0.5 font-mono text-[#4a9eff]">
                     {v.totalScore !== null
                       ? `1.0:${v.totalScore}`
-                      : v.status === "当前稳定基线"
+                      : v.id === "v6.5" || v.status === "当前稳定基线"
                       ? "稳定"
-                      : v.status === "已归档"
-                      ? "—"
+                      : v.id === "v6.4" || v.status === "已归档"
+                      ? "归档"
                       : "待测"}
                   </span>
                   {v.totalScore2 !== null && v.totalScore2 !== undefined && (

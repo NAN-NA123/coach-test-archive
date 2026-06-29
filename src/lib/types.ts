@@ -6,7 +6,7 @@ export interface VersionData {
   totalScore: number | null;
   /** 2.0用户满意度均分（V6.2起有值，之前版本为null） */
   totalScore2?: number | null;
-  testRounds: number | null;
+  testRounds: number | string | null;
   coreChange: string;
   dimensions: {
     rLibrary: DimensionScore;
@@ -107,7 +107,7 @@ export interface QARecord {
   question: string;
   pressurePoint: string;
   rTrigger?: string;
-  score: number;
+  score: number | null;
   /** 2.0评分（V6.2起有值） */
   score2?: number;
   coachAnswer: string;

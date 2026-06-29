@@ -19,6 +19,20 @@ interface DecisionGroup {
   decisions: Decision[];
 }
 
+function getDateRangeDayCount(dateRange: string) {
+  const [startRaw, endRaw] = dateRange.split("~").map((part) => part.trim());
+  const parseDate = (value: string) => {
+    const [year, month, day] = value.split("-").map(Number);
+    return Date.UTC(year, month - 1, day);
+  };
+
+  const start = parseDate(startRaw);
+  const end = parseDate(endRaw);
+  if (!Number.isFinite(start) || !Number.isFinite(end) || end < start) return 1;
+
+  return Math.floor((end - start) / 86400000) + 1;
+}
+
 export default function DecisionsPage() {
   const [expandedId, setExpandedId] = useState<number | null>(null);
   const { summary, groups } = decisionsData as {
@@ -30,6 +44,7 @@ export default function DecisionsPage() {
     (acc, g) => acc + g.decisions.length,
     0
   );
+  const dateRangeDayCount = getDateRangeDayCount(summary.dateRange);
 
   return (
     <div className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
@@ -47,13 +62,13 @@ export default function DecisionsPage() {
           <div className="text-xs text-[#4a5e80] mt-1">条关键决策</div>
         </div>
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
-          <div className="text-xs text-[#6b8ab5] mb-1">记录天数</div>
-          <div className="text-3xl font-semibold text-white font-mono">{summary.dayCount}</div>
-          <div className="text-xs text-[#4a5e80] mt-1">{summary.dateRange} 有记录</div>
+          <div className="text-xs text-[#6b8ab5] mb-1">覆盖天数</div>
+          <div className="text-3xl font-semibold text-white font-mono">{dateRangeDayCount}</div>
+          <div className="text-xs text-[#4a5e80] mt-1">{summary.dateRange}</div>
         </div>
         <div className="bg-[#141d33] border border-[#2a3a5c] rounded-xl p-5">
           <div className="text-xs text-[#6b8ab5] mb-1">日均决策</div>
-          <div className="text-3xl font-semibold text-white font-mono">{(totalDecisions / summary.dayCount).toFixed(1)}</div>
+          <div className="text-3xl font-semibold text-white font-mono">{(totalDecisions / dateRangeDayCount).toFixed(1)}</div>
           <div className="text-xs text-[#4a5e80] mt-1">条/天</div>
         </div>
       </div>

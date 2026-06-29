@@ -14,6 +14,7 @@ function getVersionDisplayState(version: VersionData) {
       badge: "当前稳定基线",
       circleClass: "bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400",
       badgeClass: "bg-emerald-500/10 text-emerald-400",
+      cardClass: "border-emerald-500/35 hover:border-emerald-400/70",
     };
   }
 
@@ -21,8 +22,9 @@ function getVersionDisplayState(version: VersionData) {
     return {
       label: "已归档",
       badge: "已归档",
-      circleClass: "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]",
-      badgeClass: "bg-[#1a2744] text-[#6b8ab5]",
+      circleClass: "bg-sky-500/15 border-2 border-sky-400/60 text-sky-300 shadow-[0_0_18px_rgba(56,189,248,0.18)]",
+      badgeClass: "bg-sky-500/10 text-sky-300 border border-sky-400/30",
+      cardClass: "border-sky-400/40 hover:border-sky-300/70",
     };
   }
 
@@ -32,6 +34,7 @@ function getVersionDisplayState(version: VersionData) {
       badge: "待回测",
       circleClass: "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400",
       badgeClass: "bg-amber-500/10 text-amber-400",
+      cardClass: "border-amber-500/35 hover:border-amber-400/70",
     };
   }
 
@@ -41,6 +44,7 @@ function getVersionDisplayState(version: VersionData) {
       badge: version.status,
       circleClass: "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400",
       badgeClass: "bg-amber-500/10 text-amber-400",
+      cardClass: "border-amber-500/35 hover:border-amber-400/70",
     };
   }
 
@@ -49,6 +53,7 @@ function getVersionDisplayState(version: VersionData) {
     badge: version.status,
     circleClass: "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]",
     badgeClass: "bg-[#1a2744] text-[#6b8ab5]",
+    cardClass: "border-[#2a3a5c] hover:border-[#4a9eff]/50",
   };
 }
 
@@ -202,7 +207,13 @@ export default function TestArchivePage() {
             {currentArchiveAdditions.map((item) => (
               <div
                 key={item.version}
-                className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-6"
+                className={`bg-[#141d33] rounded-xl border p-6 ${
+                  item.status === "当前稳定基线"
+                    ? "border-emerald-500/35"
+                    : item.status === "已归档"
+                    ? "border-sky-400/40"
+                    : "border-[#2a3a5c]"
+                }`}
               >
                 <div className="flex flex-wrap items-center gap-3 mb-3">
                   <span className="text-white font-bold text-xl">
@@ -215,6 +226,8 @@ export default function TestArchivePage() {
                     className={`text-xs px-2 py-1 rounded-lg font-medium ${
                       item.status === "当前稳定基线"
                         ? "bg-emerald-500/10 text-emerald-400"
+                        : item.status === "已归档"
+                        ? "bg-sky-500/10 text-sky-300 border border-sky-400/30"
                         : "bg-[#1a2744] text-[#6b8ab5]"
                     }`}
                   >
@@ -408,7 +421,7 @@ export default function TestArchivePage() {
               const displayState = getVersionDisplayState(v);
               return (
               <Link key={v.id} href={`/version/${v.id}`}>
-                <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-5 hover:border-[#4a9eff]/50 transition-all hover:-translate-y-0.5 group">
+                <div className={`bg-[#141d33] rounded-xl border ${displayState.cardClass} p-5 transition-all hover:-translate-y-0.5 group`}>
                   <div className="flex items-center justify-between mb-3">
                     <span className="text-white font-bold text-lg">
                       {v.name}

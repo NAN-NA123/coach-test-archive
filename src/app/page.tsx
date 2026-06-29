@@ -66,27 +66,25 @@ export default function LandingPage() {
       <Navbar />
 
       {/* Hero Section */}
-      <section className="relative overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[#0a0f1e] via-[#111b36] to-[#0d1530]" />
+      <section className="relative min-h-[calc(100vh-64px)] overflow-hidden flex items-center">
+        <div className="absolute inset-0 bg-gradient-to-br from-[#070d1a] via-[#0b1428] to-[#07101f]" />
         <div className="absolute inset-0 opacity-[0.03]" style={{
           backgroundImage: "radial-gradient(circle at 1px 1px, white 1px, transparent 0)",
           backgroundSize: "40px 40px"
         }} />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(74,158,255,0.18)_0%,rgba(74,158,255,0.08)_24%,transparent_52%)]" />
 
-        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 pt-20 pb-20 sm:pt-32 sm:pb-28">
+        <div className="relative max-w-6xl mx-auto px-4 sm:px-6 py-24 sm:py-28 w-full">
           <div className="text-center">
-            <h1 className="mb-5 text-[4.4rem] sm:text-[6.4rem] lg:text-[7rem] font-black leading-none tracking-normal">
-              <span className="inline-flex items-baseline justify-center">
-                <span className="bg-gradient-to-b from-white via-[#eaf4ff] to-[#8bb4e8] bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(74,158,255,0.24)]">C</span>
-                <span className="text-[#f3b35b] drop-shadow-[0_0_22px_rgba(243,179,91,0.35)]">o</span>
-                <span className="bg-gradient-to-b from-white via-[#dcecff] to-[#4a9eff] bg-clip-text text-transparent drop-shadow-[0_0_22px_rgba(74,158,255,0.26)]">ach</span>
-              </span>
-              <span className="mx-auto mt-3 block h-1.5 w-28 rounded-full bg-gradient-to-r from-[#f3b35b] via-[#49d6a9] to-[#4a9eff]" />
+            <h1 className="mb-8 text-[6.8rem] sm:text-[10rem] lg:text-[11rem] font-black leading-none tracking-normal text-white drop-shadow-[0_0_34px_rgba(74,158,255,0.26)]">
+              Coach
+              <span className="mx-auto mt-6 block h-px w-24 bg-[#4a9eff]" />
+              <span className="mx-auto mt-[-2px] block h-1.5 w-1.5 rounded-full bg-[#4a9eff]" />
             </h1>
-            <p className="text-xl sm:text-2xl text-[#8bb4e8] font-medium mb-4">
+            <p className="text-xl sm:text-2xl text-[#9bb9e3] font-medium mb-5">
               AI时代的私人定制教练
             </p>
-            <p className="text-base sm:text-lg text-[#6b8ab5] max-w-2xl mx-auto leading-relaxed">
+            <p className="text-base sm:text-lg text-[#6f8eb8] max-w-2xl mx-auto leading-relaxed">
               面向体型管理受阻用户，通过记录、判断和动态调整，<br className="hidden sm:block" />
               识别训练、营养、恢复和执行中的主要瓶颈，给出下一步行动
             </p>

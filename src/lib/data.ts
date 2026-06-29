@@ -39,6 +39,10 @@ export function getStatusBadge(status: string): { bg: string; text: string } {
       return { bg: "bg-emerald-500/15", text: "text-emerald-400" };
     case "待执行":
       return { bg: "bg-amber-500/15", text: "text-amber-400" };
+    case "待回测":
+      return { bg: "bg-amber-500/15", text: "text-amber-400" };
+    case "当前稳定基线":
+      return { bg: "bg-emerald-500/15", text: "text-emerald-400" };
     case "上线后迭代":
       return { bg: "bg-sky-500/15", text: "text-sky-400" };
     case "规划中":

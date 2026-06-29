@@ -7,6 +7,51 @@ import { DimensionChart } from "@/components/DimensionChart";
 import { getScoreColor } from "@/lib/data";
 
 type VersionData = (typeof versions)[number];
+function getVersionDisplayState(version: VersionData) {
+  if (version.id === "v6.5" || version.status === "当前稳定基线") {
+    return {
+      label: "稳定",
+      badge: "当前稳定基线",
+      circleClass: "bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400",
+      badgeClass: "bg-emerald-500/10 text-emerald-400",
+    };
+  }
+
+  if (version.id === "v6.4" || version.status === "已归档") {
+    return {
+      label: "已归档",
+      badge: "已归档",
+      circleClass: "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]",
+      badgeClass: "bg-[#1a2744] text-[#6b8ab5]",
+    };
+  }
+
+  if (version.id === "v6.3.3" || version.status === "待回测") {
+    return {
+      label: "待回测",
+      badge: "待回测",
+      circleClass: "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400",
+      badgeClass: "bg-amber-500/10 text-amber-400",
+    };
+  }
+
+  if (version.status === "待执行" || version.status === "规划中") {
+    return {
+      label: "待测",
+      badge: version.status,
+      circleClass: "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400",
+      badgeClass: "bg-amber-500/10 text-amber-400",
+    };
+  }
+
+  return {
+    label: "待测",
+    badge: version.status,
+    circleClass: "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]",
+    badgeClass: "bg-[#1a2744] text-[#6b8ab5]",
+  };
+}
+
 const currentArchiveAdditions = [
   {
     version: "V6.4",
@@ -99,7 +144,9 @@ export default function TestArchivePage() {
             版本演进
           </h2>
           <div className="flex items-center justify-between overflow-x-auto pb-4 px-2">
-            {versions.map((v, i) => (
+            {versions.map((v, i) => {
+              const displayState = getVersionDisplayState(v);
+              return (
               <div key={v.id} className="flex items-center">
                 <Link
                   href={`/version/${v.id}`}
@@ -107,19 +154,13 @@ export default function TestArchivePage() {
                 >
                   <div
                     className={`w-10 h-10 rounded-full flex items-center justify-center text-xs font-bold transition-all group-hover:scale-110 ${
-                      v.id === "v6.5" || v.status === "当前稳定基线"
-                        ? "bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400"
-                        : v.id === "v6.4" || v.status === "已归档"
-                        ? "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]"
-                        : v.status === "待执行" || v.status === "规划中"
-                        ? "bg-[#1a2744] border-2 border-amber-500/50 text-amber-400"
-                        : v.totalScore !== null && v.totalScore >= 90
+                      v.totalScore !== null && v.totalScore >= 90
                         ? "bg-emerald-500/20 border-2 border-emerald-500/50 text-emerald-400"
                         : v.totalScore !== null && v.totalScore >= 80
                         ? "bg-amber-500/20 border-2 border-amber-500/50 text-amber-400"
                         : v.totalScore !== null
                         ? "bg-rose-500/20 border-2 border-rose-500/50 text-rose-400"
-                        : "bg-[#1a2744] border-2 border-[#2a3a5c] text-[#6b8ab5]"
+                        : displayState.circleClass
                     }`}
                   >
                     {v.name.replace("V", "")}
@@ -130,11 +171,7 @@ export default function TestArchivePage() {
                   <span className="text-xs mt-0.5 font-mono text-[#4a9eff]">
                     {v.totalScore !== null
                       ? `1.0:${v.totalScore}`
-                      : v.id === "v6.5" || v.status === "当前稳定基线"
-                      ? "稳定"
-                      : v.id === "v6.4" || v.status === "已归档"
-                      ? "归档"
-                      : "待测"}
+                      : displayState.label}
                   </span>
                   {v.totalScore2 !== null && v.totalScore2 !== undefined && (
                     <span className="text-xs font-mono text-[#a78bfa]">
@@ -146,7 +183,7 @@ export default function TestArchivePage() {
                   <div className="w-6 sm:w-12 h-0.5 bg-[#2a3a5c] mx-1 flex-shrink-0" />
                 )}
               </div>
-            ))}
+            )})}
           </div>
         </section>
 
@@ -367,7 +404,9 @@ export default function TestArchivePage() {
             版本详情
           </h2>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            {versions.map((v) => (
+            {versions.map((v) => {
+              const displayState = getVersionDisplayState(v);
+              return (
               <Link key={v.id} href={`/version/${v.id}`}>
                 <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-5 hover:border-[#4a9eff]/50 transition-all hover:-translate-y-0.5 group">
                   <div className="flex items-center justify-between mb-3">
@@ -375,21 +414,9 @@ export default function TestArchivePage() {
                       {v.name}
                     </span>
                     <span
-                      className={`text-xs px-2 py-1 rounded-lg font-medium ${
-                        v.status === "已归档"
-                          ? "bg-[#1a2744] text-[#6b8ab5]"
-                          : v.status === "基线"
-                          ? "bg-[#1a2744] text-[#8ba3c7]"
-                          : v.status === "已完成"
-                          ? "bg-emerald-500/10 text-emerald-400"
-                          : v.status === "待执行"
-                          ? "bg-amber-500/10 text-amber-400"
-                          : v.status === "规划中"
-                          ? "bg-violet-500/10 text-violet-400"
-                          : "bg-[#1a2744] text-[#6b8ab5]"
-                      }`}
+                      className={`text-xs px-2 py-1 rounded-lg font-medium ${displayState.badgeClass}`}
                     >
-                      {v.status}
+                      {displayState.badge}
                     </span>
                   </div>
                   <p className="text-[#6b8ab5] text-sm mb-3 line-clamp-2">
@@ -418,8 +445,10 @@ export default function TestArchivePage() {
                         </>
                       ) : (
                         <span className="text-sm text-[#4a5e80]">
-                          {v.status === "已归档"
+                          {v.id === "v6.4" || v.status === "已归档"
                             ? "未评分"
+                            : v.id === "v6.3.3" || v.status === "待回测"
+                            ? "待回测"
                             : v.issues?.length
                             ? `${v.issues.length}项修复计划中`
                             : "待测试"}
@@ -432,7 +461,7 @@ export default function TestArchivePage() {
                   </div>
                 </div>
               </Link>
-            ))}
+            )})}
           </div>
         </section>
       </div>

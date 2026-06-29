@@ -28,8 +28,17 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
   const prevVersion = currentIdx > 0 ? allVersions[currentIdx - 1] : null;
 
   const hasScore = version.totalScore !== null;
-  const isPending = version.status === "待执行" || version.status === "规划中" || version.status === "上线后迭代";
-  const isArchived = version.status === "已归档";
+  const isReviewPending = version.id === "v6.3.3" || version.status === "待回测";
+  const isStableBaseline = version.id === "v6.5" || version.status === "当前稳定基线";
+  const isArchived = version.id === "v6.4" || version.status === "已归档";
+  const displayStatus = isStableBaseline
+    ? "当前稳定基线"
+    : isArchived
+    ? "已归档"
+    : isReviewPending
+    ? "待回测"
+    : version.status;
+  const isPending = isReviewPending || version.status === "待执行" || version.status === "规划中" || version.status === "上线后迭代";
 
   return (
     <div className="min-h-screen" style={{ background: "#0a0f1e" }}>
@@ -47,8 +56,8 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
             <div className="flex-1">
               <div className="flex items-center gap-3">
                 <h1 className="text-2xl sm:text-3xl font-bold text-white">{version.fullName}</h1>
-                <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${getStatusBadge(version.status).bg} ${getStatusBadge(version.status).text}`}>
-                  {version.status}
+                <span className={`text-xs px-2.5 py-1 rounded-full font-medium ${getStatusBadge(displayStatus).bg} ${getStatusBadge(displayStatus).text}`}>
+                  {displayStatus}
                 </span>
               </div>
               <p className="text-[#8ba3c7] mt-2">{version.coreChange}</p>
@@ -85,9 +94,11 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
             ) : isPending ? (
               <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-amber-500/30">
                 <div className="text-2xl font-bold text-amber-400">
-                  {version.status === "待执行" ? "待测" : "规划中"}
+                  {isReviewPending ? "待回测" : version.status === "待执行" ? "待测" : "规划中"}
                 </div>
-                <div className="text-xs text-[#6b8ab5] mt-1">尚未测试</div>
+                <div className="text-xs text-[#6b8ab5] mt-1">
+                  {isReviewPending ? "等待回测验证" : "尚未测试"}
+                </div>
               </div>
             ) : isArchived ? (
               <div className="text-center px-6 py-3 rounded-lg bg-[#1a2744] border border-[#2a3a5c]">
@@ -183,7 +194,7 @@ export default async function VersionDetailPage({ params }: { params: Promise<{ 
         ) : isPending ? (
           <>
             {version.issues.length > 0 && (
-              <Section title={version.status === "待执行" ? "计划修复项" : "迭代方向"}>
+              <Section title={isReviewPending ? "回测计划" : version.status === "待执行" ? "计划修复项" : "迭代方向"}>
                 <div className="space-y-3">
                   {version.issues.map((issue) => (
                     <div key={issue.id} className="flex items-start gap-3 p-4 bg-[#1a2744] rounded-lg border border-[#2a3a5c]">

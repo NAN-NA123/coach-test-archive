@@ -127,6 +127,7 @@ export default function LandingPage() {
             <ul className="space-y-3 text-sm text-[#8ba3c7]">
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>记录饮食</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>记录热量、蛋白质、餐次、食欲、完成率</span></li>
+              <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>维护食物库、添加、计算、汇总等底层数据能力</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>收集用户描述</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span>发现饮食执行问题</span></li>
               <li className="flex gap-2"><span className="text-[#4a9eff] shrink-0">•</span><span className="font-medium text-white">为动态Coach决策系统提供判断数据</span></li>
@@ -160,7 +161,7 @@ export default function LandingPage() {
           <svg className="w-6 h-6 text-[#4a9eff] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
-          <span className="text-xs text-[#6b8ab5]">提供判断数据</span>
+          <span className="text-xs text-[#6b8ab5]">提供底层数据</span>
           <svg className="w-6 h-6 text-[#4a9eff] shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
           </svg>
@@ -282,7 +283,7 @@ export default function LandingPage() {
           <h2 className="text-2xl sm:text-3xl font-bold text-white mb-3">发展路线</h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#4a9eff] text-white px-3 py-1 rounded-full">第一阶段</span>
@@ -290,6 +291,16 @@ export default function LandingPage() {
             <div className="text-base font-semibold text-white mb-3">聚焦体型增长受阻</div>
             <p className="text-sm text-[#8ba3c7] leading-relaxed">
               当前优先服务增重、增肌、体型增长受阻用户，沉淀可回测的失败案例、规则边界和动态调整路径。
+            </p>
+          </div>
+
+          <div className="bg-[#141d33] rounded-xl border border-[#2a3a5c] p-7">
+            <div className="flex items-center gap-3 mb-4">
+              <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">底层能力</span>
+            </div>
+            <div className="text-base font-semibold text-white mb-3">营养数据底座</div>
+            <p className="text-sm text-[#8ba3c7] leading-relaxed">
+              营养模块优先做好食物库、添加、计算、汇总和同步给 Coach，不先做成「今天怎么吃」的聊天首页。
             </p>
           </div>
 

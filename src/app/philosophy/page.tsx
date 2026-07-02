@@ -92,7 +92,7 @@ export default function PhilosophyPage() {
               营养管理区不是单纯的热量查询表，也不是营养百科。
             </p>
             <p className="text-sm text-[#8ba3c7] leading-relaxed">
-              它负责记录用户的饮食、热量、蛋白质、餐次、食欲、完成率和消化状态，并为Coach判断摄入不足、执行断档、食物选择不合适或胃肠耐受失败提供数据。
+              它负责记录用户的饮食、热量、蛋白质、餐次、食欲、完成率和消化状态，并维护食物库、添加、计算、汇总等底层能力，为Coach判断摄入不足、执行断档、食物选择不合适或胃肠耐受失败提供数据。
             </p>
           </div>
 
@@ -142,6 +142,33 @@ export default function PhilosophyPage() {
             <p className="text-sm text-[#8ba3c7] leading-relaxed">
               烹饪细节区根据用户食谱提供可执行的烹饪方式，包括食材处理、替代食材、低成本做法，以及宿舍、便利店、外卖等真实生活场景适配。
             </p>
+          </div>
+        </div>
+      </div>
+
+      {/* 营养库与Coach分层 */}
+      <div className="bg-[#141d33] rounded-xl border border-[#49d6a9]/35 p-8 mb-8">
+        <h2 className="text-xl font-bold text-white mb-5">营养库与Coach分层</h2>
+        <div className="space-y-4">
+          <p className="text-white font-semibold text-lg leading-relaxed">
+            Coach的数据底座和Coach的决策表达必须分层。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            营养库负责记录、计算、来源、审核和API；Coach负责在用户真实生活场景中调用这些数据做判断。
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] p-4">
+              <div className="text-sm font-semibold text-[#49d6a9] mb-2">营养库优先做什么</div>
+              <p className="text-sm text-[#8ba3c7] leading-relaxed">
+                食物库、用户添加、包装标签候选、热量和营养计算、每日汇总，以及同步给Coach的结构化数据。
+              </p>
+            </div>
+            <div className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] p-4">
+              <div className="text-sm font-semibold text-[#4a9eff] mb-2">Coach负责什么</div>
+              <p className="text-sm text-[#8ba3c7] leading-relaxed">
+                在便利店、外卖、训练后补充等真实场景中，调用营养数据判断下一步行动，而不是让营养库自己变成聊天首页。
+              </p>
+            </div>
           </div>
         </div>
       </div>

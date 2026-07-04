@@ -339,7 +339,7 @@
             <p>
               V6.4 回测证明，继续在单 Agent 长 Prompt 上补安全边界和路径判断，已经难以稳定控制 P0 红旗、补剂分类和普通 Coach 场景。主路线转向 Dify 工作流拆节点。
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
               <div className="bg-[#0f1729] rounded-lg border border-[#2a3a5c] p-3">
                 <div className="text-xs text-[#4a9eff] mb-1">2026-06-25</div>
                 <div className="text-white font-medium mb-1">冻结单 Agent 补丁路线</div>
@@ -364,6 +364,11 @@
                 <div className="text-xs text-[#f3b35b] mb-1">2026-07-03</div>
                 <div className="text-white font-medium mb-1">预约页 V1.1 结构冻结</div>
                 <div className="text-xs text-[#6b8ab5]">不再继续调整页面信息结构；后续只做视觉、排版和细节微调，营养库继续保持数据底座方向。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#a78bfa]/35 p-3">
+                <div className="text-xs text-[#a78bfa] mb-1">2026-07-04</div>
+                <div className="text-white font-medium mb-1">防回归判定口径修正</div>
+                <div className="text-xs text-[#6b8ab5]">战略AI先按真实用户审核，再看路径。普通营养补充品可做安全前提下的耐受观察；陌生产品仍禁止低量试探。</div>
               </div>
             </div>
           </div>

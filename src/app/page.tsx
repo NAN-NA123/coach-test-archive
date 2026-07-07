@@ -246,17 +246,17 @@ export default function LandingPage() {
           <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">当前基线</span>
-              <span className="text-xs text-[#6b8ab5]">2026-06-28</span>
+              <span className="text-xs text-[#6b8ab5]">2026-07-07</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Dify V6.5 三路主流程稳定</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Dify V6.5 发布版基线与 B12 草稿回归</h2>
             <p className="text-sm text-[#8ba3c7] leading-relaxed mb-5">
-              当前已完成 P0 红旗风险、补剂决策、普通 Coach 三条路径回测。下一步不是继续扩大临时 prompt 测试，而是进入正式四库/RAG 接入前的轻量防回归与节点调用协议验证。
+              guardfix 发布版 200 题稳定基线通过；IE-009 guard + CLASS4 v4 草稿回归通过但未发布。B12 长期纯素剂量边界已确认 prompt-only 窄修失败，代码兜底已导入草稿，仍需真实草稿运行回归，未通过前不发布。
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {["CLASS 1 P0 红旗风险", "CLASS 2 补剂决策", "CLASS 3 普通 Coach"].map((item) => (
+              {["发布版 200 基线", "IE-009 + CLASS4 v4", "B12 代码兜底待回归"].map((item) => (
                 <div key={item} className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] px-4 py-3 text-sm text-white">
                   {item}
-                  <div className="mt-1 text-xs text-[#49d6a9]">已通过定向复测</div>
+                  <div className="mt-1 text-xs text-[#49d6a9]">已进入回归记录</div>
                 </div>
               ))}
             </div>

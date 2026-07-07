@@ -15,6 +15,26 @@
       <div className="mb-12">
         <h2 className="text-xl font-bold text-white mb-6">系统设计全流程图</h2>
         <div className="space-y-4">
+          <div className={`${sectionBg} p-5 border-cyan-700/40`}>
+            <div className="flex items-center gap-2 mb-3">
+              <span className="w-7 h-7 rounded-lg bg-cyan-600 text-white text-xs font-bold flex items-center justify-center">现</span>
+              <h3 className={head}>当前接入状态（2026-07-07）</h3>
+            </div>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
+              <div className="bg-[#1a2744] rounded-lg p-3">
+                <div className="font-semibold text-white mb-1">Dify V6.5 草稿</div>
+                <div className={body}>guardfix 发布版 200 题稳定基线通过；IE-009 guard + CLASS4 v4 已草稿回归通过，仍需发布前核对。</div>
+              </div>
+              <div className="bg-[#1a2744] rounded-lg p-3">
+                <div className="font-semibold text-white mb-1">四库 RAG</div>
+                <div className={body}>P/PC、R、K、C 四库全量文档已导入可用；本轮 B12 问题不走补 RAG 或调 topK，先做最窄输出兜底。</div>
+              </div>
+              <div className="bg-[#1a2744] rounded-lg p-3">
+                <div className="font-semibold text-white mb-1">自动化回归</div>
+                <div className={body}>B12长期纯素剂量边界确认硬失败；prompt-only v1/v2 未修复，代码兜底已导入草稿，待真实草稿回归。</div>
+              </div>
+            </div>
+          </div>
 
           {/* ① 系统设计层 */}
           <div className={`${sectionBg} p-5`}>
@@ -339,7 +359,7 @@
             <p>
               V6.4 回测证明，继续在单 Agent 长 Prompt 上补安全边界和路径判断，已经难以稳定控制 P0 红旗、补剂分类和普通 Coach 场景。主路线转向 Dify 工作流拆节点。
             </p>
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-6 gap-3">
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3">
               <div className="bg-[#0f1729] rounded-lg border border-[#2a3a5c] p-3">
                 <div className="text-xs text-[#4a9eff] mb-1">2026-06-25</div>
                 <div className="text-white font-medium mb-1">冻结单 Agent 补丁路线</div>
@@ -369,6 +389,16 @@
                 <div className="text-xs text-[#a78bfa] mb-1">2026-07-04</div>
                 <div className="text-white font-medium mb-1">防回归判定口径修正</div>
                 <div className="text-xs text-[#6b8ab5]">战略AI先按真实用户审核，再看路径。普通营养补充品可做安全前提下的耐受观察；陌生产品仍禁止低量试探。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#49d6a9]/35 p-3">
+                <div className="text-xs text-[#49d6a9] mb-1">2026-07-06</div>
+                <div className="text-white font-medium mb-1">四库 RAG 与 guard 窄修</div>
+                <div className="text-xs text-[#6b8ab5]">四库全量 RAG 24题通过；压力200发现 guard 过度拒答，草稿窄修后原失败题回归通过，完整200待收口。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#4a9eff]/35 p-3">
+                <div className="text-xs text-[#4a9eff] mb-1">2026-07-07</div>
+                <div className="text-white font-medium mb-1">发布版基线与 B12 边界</div>
+                <div className="text-xs text-[#6b8ab5]">guardfix 发布版200通过；IE-009/CLASS4 v4草稿通过；B12长期纯素剂量边界转入代码兜底草稿回归。</div>
               </div>
             </div>
           </div>

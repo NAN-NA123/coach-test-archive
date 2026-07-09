@@ -246,14 +246,14 @@ export default function LandingPage() {
           <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">当前基线</span>
-              <span className="text-xs text-[#6b8ab5]">2026-07-07</span>
+              <span className="text-xs text-[#6b8ab5]">2026-07-09</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Dify V6.5 发布版基线与 B12 草稿回归</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Dify V6.5 v5 发布版基线与长测中</h2>
             <p className="text-sm text-[#8ba3c7] leading-relaxed mb-5">
-              guardfix 发布版 200 题稳定基线通过；IE-009 guard + CLASS4 v4 草稿回归通过但未发布。B12 长期纯素剂量边界已确认 prompt-only 窄修失败，代码兜底已导入草稿，仍需真实草稿运行回归，未通过前不发布。
+              v5 发布版已完成影响集38题、发布后200题和四库压力200题回归。夜间200已完成117题有效集，剩余83题因 Dify 租户执行额度429待断点续跑；v1c本地400整体有条件通过，PV20N-107 肌酸标签5g场景作为记录项观察。
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {["发布版 200 基线", "IE-009 + CLASS4 v4", "B12 代码兜底待回归"].map((item) => (
+              {["v5发布后200通过", "夜间117有效集通过", "PV20N-107记录观察"].map((item) => (
                 <div key={item} className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] px-4 py-3 text-sm text-white">
                   {item}
                   <div className="mt-1 text-xs text-[#49d6a9]">已进入回归记录</div>

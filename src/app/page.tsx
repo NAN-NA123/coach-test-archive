@@ -246,17 +246,17 @@ export default function LandingPage() {
           <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">当前基线</span>
-              <span className="text-xs text-[#6b8ab5]">2026-07-09</span>
+              <span className="text-xs text-[#6b8ab5]">2026-07-11</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">Dify V6.5 v5 发布版基线与长测中</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">前端代理层成为正式体验边界</h2>
             <p className="text-sm text-[#8ba3c7] leading-relaxed mb-5">
-              v5 发布版已完成影响集38题、发布后200题和四库压力200题回归。夜间200已完成117题有效集，剩余83题因 Dify 租户执行额度429待断点续跑；v1c本地400整体有条件通过，PV20N-107 肌酸标签5g场景作为记录项观察。
+              归律 Demo 与正式产品前端不得直连 Dify。AI 决策能力通过后端代理层封装为稳定 JSON 决策卡，再展示给用户；四库、RAG、CLASS、节点、权重和 Prompt 只作为内部判断来源，不在前端暴露。
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {["v5发布后200通过", "夜间117有效集通过", "PV20N-107记录观察"].map((item) => (
+              {["前端不直连Dify", "后端代理层兜底", "稳定JSON决策卡"].map((item) => (
                 <div key={item} className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] px-4 py-3 text-sm text-white">
                   {item}
-                  <div className="mt-1 text-xs text-[#49d6a9]">已进入回归记录</div>
+                  <div className="mt-1 text-xs text-[#49d6a9]">已同步产品库边界</div>
                 </div>
               ))}
             </div>

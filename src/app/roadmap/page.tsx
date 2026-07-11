@@ -18,20 +18,20 @@
           <div className={`${sectionBg} p-5 border-cyan-700/40`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-7 h-7 rounded-lg bg-cyan-600 text-white text-xs font-bold flex items-center justify-center">现</span>
-              <h3 className={head}>当前接入状态（2026-07-09）</h3>
+              <h3 className={head}>当前接入状态（2026-07-11）</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">Dify V6.5 v5</div>
-                <div className={body}>v5发布版影响集38题、发布后200题、四库压力200题回归通过；长测继续推进。</div>
+                <div className="font-semibold text-white mb-1">前端接入边界</div>
+                <div className={body}>Demo 与正式产品前端均不直连 Dify，只接收后端代理层返回的稳定 JSON 决策卡。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">四库 RAG</div>
-                <div className={body}>P/PC、R、K、C 四库全量文档保持可用；本轮没有新增RAG、没有调topK、没有修改飞书正式四库。</div>
+                <div className="font-semibold text-white mb-1">后端代理层</div>
+                <div className={body}>代理层负责 API Key 隔离、schema 校验、fallback、风险二次兜底和内部信息清洗。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">自动化回归</div>
-                <div className={body}>夜间200已完成117题有效集，剩余83题因Dify额度429待续跑；PV20N-107作为记录项观察。</div>
+                <div className="font-semibold text-white mb-1">四库边界</div>
+                <div className={body}>本轮不新增 P/R/K/C 正式四库条目；四库约束只通过依据摘要和稳定性间接体现。</div>
               </div>
             </div>
           </div>
@@ -404,6 +404,11 @@
                 <div className="text-xs text-[#49d6a9] mb-1">2026-07-09</div>
                 <div className="text-white font-medium mb-1">v5发布后长测与记录项</div>
                 <div className="text-xs text-[#6b8ab5]">v5发布后200、四库压力200通过；夜间117题有效集通过，118-200因额度429待断点续跑；PV20N-107记录观察。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#f3b35b]/35 p-3">
+                <div className="text-xs text-[#f3b35b] mb-1">2026-07-11</div>
+                <div className="text-white font-medium mb-1">后端代理层成为产品边界</div>
+                <div className="text-xs text-[#6b8ab5]">前端不直连Dify；统一由后端代理层输出稳定JSON决策卡，负责密钥隔离、格式校验、失败兜底和内部信息清洗。</div>
               </div>
             </div>
           </div>

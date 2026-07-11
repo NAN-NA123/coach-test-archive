@@ -78,6 +78,36 @@ export default function PhilosophyPage() {
         </div>
       </div>
 
+      {/* AI 决策呈现边界 */}
+      <div className="bg-[#141d33] rounded-xl border border-[#4a9eff]/35 p-8 mb-8">
+        <div className="flex items-center gap-3 mb-5">
+          <h2 className="text-xl font-bold text-white">AI 决策的用户呈现边界</h2>
+          <span className="text-xs bg-[#1a2744] text-[#8ba3c7] px-2 py-1 rounded-lg">2026-07-11</span>
+        </div>
+        <div className="space-y-4">
+          <p className="text-white font-semibold text-lg leading-relaxed">
+            AI 决策能力不作为前端直连聊天能力展示，而以稳定决策卡呈现。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            前端不直接调用 Dify 工作流，也不展示四库编号、检索机制、工作流分类、节点、权重或提示词原文。用户看到的是经过后端代理层校验、兜底和清洗后的判断结果。
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+            <div className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] p-4">
+              <div className="text-sm font-semibold text-[#49d6a9] mb-2">前端看到什么</div>
+              <p className="text-sm text-[#8ba3c7] leading-relaxed">风险标记、主要卡点、今天收口动作、明天最小行动、调整记录和依据摘要。</p>
+            </div>
+            <div className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] p-4">
+              <div className="text-sm font-semibold text-[#4a9eff] mb-2">后端负责什么</div>
+              <p className="text-sm text-[#8ba3c7] leading-relaxed">隔离 API Key，做固定字段校验、失败兜底、风险二次兜底和内部信息清洗。</p>
+            </div>
+            <div className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] p-4">
+              <div className="text-sm font-semibold text-[#f3b35b] mb-2">不对用户暴露什么</div>
+              <p className="text-sm text-[#8ba3c7] leading-relaxed">四库编号、RAG、CLASS、节点、权重、Prompt 和原始模型输出。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* 核心模块 */}
       <div className="mb-8">
         <h2 className="text-xl font-bold text-white mb-6">核心模块</h2>

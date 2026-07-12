@@ -246,17 +246,17 @@ export default function LandingPage() {
           <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">当前基线</span>
-              <span className="text-xs text-[#6b8ab5]">2026-07-11</span>
+              <span className="text-xs text-[#6b8ab5]">2026-07-12</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">前端代理层成为正式体验边界</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">预约页视觉定版，转入上线稳定性</h2>
             <p className="text-sm text-[#8ba3c7] leading-relaxed mb-5">
-              归律 Demo 与正式产品前端不得直连 Dify。AI 决策能力通过后端代理层封装为稳定 JSON 决策卡，再展示给用户；四库、RAG、CLASS、节点、权重和 Prompt 只作为内部判断来源，不在前端暴露。
+              Coach 共创预约页整体视觉方向已确认，后续不再主动进行大范围视觉探索。当前重点转为部署稳定性、飞书写入稳定性、访问压力测试和提交后的微信/QQ群承接链路。
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {["前端不直连Dify", "后端代理层兜底", "稳定JSON决策卡"].map((item) => (
+              {["视觉不再大改", "表单提交链路验收", "双二维码承接"].map((item) => (
                 <div key={item} className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] px-4 py-3 text-sm text-white">
                   {item}
-                  <div className="mt-1 text-xs text-[#49d6a9]">已同步产品库边界</div>
+                  <div className="mt-1 text-xs text-[#49d6a9]">已同步线路图</div>
                 </div>
               ))}
             </div>

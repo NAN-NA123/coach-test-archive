@@ -18,20 +18,20 @@
           <div className={`${sectionBg} p-5 border-cyan-700/40`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-7 h-7 rounded-lg bg-cyan-600 text-white text-xs font-bold flex items-center justify-center">现</span>
-              <h3 className={head}>当前接入状态（2026-07-11）</h3>
+              <h3 className={head}>当前接入状态（2026-07-12）</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">前端接入边界</div>
-                <div className={body}>Demo 与正式产品前端均不直连 Dify，只接收后端代理层返回的稳定 JSON 决策卡。</div>
+                <div className="font-semibold text-white mb-1">预约页阶段</div>
+                <div className={body}>共创预约页视觉方向已确认，主线从大范围视觉探索转入上线稳定性。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">后端代理层</div>
-                <div className={body}>代理层负责 API Key 隔离、schema 校验、fallback、风险二次兜底和内部信息清洗。</div>
+                <div className="font-semibold text-white mb-1">提交后承接</div>
+                <div className={body}>提交成功页需要提供微信二维码和 QQ 群二维码，分别承接个人联系与群内共创沟通。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">四库边界</div>
-                <div className={body}>本轮不新增 P/R/K/C 正式四库条目；四库约束只通过依据摘要和稳定性间接体现。</div>
+                <div className="font-semibold text-white mb-1">展示边界</div>
+                <div className={body}>用户界面不展示内部版本号；除非出现真实链路异常或用户明确要求，不重启视觉大改。</div>
               </div>
             </div>
           </div>
@@ -409,6 +409,11 @@
                 <div className="text-xs text-[#f3b35b] mb-1">2026-07-11</div>
                 <div className="text-white font-medium mb-1">后端代理层成为产品边界</div>
                 <div className="text-xs text-[#6b8ab5]">前端不直连Dify；统一由后端代理层输出稳定JSON决策卡，负责密钥隔离、格式校验、失败兜底和内部信息清洗。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#49d6a9]/35 p-3">
+                <div className="text-xs text-[#49d6a9] mb-1">2026-07-12</div>
+                <div className="text-white font-medium mb-1">预约页转入上线稳定性</div>
+                <div className="text-xs text-[#6b8ab5]">视觉方向已确认；第五页结构、静态CTA、提交成功页微信/QQ群二维码和不展示内部版本号成为后续验收边界。</div>
               </div>
             </div>
           </div>

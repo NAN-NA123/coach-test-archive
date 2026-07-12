@@ -1,8 +1,8 @@
 {
   "summary": {
-    "totalCount": 53,
-    "dateRange": "2026-06-18 ~ 2026-07-11",
-    "dayCount": 24
+    "totalCount": 54,
+    "dateRange": "2026-06-18 ~ 2026-07-12",
+    "dayCount": 25
   },
   "groups": [
     {
@@ -467,6 +467,18 @@
           "content": "归律 Demo 与正式产品前端统一不直接调用 Dify 工作流，而是通过后端代理层返回固定 JSON 决策卡。前端只消费 risk_flag、main_blocker、today_close、tomorrow_min_action、adjustment_record、basis_summary、missing_info 等稳定字段。",
           "reason": "后端代理层需要隔离 API Key，隐藏内部工作流和原始模型输出，并在用户可见前完成 schema 校验、fallback、风险二次兜底、内部术语清洗、医疗化表达清洗和承诺式表达清洗。",
           "highlight": "这是产品体验边界和工程架构边界，不升级为 P/R/K/C 正式四库条目，也不在前端展示四库编号、RAG、CLASS、节点、权重或 Prompt。"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-12",
+      "decisions": [
+        {
+          "id": 54,
+          "title": "决策52：预约页视觉定版后转入上线稳定性",
+          "content": "Coach 共创预约页整体视觉方向已确认，后续不再主动进行大范围视觉探索；当前重点转为部署稳定性、飞书写入稳定性、访问压力测试和提交后承接链路。",
+          "reason": "用户已确认“这一版没问题了”“视觉定完了”，执行线程也已完成预约页结构、表单提交、二维码前置需求和移动端验收测试。继续大改视觉会破坏已确认的上线前基线。",
+          "highlight": "第五页继续采用先介绍共创价值、再点击开启共创预约、再进入表单填写的结构；CTA保持静态、克制、可点击；提交成功页同时提供微信二维码和QQ群二维码；用户界面不展示内部版本号。"
         }
       ]
     }

@@ -277,6 +277,39 @@ const currentArchiveAdditions = [
       }
     ],
   },
+  {
+    version: "2026-07-13",
+    title: "归律 Demo v0.2.3 输入输出边界",
+    status: "基线通过",
+    summary:
+      "归律 Demo 后端 AI 基线更新为 guilv-demo-profile-v0.2.3-missing-info-risk-boundary。10组标准化输入样本全部通过，未来预测型 missing_info 违规为0；missing_info 当前事实边界和 risk_flag 三档边界进入 P/PC 候选核对，暂不直接写入正式四库。",
+    tests: [
+      {
+        question:
+          "输入是否要求用户预测明日安排、未来可用时间或再次加班可能性？",
+        answer:
+          "v0.2.3 固定边界为：前端输入只收集用户当前已经知道、已经发生或当前能确认的事实；AI 可以给下一次最小行动或明日行动建议，但不能把未来预测反向变成 missing_info 追问。",
+        result:
+          "通过。10组标准化输入中未来预测型 missing_info 违规为0。"
+      },
+      {
+        question:
+          "risk_flag 是否会把普通生活执行难度升级为风险？",
+        answer:
+          "risk_flag 只表达身体安全风险：none 用于普通生活波动，caution 用于身体安全信息含糊且无法排除风险，stop 用于明确风险标记或明确不适。",
+        result:
+          "通过。none / caution / stop 三档已纳入防回归基线。"
+      },
+      {
+        question:
+          "最终 JSON 节点是否会重写 LLM 已输出的核心决策字段？",
+        answer:
+          "最终代码节点只做解析、校验、敏感信息清洗、missing_info 过滤和 risk_flag 安全兜底，不重写五个核心决策字段。",
+        result:
+          "通过。该内容属于工作流实现和防回归规则，不直接升级为 P/R/K/C 正式四库条目。"
+      }
+    ],
+  },
 ];
 
 export default function TestArchivePage() {
@@ -362,7 +395,7 @@ export default function TestArchivePage() {
               当前补充档案
             </h2>
             <span className="text-xs text-[#6b8ab5]">
-              更新至 2026-07-09
+              更新至 2026-07-13
             </span>
           </div>
           <div className="space-y-5">

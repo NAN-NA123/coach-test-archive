@@ -108,6 +108,22 @@ export default function PhilosophyPage() {
         </div>
       </div>
 
+      {/* 动态决策卡 */}
+      <div className="bg-[#141d33] rounded-xl border border-[#49d6a9]/35 p-8 mb-8">
+        <div className="flex items-center gap-3 mb-5">
+          <h2 className="text-xl font-bold text-white">动态决策卡的产品逻辑</h2>
+          <span className="text-xs bg-[#1a2744] text-[#8ba3c7] px-2 py-1 rounded-lg">2026-07-13</span>
+        </div>
+        <div className="space-y-4">
+          <p className="text-white font-semibold text-lg leading-relaxed">
+            归律 Demo 的核心不是聊天生成建议，而是把长期画像、今日事实、现实变化和边界约束转成动态决策卡。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            Demo 当前只呈现最小可展示闭环，但长期产品逻辑应保留“长期画像 + 今日事实 + 现实变化 + 边界约束 → 动态决策”的结构。四库约束作为内部判断依据，不以四库编号、Prompt、RAG、Dify 节点或权重形式暴露给用户。
+          </p>
+        </div>
+      </div>
+
       {/* 核心模块 */}
       <div className="mb-8">
         <h2 className="text-xl font-bold text-white mb-6">核心模块</h2>

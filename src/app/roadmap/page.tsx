@@ -18,20 +18,20 @@
           <div className={`${sectionBg} p-5 border-cyan-700/40`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-7 h-7 rounded-lg bg-cyan-600 text-white text-xs font-bold flex items-center justify-center">现</span>
-              <h3 className={head}>当前接入状态（2026-07-12）</h3>
+              <h3 className={head}>当前接入状态（2026-07-13）</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">预约页阶段</div>
-                <div className={body}>共创预约页视觉方向已确认，主线从大范围视觉探索转入上线稳定性。</div>
+                <div className="font-semibold text-white mb-1">Demo AI 基线</div>
+                <div className={body}>当前基线为 guilv-demo-profile-v0.2.3-missing-info-risk-boundary，10组标准化输入通过。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">提交后承接</div>
-                <div className={body}>提交成功页需要提供微信二维码和 QQ 群二维码，分别承接个人联系与群内共创沟通。</div>
+                <div className="font-semibold text-white mb-1">输入输出边界</div>
+                <div className={body}>输入只收集当前可确认事实；输出可给下一次或明日行动，不把未来预测列为缺失信息。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">展示边界</div>
-                <div className={body}>用户界面不展示内部版本号；除非出现真实链路异常或用户明确要求，不重启视觉大改。</div>
+                <div className="font-semibold text-white mb-1">四库候选</div>
+                <div className={body}>missing_info 当前事实边界和 risk_flag 三档边界进入 P/PC 候选核对，暂不直接入正式四库。</div>
               </div>
             </div>
           </div>
@@ -414,6 +414,11 @@
                 <div className="text-xs text-[#49d6a9] mb-1">2026-07-12</div>
                 <div className="text-white font-medium mb-1">预约页转入上线稳定性</div>
                 <div className="text-xs text-[#6b8ab5]">视觉方向已确认；第五页结构、静态CTA、提交成功页微信/QQ群二维码和不展示内部版本号成为后续验收边界。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#4a9eff]/35 p-3">
+                <div className="text-xs text-[#4a9eff] mb-1">2026-07-13</div>
+                <div className="text-white font-medium mb-1">归律 Demo v0.2.3 后端 AI 基线</div>
+                <div className="text-xs text-[#6b8ab5]">结构化输入、七字段JSON、missing_info过滤和risk_flag兜底通过10组标准化输入；两条边界进入P/PC候选核对。</div>
               </div>
             </div>
           </div>

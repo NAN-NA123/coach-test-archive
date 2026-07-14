@@ -124,6 +124,25 @@ export default function PhilosophyPage() {
         </div>
       </div>
 
+      {/* 具体问题先行 */}
+      <div className="bg-[#141d33] rounded-xl border border-[#f3b35b]/35 p-8 mb-8">
+        <div className="flex items-center gap-3 mb-5">
+          <h2 className="text-xl font-bold text-white">具体问题先行的回答边界</h2>
+          <span className="text-xs bg-[#1a2744] text-[#8ba3c7] px-2 py-1 rounded-lg">2026-07-14</span>
+        </div>
+        <div className="space-y-4">
+          <p className="text-white font-semibold text-lg leading-relaxed">
+            归律 Demo 不是只输出训练、饮食、恢复总结，而是必须先理解用户当下真正问了什么。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            当 user_question 非空时，系统必须把它作为独立意图入口：先判断用户是在问吃法、训练安排、安全边界、记录不确定、动机受挫还是社交外食，再直接回答这个问题，最后才给可选方案和必要边界。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            用户层不展示内部分类、四库编号、RAG、节点或规则路径；用户看到的是“我现在该怎么做”的清晰回答，而不是后台解释或泛化模板。
+          </p>
+        </div>
+      </div>
+
       {/* 核心模块 */}
       <div className="mb-8">
         <h2 className="text-xl font-bold text-white mb-6">核心模块</h2>

@@ -278,6 +278,39 @@ const currentArchiveAdditions = [
     ],
   },
   {
+    version: "2026-07-14",
+    title: "归律 Demo v0.2.34 具体问题意图回归",
+    status: "基线通过",
+    summary:
+      "归律 Demo 后端 AI 基线更新为 guilv-demo-profile-v0.2.34-boredom-eating-router-priority。user_question 非空时必须作为独立意图入口处理，先回答用户当下问题，再给可选方案和必要边界；覆盖六类具体问题意图，并通过两套100条批测及多项回归。",
+    tests: [
+      {
+        question:
+          "user_question 非空时，是否先回答用户当下具体问题？",
+        answer:
+          "系统必须先识别具体问题意图，并输出 user_question_answer，再给 recommended_plans / suggested_options 和必要边界，不能退回泛化训练、饮食、恢复模板。",
+        result:
+          "通过。具体问题先行进入产品库正式表达和防回归基线。"
+      },
+      {
+        question:
+          "六类具体问题意图是否覆盖？",
+        answer:
+          "已覆盖情绪性进食、社交外食、日程打乱、安全边界、营养记录不确定和动机挫败六类意图。",
+        result:
+          "通过。v0.2.34 已通过两套100条批测及多项回归。"
+      },
+      {
+        question:
+          "该边界是否直接进入正式四库或 RAG？",
+        answer:
+          "不直接进入正式 P/R/K/C，也不改 RAG/topK；先作为四库系统更新线路图候选观察项，后续需战略AI与飞书正式四库核对。",
+        result:
+          "记录项。当前只更新网站归档，不修改飞书正式四库。"
+      }
+    ],
+  },
+  {
     version: "2026-07-13",
     title: "归律 Demo v0.2.3 输入输出边界",
     status: "基线通过",
@@ -395,7 +428,7 @@ export default function TestArchivePage() {
               当前补充档案
             </h2>
             <span className="text-xs text-[#6b8ab5]">
-              更新至 2026-07-13
+              更新至 2026-07-14
             </span>
           </div>
           <div className="space-y-5">

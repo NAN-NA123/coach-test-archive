@@ -18,20 +18,20 @@
           <div className={`${sectionBg} p-5 border-cyan-700/40`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-7 h-7 rounded-lg bg-cyan-600 text-white text-xs font-bold flex items-center justify-center">现</span>
-              <h3 className={head}>当前接入状态（2026-07-13）</h3>
+              <h3 className={head}>当前接入状态（2026-07-14）</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">Demo AI 基线</div>
-                <div className={body}>当前基线为 guilv-demo-profile-v0.2.3-missing-info-risk-boundary，10组标准化输入通过。</div>
+                <div className="font-semibold text-white mb-1">user_question链路</div>
+                <div className={body}>当前基线为 guilv-demo-profile-v0.2.34-boredom-eating-router-priority，新增具体问题独立处理链路。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">输入输出边界</div>
-                <div className={body}>输入只收集当前可确认事实；输出可给下一次或明日行动，不把未来预测列为缺失信息。</div>
+                <div className="font-semibold text-white mb-1">意图覆盖</div>
+                <div className={body}>覆盖情绪性进食、社交外食、日程打乱、安全边界、营养记录不确定和动机挫败六类问题意图。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
                 <div className="font-semibold text-white mb-1">四库候选</div>
-                <div className={body}>missing_info 当前事实边界和 risk_flag 三档边界进入 P/PC 候选核对，暂不直接入正式四库。</div>
+                <div className={body}>用户具体问题意图与回答边界进入四库系统更新线路图候选观察，暂不直接写入正式 P/R/K/C。</div>
               </div>
             </div>
           </div>
@@ -419,6 +419,11 @@
                 <div className="text-xs text-[#4a9eff] mb-1">2026-07-13</div>
                 <div className="text-white font-medium mb-1">归律 Demo v0.2.3 后端 AI 基线</div>
                 <div className="text-xs text-[#6b8ab5]">结构化输入、七字段JSON、missing_info过滤和risk_flag兜底通过10组标准化输入；两条边界进入P/PC候选核对。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#f3b35b]/35 p-3">
+                <div className="text-xs text-[#f3b35b] mb-1">2026-07-14</div>
+                <div className="text-white font-medium mb-1">归律 Demo v0.2.34 具体问题先行</div>
+                <div className="text-xs text-[#6b8ab5]">user_question非空时必须先直接作答；v0.2.34通过两套100条批测和多项回归，候选边界暂不入正式四库。</div>
               </div>
             </div>
           </div>

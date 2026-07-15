@@ -278,6 +278,39 @@ const currentArchiveAdditions = [
     ],
   },
   {
+    version: "2026-07-15",
+    title: "归律 Demo 真实前端 payload 与代理接口回归",
+    status: "基线通过",
+    summary:
+      "归律 Demo 发布前验收标准更新为：以本地正式代理接口 POST /api/guilv/demo/decision 和真实前端 payload 的逐字段回归为准。直接调用 Dify 工作流或泛化脚本通过，不能替代真实页面闭环；followup_questions 与 suggested_options 分离进入接口契约，tomorrow_min_action 暂保兼容但展示语义改为下一次最小行动。",
+    tests: [
+      {
+        question:
+          "发布前验收是否可以只看 Dify 或脚本批测通过？",
+        answer:
+          "不可以。Demo 验收必须走本地代理接口和真实前端 payload，做逐字段 exact 回归，确认页面闭环真实打通。",
+        result:
+          "通过。该边界已同步产品线路图和决策日志。"
+      },
+      {
+        question:
+          "已提供的训练、饮食、身体反馈是否还能被当成缺失信息？",
+        answer:
+          "不能。结构化记录是有效背景，系统应结合已知事实、当前状态和具体问题动态决策；缺失信息只追问真正缺失且影响判断的字段。",
+        result:
+          "通过。该内容作为产品理念补充，不新增正式四库条目。"
+      },
+      {
+        question:
+          "追问问题和建议选项是否仍混在一起？",
+        answer:
+          "不应混在一起。followup_questions 负责追问缺失信息，suggested_options 负责给用户可选动作；二者分离进入接口契约和防回归基线。",
+        result:
+          "记录项。当前不导入 RAG，不调 topK，不写入正式 P/R/K/C。"
+      }
+    ],
+  },
+  {
     version: "2026-07-14",
     title: "归律 Demo v0.2.34 具体问题意图回归",
     status: "基线通过",
@@ -428,7 +461,7 @@ export default function TestArchivePage() {
               当前补充档案
             </h2>
             <span className="text-xs text-[#6b8ab5]">
-              更新至 2026-07-14
+              更新至 2026-07-15
             </span>
           </div>
           <div className="space-y-5">

@@ -18,20 +18,20 @@
           <div className={`${sectionBg} p-5 border-cyan-700/40`}>
             <div className="flex items-center gap-2 mb-3">
               <span className="w-7 h-7 rounded-lg bg-cyan-600 text-white text-xs font-bold flex items-center justify-center">现</span>
-              <h3 className={head}>当前接入状态（2026-07-14）</h3>
+              <h3 className={head}>当前接入状态（2026-07-15）</h3>
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3 text-sm">
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">user_question链路</div>
-                <div className={body}>当前基线为 guilv-demo-profile-v0.2.34-boredom-eating-router-priority，新增具体问题独立处理链路。</div>
+                <div className="font-semibold text-white mb-1">真实闭环验收</div>
+                <div className={body}>Demo 发布前以本地代理接口和真实前端 payload 的逐字段回归为验收基线。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
-                <div className="font-semibold text-white mb-1">意图覆盖</div>
-                <div className={body}>覆盖情绪性进食、社交外食、日程打乱、安全边界、营养记录不确定和动机挫败六类问题意图。</div>
+                <div className="font-semibold text-white mb-1">接口契约</div>
+                <div className={body}>followup_questions 与 suggested_options 分离进入接口契约；tomorrow_min_action 暂保兼容，展示语义改为下一次最小行动。</div>
               </div>
               <div className="bg-[#1a2744] rounded-lg p-3">
                 <div className="font-semibold text-white mb-1">四库候选</div>
-                <div className={body}>用户具体问题意图与回答边界进入四库系统更新线路图候选观察，暂不直接写入正式 P/R/K/C。</div>
+                <div className={body}>真实前端 payload 精确回归、intent router 扩展、追问与选项分离进入工程与防回归候选，不进入正式 P/R/K/C。</div>
               </div>
             </div>
           </div>
@@ -424,6 +424,11 @@
                 <div className="text-xs text-[#f3b35b] mb-1">2026-07-14</div>
                 <div className="text-white font-medium mb-1">归律 Demo v0.2.34 具体问题先行</div>
                 <div className="text-xs text-[#6b8ab5]">user_question非空时必须先直接作答；v0.2.34通过两套100条批测和多项回归，候选边界暂不入正式四库。</div>
+              </div>
+              <div className="bg-[#0f1729] rounded-lg border border-[#49d6a9]/35 p-3">
+                <div className="text-xs text-[#49d6a9] mb-1">2026-07-15</div>
+                <div className="text-white font-medium mb-1">真实前端 payload 与代理接口验收</div>
+                <div className="text-xs text-[#6b8ab5]">发布前以 POST /api/guilv/demo/decision 和真实前端 payload 的 exact 回归为准；直接跑 Dify 或泛化脚本不能替代页面闭环。</div>
               </div>
             </div>
           </div>

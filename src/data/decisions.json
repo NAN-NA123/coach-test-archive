@@ -1,8 +1,8 @@
 {
   "summary": {
-    "totalCount": 56,
-    "dateRange": "2026-06-18 ~ 2026-07-14",
-    "dayCount": 27
+    "totalCount": 57,
+    "dateRange": "2026-06-18 ~ 2026-07-15",
+    "dayCount": 28
   },
   "groups": [
     {
@@ -503,6 +503,18 @@
           "content": "归律 Demo 在 user_question 非空时，必须把用户具体问题作为独立意图入口处理，先回答当下问题，再给可选方案和必要边界。",
           "reason": "系统此前可能退回泛化训练、饮食、恢复总结，不能承接用户真实即时问题。v0.2.34 已覆盖六类意图，并通过两套100条批测及多项回归。",
           "highlight": "这是产品体验边界和发布前稳定性要求；四库正式沉淀需战略AI和飞书正式库核对，不直接写入 P/R/K/C，不改 RAG/topK。"
+        }
+      ]
+    },
+    {
+      "date": "2026-07-15",
+      "decisions": [
+        {
+          "id": 57,
+          "title": "决策55：归律 Demo 发布验收以真实页面闭环为准",
+          "content": "归律 Demo 正式验收以 POST /api/guilv/demo/decision 和真实前端 payload 的 exact 回归为准；直接跑 Dify 或泛化脚本通过，不能替代真实页面闭环。",
+          "reason": "真实产品风险不只在模型输出，还在前端传参、代理接口、JSON 后处理、追问与选项分离、字段兼容和页面展示。发布前必须验证真实链路。",
+          "highlight": "followup_questions 与 suggested_options 分离进入接口契约；tomorrow_min_action 暂保兼容，展示语义改为下一次最小行动，长期迁移到 next_min_action。本轮不进入正式 P/R/K/C，不导入 RAG，不调 topK。"
         }
       ]
     }

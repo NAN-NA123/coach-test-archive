@@ -143,6 +143,25 @@ export default function PhilosophyPage() {
         </div>
       </div>
 
+      {/* 结构化记录有效背景 */}
+      <div className="bg-[#141d33] rounded-xl border border-[#4a9eff]/35 p-8 mb-8">
+        <div className="flex items-center gap-3 mb-5">
+          <h2 className="text-xl font-bold text-white">结构化记录是有效背景</h2>
+          <span className="text-xs bg-[#1a2744] text-[#8ba3c7] px-2 py-1 rounded-lg">2026-07-15</span>
+        </div>
+        <div className="space-y-4">
+          <p className="text-white font-semibold text-lg leading-relaxed">
+            归律不能把用户已经提供的训练、饮食和身体反馈误判为缺失信息。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            结构化记录是动态决策的有效背景。系统需要结合已知记录、当前状态和 user_question 直接判断：哪些事实已经足够，哪些仍需要追问，哪些可立即给出下一步。
+          </p>
+          <p className="text-[#8ba3c7] leading-relaxed">
+            具体问题非空时，仍然先回答用户当下问题，再给可选方案；追问问题和建议选项必须分离，避免把“还需要补什么信息”和“你可以怎么选”混在一起。
+          </p>
+        </div>
+      </div>
+
       {/* 核心模块 */}
       <div className="mb-8">
         <h2 className="text-xl font-bold text-white mb-6">核心模块</h2>

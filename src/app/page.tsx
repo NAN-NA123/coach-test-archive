@@ -246,14 +246,14 @@ export default function LandingPage() {
           <div className="rounded-xl bg-[#141d33] border border-[#2a3a5c] p-7">
             <div className="flex items-center gap-3 mb-4">
               <span className="text-xs font-semibold bg-[#49d6a9] text-[#06131c] px-3 py-1 rounded-full">当前基线</span>
-              <span className="text-xs text-[#6b8ab5]">2026-07-14</span>
+              <span className="text-xs text-[#6b8ab5]">2026-07-15</span>
             </div>
-            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">归律 Demo v0.2.34 具体问题先行</h2>
+            <h2 className="text-xl sm:text-2xl font-bold text-white mb-4">归律 Demo 真实前端闭环验收</h2>
             <p className="text-sm text-[#8ba3c7] leading-relaxed mb-5">
-              归律 Demo 后端 AI 基线新增 user_question 独立处理链路：当用户提出具体问题时，先识别问题意图并直接回答，再给可选方案和必要边界，不能退回泛化训练/饮食/恢复模板。
+              归律 Demo 发布前验收以本地代理接口 POST /api/guilv/demo/decision 和真实前端 payload 的 exact 回归为准；直接调用 Dify 或泛化脚本通过，不能替代真实页面闭环。
             </p>
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
-              {["user_question独立入口", "直接回答优先", "六类意图回归"].map((item) => (
+              {["真实payload回归", "代理接口验收", "追问选项分离"].map((item) => (
                 <div key={item} className="rounded-lg bg-[#0f1729] border border-[#2a3a5c] px-4 py-3 text-sm text-white">
                   {item}
                   <div className="mt-1 text-xs text-[#49d6a9]">已同步产品库边界</div>
